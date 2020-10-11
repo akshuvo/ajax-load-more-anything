@@ -56,8 +56,8 @@ Just put the class or ID where you want to show the Button then put the CSS or I
 ### I can't find the selector for my website. Can you help?
 Contact for paid help: akhtarujjamanshuvo@gmail.com
 
-### Can i see video Tutorial ? = Checkout the tutorial on
-[Youtube](https://youtu.be/km6V2bcfc6o)
+### Can i see video Tutorial ?
+Checkout the tutorial on [Youtube](https://youtu.be/km6V2bcfc6o)
 
 ### Questions/Suggestions/Support?
 Create Topic in [Support forum](https://wordpress.org/support/plugin/ajax-load-more-anything/) or Create issue on [Github](https://github.com/akshuvo/load-more-anything/issues)
