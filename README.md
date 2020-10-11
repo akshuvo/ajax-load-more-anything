@@ -63,10 +63,10 @@ Contact for paid help: akhtarujjamanshuvo@gmail.com
 Create Topic in [Support forum](https://wordpress.org/support/plugin/ajax-load-more-anything/) or Create issue on [Github](https://github.com/akshuvo/load-more-anything/issues)
 
 ## Screenshots
-1. Up to 5 wrappers you can use
-2. Frontend Preview screenshot-2.
-3. Any Class, ID or Tags can be use to Load More.
-4. Countable Button Load More
+1. Up to 5 wrappers you can use - https://ps.w.org/ajax-load-more-anything/assets/screenshot-1.png
+2. Frontend Preview screenshot-2. - https://ps.w.org/ajax-load-more-anything/assets/screenshot-2.png
+3. Any Class, ID or Tags can be use to Load More. - https://ps.w.org/ajax-load-more-anything/assets/screenshot-3.png
+4. Countable Button Load More - https://ps.w.org/ajax-load-more-anything/assets/screenshot-4.png
 
 ## Changelog
 
