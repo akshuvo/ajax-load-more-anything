@@ -76,7 +76,7 @@ Create Topic in [Support forum](https://wordpress.org/support/plugin/ajax-load-m
 
 == Changelog ==
 
-= 2.2.5 = ( Oct 12, 2020 )
+= 2.2.6 = ( Oct 12, 2020 )
 - Code Improvement
 - Fixed: Incorrect behaviour in the latest Chrome
 - Fixed: Selector Escaping

@@ -4,7 +4,7 @@ Plugin Name:  Load More Anything
 Plugin URI:   https://github.com/akshuvo/load-more-anything/
 Author:       Akhtarujjaman Shuvo
 Author URI:   https://www.facebook.com/akhterjshuvo/
-Version: 	  2.2.5
+Version: 	  2.2.6
 Description:  A simple plugin that help you to Load more any item with jQuery. You can use Ajaxify Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce Product, Images, Photos, Videos, custom Div or whatever you want.
 License:      GPL2
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html
