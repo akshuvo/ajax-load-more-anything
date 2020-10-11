@@ -1,4 +1,4 @@
-# Load More Anything
+# Load More Anything WordPress Plugin
 A simple plugin that help you to Load more any item with jquery. You can
 use Load More button for your blog post, Comments, page, Category,
 Recent Posts, Sidebar widget Data, Woocommerce Product, Images, Photos,
