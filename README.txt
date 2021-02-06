@@ -1,15 +1,13 @@
 === Load More Anything ===
 Contributors: mdshuvo
 Tags: div jquery load, anything jquery, blog post jquery load, Comments jquery load, page jquery load, Category jquery load, Recent Posts jquery load, Sidebar widget jquery load, Woocommerce Product jquery load, Images jquery load, Photos jquery load, Videos jquery load, custom Div jquery load,infinite scroll, infinite scrolling, scroll, lazy load, lazy loading, endless scroll, pagination, jquery load pagination, jquery load, jquery load posts, jquery load more, anything load more, devshuvo
-Tested up to: 5.5.1
+Tested up to: 5.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 A simple plugin that help you to Load more any item with jquery. You can use Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce Product, Images, Photos, Videos, custom Div or whatever you want.
 
 == Description ==
-### Note: IT'S NOT AJAX. IT'S JQUERY . SO DON'T PUT REVIEW REGARDING TO THIS TOPIC
-### if you face any issue then comment. please don't review regarding ajax/jquery issue. i just make this for helping people. Don't use if you want ajax. Thanks
 
 No need to add any code on your theme core file. Just plug and play.A simple plugin that helps you to Load more any item. You can use Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce Product, Images, Photos, Videos, custom Div or whatever you want.
 
@@ -75,6 +73,16 @@ Create Topic in [Support forum](https://wordpress.org/support/plugin/ajax-load-m
 4. Countable Button Load More
 
 == Changelog ==
+
+= 2.3.0 = ( Oct 20, 2020 )
+- Code Improvement
+- Fixed: Incorrect scroll behaviour in the latest Chrome
+- Modified: &lt;div class="lmb-container"&gt;&lt;a href="#" class="btn loadMoreBtn" id="loadMore"&gt;LABEL&lt;/a&gt;&lt;/div&gt;<br />
+to
+- &lt;a href="#" class="btn loadMoreBtn" id="loadMore"&gt;&lt;span class="loadMoreBtn-label"&gt;LABEL&lt;/span&gt;&lt;/a&gt;
+
+= 2.4.0 = ( Feb 06, 2021 )
+- WordPress 5.6.1 Compatibility
 
 = 2.2.6 = ( Oct 12, 2020 )
 - Code Improvement

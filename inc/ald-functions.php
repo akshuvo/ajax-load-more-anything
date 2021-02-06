@@ -9,8 +9,9 @@ require_once( dirname( __FILE__ ) . '/class-admin-notice.php' );
  * Review Notice
  */
 function ald_review_admin_notices($args){
+
 	$args[] = array(
-		'id' => "samplenotices",
+		'id' => "load_more_review_notices",
 		'text' => "<b>We hope you're enjoying this plugin! Could you please give a 5-star rating on WordPress to inspire us?</b>",
 		'logo' => "https://ps.w.org/ajax-load-more-anything/assets/icon-256x256.png",
 		'border_color' => "#000",
@@ -203,7 +204,7 @@ function ald_custom_code(){?>
 					<?php $ald_item_load = get_option('ald_item_load'); ?>
 
 					// Append the Load More Button
-					$("<?php _e( $ald_wrapper_class ); ?>").append('<div class="lmb-container"><a href="#" class="btn loadMoreBtn" id="loadMore"><?php echo ald_button_label( $ald_load_label ); ?></a></div>');
+					$("<?php _e( $ald_wrapper_class ); ?>").append('<a href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
 
 					// Show the initial visible items
 					$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).show();
@@ -233,6 +234,8 @@ function ald_custom_code(){?>
 						$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").fadeOut('slow');
 						console.log( noItemMsg );
 					}
+
+
 				<?php endif;?>
 				// end wrapper 1
 
@@ -246,7 +249,7 @@ function ald_custom_code(){?>
 					<?php $ald_item_load = get_option('ald_item_loada'); ?>
 
 					// Append the Load More Button
-					$("<?php _e( $ald_wrapper_class ); ?>").append('<div class="lmb-container"><a href="#" class="btn loadMoreBtn" id="loadMore"><?php echo ald_button_label( $ald_load_label ); ?></a></div>');
+					$("<?php _e( $ald_wrapper_class ); ?>").append('<a href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
 
 					// Show the initial visible items
 					$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).show();
@@ -289,7 +292,7 @@ function ald_custom_code(){?>
 					<?php $ald_item_load = get_option('ald_item_loadb'); ?>
 
 					// Append the Load More Button
-					$("<?php _e( $ald_wrapper_class ); ?>").append('<div class="lmb-container"><a href="#" class="btn loadMoreBtn" id="loadMore"><?php echo ald_button_label( $ald_load_label ); ?></a></div>');
+					$("<?php _e( $ald_wrapper_class ); ?>").append('<a href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
 
 					// Show the initial visible items
 					$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).show();
@@ -331,7 +334,7 @@ function ald_custom_code(){?>
 					<?php $ald_item_load = get_option('ald_item_loadc'); ?>
 
 					// Append the Load More Button
-					$("<?php _e( $ald_wrapper_class ); ?>").append('<div class="lmb-container"><a href="#" class="btn loadMoreBtn" id="loadMore"><?php echo ald_button_label( $ald_load_label ); ?></a></div>');
+					$("<?php _e( $ald_wrapper_class ); ?>").append('<a href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
 
 					// Show the initial visible items
 					$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).show();
@@ -373,7 +376,7 @@ function ald_custom_code(){?>
 					<?php $ald_item_load = get_option('ald_item_loadd'); ?>
 
 					// Append the Load More Button
-					$("<?php _e( $ald_wrapper_class ); ?>").append('<div class="lmb-container"><a href="#" class="btn loadMoreBtn" id="loadMore"><?php echo ald_button_label( $ald_load_label ); ?></a></div>');
+					$("<?php _e( $ald_wrapper_class ); ?>").append('<a href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
 
 					// Show the initial visible items
 					$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).show();
@@ -416,7 +419,7 @@ function ald_custom_code(){?>
 					<?php $ald_item_load = get_option('ald_item_loade'); ?>
 
 					// Append the Load More Button
-					$("<?php _e( $ald_wrapper_class ); ?>").append('<div class="lmb-container"><a href="#" class="btn loadMoreBtn" id="loadMore"><?php echo ald_button_label( $ald_load_label ); ?></a></div>');
+					$("<?php _e( $ald_wrapper_class ); ?>").append('<a href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
 
 					$("<?php _e( $ald_load_class ); ?>").hide();
 

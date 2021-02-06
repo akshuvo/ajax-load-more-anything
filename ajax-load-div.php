@@ -1,16 +1,16 @@
 <?php
-/*
-Plugin Name:  Load More Anything
-Plugin URI:   https://github.com/akshuvo/load-more-anything/
-Author:       Akhtarujjaman Shuvo
-Author URI:   https://www.facebook.com/akhterjshuvo/
-Version: 	  2.2.6
-Description:  A simple plugin that help you to Load more any item with jQuery. You can use Ajaxify Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce Product, Images, Photos, Videos, custom Div or whatever you want.
-License:      GPL2
-License URI:  https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain:  aldtd
-Domain Path:  /lang
-*/
+/**
+ * Plugin Name:  Load More Anything
+ * Plugin URI:   https://github.com/akshuvo/load-more-anything/
+ * Author:       Akhtarujjaman Shuvo
+ * Author URI:   https://www.facebook.com/akhterjshuvo/
+ * Version: 	  2.4.0
+ * Description:  A simple plugin that help you to Load more any item with jQuery. You can use Ajaxify Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce Product, Images, Photos, Videos, custom Div or whatever you want.
+ * License:      GPL2
+ * License URI:  https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:  aldtd
+ * Domain Path:  /lang
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
@@ -23,6 +23,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 * @since 1.0.0
 */
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+if ( !defined('ALD_PLUGIN_VERSION') ) {
+    define('ALD_PLUGIN_VERSION', '2.3.1');
+}
 
 // Custom Functions
 require_once( __DIR__ . '/inc/ald-functions.php' );
@@ -51,10 +55,8 @@ add_action('plugins_loaded', 'ald_load_text_domain', 10, 2);
 // Load Scripts
 function ald_enqueue_scripts(){
 
-	$version = current_time('timestamp');
-
-	wp_enqueue_style('ald-styles', plugin_dir_url( __FILE__ ) . 'css/ald-styles.css', null, $version );
-    wp_enqueue_script( 'ald-script', plugin_dir_url( __FILE__ ) . 'js/ald-scripts.js', array('jquery'), $version, true );
+	wp_enqueue_style('ald-styles', plugin_dir_url( __FILE__ ) . 'css/ald-styles.css', null, ALD_PLUGIN_VERSION );
+    wp_enqueue_script( 'ald-script', plugin_dir_url( __FILE__ ) . 'js/ald-scripts.js', array('jquery'), ALD_PLUGIN_VERSION, true );
 
 	wp_localize_script( 'ald-script', 'ald_params',
 		array(
@@ -71,6 +73,25 @@ function ald_admin_scripts() {
 	wp_enqueue_script( 'jquery-form' );
 }
 add_action( 'admin_enqueue_scripts', 'ald_admin_scripts' );
+
+// Plugin activation hook
+function ald_plugin_activation() {
+    update_option('ald_plugin_version', '2.3.1');
+}
+register_activation_hook(__FILE__, 'ald_plugin_activation');
+
+// Plugin Loaded
+function ald_plugin_loaded_action() {
+	if ( !is_admin() ) {
+		return;
+	}
+
+	if ( false === get_option('ald_plugin_version') ){
+    	update_option( 'ald_plugin_version', '2.3.1' );
+	}
+
+}
+add_action('plugins_loaded', 'ald_plugin_loaded_action');
 
 /**
 * Design Setting Page
@@ -92,7 +113,7 @@ $button_label = __( 'Load More Button Label', 'aldtd' );
 $button_label_desc = __( 'Enter the name of Load More Button <br> Use <code>+[count]</code> for countable button like +15 more', 'aldtd' );
 ?>
 <div class="wrap">
-<h1>Load More Anyting</h1>
+<h1><?php esc_html_e( 'Load More Anyting', 'aldtd' ); ?></h1>
 
 <form method="post" action="options.php" id="ald_option_form">
     <?php settings_fields( 'ald-plugin-settings-group' ); ?>
@@ -106,7 +127,7 @@ $button_label_desc = __( 'Enter the name of Load More Button <br> Use <code>+[co
 				<div id="postimagediv" class="postbox">
 					<a class="header" data-toggle="collapse" href="#divone">
 						<span id="poststuff">
-							<h2 class="hndle">Wrapper - 1</h2>
+							<h2 class="hndle"><?php esc_html_e( 'Wrapper - 1', 'aldtd' ); ?></h2>
 						</span>
 					</a>
 					<div id="divone" class="collapse show">
@@ -157,7 +178,7 @@ $button_label_desc = __( 'Enter the name of Load More Button <br> Use <code>+[co
 				<div id="postimagediv" class="postbox">
 					<a class="header" data-toggle="collapse" href="#divtwo">
 						<span id="poststuff">
-							<h2 class="hndle">Wrapper - 2</h2>
+							<h2 class="hndle"><?php esc_html_e( 'Wrapper - 2', 'aldtd' ); ?></h2>
 						</span>
 					</a>
 					<div id="divtwo" class="collapse">
@@ -208,7 +229,7 @@ $button_label_desc = __( 'Enter the name of Load More Button <br> Use <code>+[co
 				<div id="postimagediv" class="postbox">
 					<a class="header" data-toggle="collapse" href="#divthree">
 						<span id="poststuff">
-							<h2 class="hndle">Wrapper - 3</h2>
+							<h2 class="hndle"><?php esc_html_e( 'Wrapper - 3', 'aldtd' ); ?></h2>
 						</span>
 					</a>
 					<div id="divthree" class="collapse">
@@ -259,7 +280,7 @@ $button_label_desc = __( 'Enter the name of Load More Button <br> Use <code>+[co
 				<div id="postimagediv" class="postbox">
 					<a class="header" data-toggle="collapse" href="#divfour">
 						<span id="poststuff">
-							<h2 class="hndle">Wrapper - 4</h2>
+							<h2 class="hndle"><?php esc_html_e( 'Wrapper - 4', 'aldtd' ); ?></h2>
 						</span>
 					</a>
 					<div id="divfour" class="collapse">
@@ -310,7 +331,7 @@ $button_label_desc = __( 'Enter the name of Load More Button <br> Use <code>+[co
 				<div id="postimagediv" class="postbox">
 					<a class="header" data-toggle="collapse" href="#divfive">
 						<span id="poststuff">
-							<h2 class="hndle">Wrapper - 5</h2>
+							<h2 class="hndle"><?php esc_html_e( 'Wrapper - 5', 'aldtd' ); ?></h2>
 						</span>
 					</a>
 					<div id="divfive" class="collapse">
@@ -361,7 +382,7 @@ $button_label_desc = __( 'Enter the name of Load More Button <br> Use <code>+[co
 				<div id="postimagediv" class="postbox">
 					<a class="header" data-toggle="collapse" href="#divsix">
 						<span id="poststuff">
-							<h2 class="hndle">Wrapper - 6 ( For Flex Display )</h2>
+							<h2 class="hndle"><?php esc_html_e( 'Wrapper - 6 ( For Flex Display )', 'aldtd' ); ?></h2>
 						</span>
 					</a>
 					<div id="divsix" class="collapse">
@@ -421,18 +442,27 @@ $button_label_desc = __( 'Enter the name of Load More Button <br> Use <code>+[co
 }";}else {echo __( get_option('asr_ald_css_class') ); } ?></textarea></pre>
 
 			<table>
-				<tr><td><strong><h3 style=" margin: 0 0 2px 0; ">Do you have any work need to be done ?</h3>We do WordPress Theme & Plugin development or Customization  and Website Maintainance <a class="button" title="Get me in touch if you have any custom request" href="mailto:akhtarujjamanshuvo@gmail.com" style="vertical-align: middle; margin-left: 4px;">Email Us</a></strong><hr></td></tr>
+				<tr>
+					<td>
+						<strong>
+							<h3 style=" margin: 0 0 2px 0; "><?php esc_html_e( 'Do you have any work need to be done ?', 'aldtd' ); ?></h3>
+							<?php esc_html_e( 'We do WordPress Theme & Plugin development or Customization  and Website Maintainance', 'aldtd' ); ?>
+							<a class="button" title="Get me in touch if you have any custom request" href="mailto:akhtarujjamanshuvo@gmail.com" style="vertical-align: middle; margin-left: 4px;"><?php esc_html_e( 'Email Us', 'aldtd' ); ?></a>
+						</strong>
+						<hr>
+					</td>
+				</tr>
 
-				<tr><td><strong>If you like my plugin please leave a review for inspire me <a class="button" target="_blank" href="https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/#new-post" style=" vertical-align: middle; margin-left: 4px; ">Review Now</a></strong><hr></td></tr>
+				<tr><td><strong><?php esc_html_e( 'If you like my plugin please leave a review for inspire me', 'aldtd' ); ?> <a class="button" target="_blank" href="https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/#new-post" style=" vertical-align: middle; margin-left: 4px; "><?php esc_html_e( 'Review Now', 'aldtd' ); ?></a></strong><hr></td></tr>
 
 				<tr>
 					<td>
-						<div><strong>Questions/Suggestions/Support:</strong></div>
-						<a class="button" target="_blank" href="https://www.youtube.com/watch?v=km6V2bcfc6o" style="margin-left: 4px; ">Video Tutorial</a>
+						<div><strong><?php esc_html_e( 'Questions/Suggestions/Support:', 'aldtd' ); ?></strong></div>
+						<a class="button" target="_blank" href="https://www.youtube.com/watch?v=km6V2bcfc6o" style="margin-left: 4px; "><?php esc_html_e( 'Video Tutorial', 'aldtd' ); ?></a>
 
-						<a class="button" target="_blank" href="https://wordpress.org/support/plugin/ajax-load-more-anything" style="margin-left: 4px; ">View Support Forum</a>
+						<a class="button" target="_blank" href="https://wordpress.org/support/plugin/ajax-load-more-anything" style="margin-left: 4px; "><?php esc_html_e( 'View Support Forum', 'aldtd' ); ?></a>
 
-						<a class="button" target="_blank" href="https://github.com/akshuvo/load-more-anything/issues" style="margin-left: 4px; ">Create Issue on Github</a>
+						<a class="button" target="_blank" href="https://github.com/akshuvo/load-more-anything/issues" style="margin-left: 4px; "><?php esc_html_e( 'Create Issue on Github', 'aldtd' ); ?></a>
 					</td>
 				</tr>
 

@@ -70,6 +70,10 @@ Create Topic in [Support forum](https://wordpress.org/support/plugin/ajax-load-m
 
 ## Changelog
 
+= 2.4.0 = ( Feb 06, 2021 )
+- WordPress 5.6.1 Compatibility
+
+
 = 2.2.6 = ( Oct 12, 2020 )
 - Code Improvement
 - Fixed: Incorrect behaviour in the latest Chrome

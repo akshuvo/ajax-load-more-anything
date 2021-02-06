@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Load More Anything\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-11 21:52+0000\n"
+"POT-Creation-Date: 2021-01-07 09:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -27,21 +27,33 @@ msgstr ""
 msgid "Akhtarujjaman Shuvo"
 msgstr ""
 
-#: ajax-load-div.php:413
+#: ajax-load-div.php:465
+msgid "Create Issue on Github"
+msgstr ""
+
+#: ajax-load-div.php:434
 msgid "Custom CSS"
 msgstr ""
 
-#: ajax-load-div.php:92
+#: ajax-load-div.php:448
+msgid "Do you have any work need to be done ?"
+msgstr ""
+
+#: ajax-load-div.php:450
+msgid "Email Us"
+msgstr ""
+
+#: ajax-load-div.php:113
 msgid ""
 "Enter the name of Load More Button <br> Use <code>+[count]</code> for "
 "countable button like +15 more"
 msgstr ""
 
-#: ajax-load-div.php:89
+#: ajax-load-div.php:110
 msgid "How Many Item Will Load When Click Load More Button?"
 msgstr ""
 
-#: ajax-load-div.php:86
+#: ajax-load-div.php:107
 msgid "How many item will show initially"
 msgstr ""
 
@@ -53,7 +65,11 @@ msgstr ""
 msgid "https://www.facebook.com/akhterjshuvo/"
 msgstr ""
 
-#: ajax-load-div.php:88
+#: ajax-load-div.php:456
+msgid "If you like my plugin please leave a review for inspire me"
+msgstr ""
+
+#: ajax-load-div.php:109
 msgid "Load Items"
 msgstr ""
 
@@ -61,27 +77,77 @@ msgstr ""
 msgid "Load More Anything"
 msgstr ""
 
-#: ajax-load-div.php:91
+#: ajax-load-div.php:116
+msgid "Load More Anyting"
+msgstr ""
+
+#: ajax-load-div.php:112
 msgid "Load More Button Label"
 msgstr ""
 
-#: ajax-load-div.php:79
+#: ajax-load-div.php:100
 msgid "Load More Button Selector"
 msgstr ""
 
-#: ajax-load-div.php:80
+#: ajax-load-div.php:101
 msgid "Load more button will be insert end of this selector"
 msgstr ""
 
-#: ajax-load-div.php:82
+#: ajax-load-div.php:103
 msgid "Load More Items Selector"
 msgstr ""
 
-#: ajax-load-div.php:83
+#: ajax-load-div.php:460
+msgid "Questions/Suggestions/Support:"
+msgstr ""
+
+#: ajax-load-div.php:456
+msgid "Review Now"
+msgstr ""
+
+#: ajax-load-div.php:104
 msgid ""
 "Selector for load more items. Example: <code>.parent_selector .items</code>"
 msgstr ""
 
-#: ajax-load-div.php:85
+#: ajax-load-div.php:461
+msgid "Video Tutorial"
+msgstr ""
+
+#: ajax-load-div.php:463
+msgid "View Support Forum"
+msgstr ""
+
+#: ajax-load-div.php:106
 msgid "Visiable Items"
+msgstr ""
+
+#: ajax-load-div.php:449
+msgid ""
+"We do WordPress Theme & Plugin development or Customization  and Website "
+"Maintainance"
+msgstr ""
+
+#: ajax-load-div.php:130
+msgid "Wrapper - 1"
+msgstr ""
+
+#: ajax-load-div.php:181
+msgid "Wrapper - 2"
+msgstr ""
+
+#: ajax-load-div.php:232
+msgid "Wrapper - 3"
+msgstr ""
+
+#: ajax-load-div.php:283
+msgid "Wrapper - 4"
+msgstr ""
+
+#: ajax-load-div.php:334
+msgid "Wrapper - 5"
+msgstr ""
+
+#: ajax-load-div.php:385
+msgid "Wrapper - 6 ( For Flex Display )"
 msgstr ""
