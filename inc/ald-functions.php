@@ -40,26 +40,12 @@ if( !function_exists('ald_plugin_admin_script') ){
 	function ald_plugin_admin_script(){
 
 		?>
-		<style>
-			#postimagediv a.header {
-			    text-transform: uppercase;
-			    text-decoration: none;
-			    display: block;
-			}
 
-			#postimagediv a.header + div {
-			    border-top: 1px solid #ccd0d4;
-			}
-
-			#postimagediv a.header h2 {
-				cursor: pointer;
-			}
-		</style>
 
 		<script type="text/javascript">
 			jQuery(function($){
 
-				jQuery('#postimagediv .collapse').hide();
+
 
 				jQuery('#postimagediv').each(function(){
 
@@ -123,30 +109,6 @@ function ald_custom_style(){?>
 
 add_action('wp_head','ald_custom_style');
 
-/*
-* Admin Scripts for form Design
-*/
-function ald_admin_style(){?>
-	<style type="text/css">
-		@media(min-width:960px){
-			.left-col{
-				width:60%;
-			}
-			.right-col{
-				width:40%;
-			}
-			td.left-col,
-			td.right-col{
-				vertical-align:top;
-			}
-		}
-		.successModal {
-			display: inline-block;
-		}
-	</style>
-<?php }
-
-add_action('admin_head','ald_admin_style');
 
 // button label
 function ald_button_label( $label = null ){
@@ -159,32 +121,14 @@ function ald_button_label( $label = null ){
 /*
 * Ajax option Saving
 */
-function ald_ajax_save_btn(){ ?>
-	<?php submit_button(); ?>
-	<div id="saveResult"></div>
-	<script type="text/javascript">
-		jQuery(document).ready(function() {
-			jQuery('#ald_option_form').submit(function() {
-				jQuery(this).ajaxSubmit({
-					success: function() {
-						jQuery('#saveResult').html("<div id='saveMessage' class='successModal'></div>");
-						jQuery('#saveMessage').append("<p><?php echo htmlentities(__('Settings Saved Successfully','wp'),ENT_QUOTES); ?></p>").show();
-					},
-					beforeSend: function() {
-						jQuery('#saveResult').html("<div id='saveMessage' class='successModal'><span class='is-active spinner'></span></div>");
-					},
-					timeout: 10000
-				});
+function ald_ajax_save_btn(){
+	submit_button();
+}
 
 
-				return false;
-			});
-		});
-	</script>
-<?php }
-
-
-
+/**
+ * Custom JS
+ */
 function ald_custom_code(){?>
 	<script type="text/javascript">
 		(function($) {

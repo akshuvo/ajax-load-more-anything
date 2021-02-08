@@ -1,0 +1,211 @@
+/**
+ * Admin CSS
+ */
+#postimagediv a.header {
+    text-transform: uppercase;
+    text-decoration: none;
+    display: block;
+}
+
+#postimagediv a.header + div {
+    border-top: 1px solid #ccd0d4;
+}
+
+#postimagediv a.header h2 {
+	cursor: pointer;
+}
+
+.ald-wrap .collapse{
+	display: none;
+}
+
+.ald-wrap .desc {
+    font-size: 12px;
+    font-weight: normal;
+    clear: both;
+    overflow: hidden;
+    margin: 5px 0;
+}
+/* Start Option Panel */
+.tf-clearfix {
+    clear: both;
+    display: table;
+    width: 100%;
+    min-height: 1px;
+}
+
+.tf-clearfix:after,
+.tf-clearfix:before,
+.tf-container-fluid:after,
+.tf-container-fluid:before,
+.tf-container:after,
+.tf-container:before,
+.tf-row:after,
+.tf-row:before {
+    content: " ";
+    display: table;
+}
+
+.tf-row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.tf-col-6 {
+    max-width: 50%;
+    padding-right: 30px;
+}
+
+.wfull{
+    width: 100%;
+}
+
+
+#tourfic_options_metabox input[type=date], #tourfic_options_metabox input[type=datetime-local], #tourfic_options_metabox input[type=datetime], #tourfic_options_metabox input[type=email], #tourfic_options_metabox input[type=month], #tourfic_options_metabox input[type=number], #tourfic_options_metabox input[type=password], #tourfic_options_metabox input[type=search], #tourfic_options_metabox input[type=tel], #tourfic_options_metabox input[type=text], #tourfic_options_metabox input[type=time], #tourfic_options_metabox input[type=url], #tourfic_options_metabox input[type=week], #tourfic_options_metabox textarea {
+    border: solid 1px #ddd;
+    border-radius: 2px;
+    height: 40px;
+    line-height: 38px;
+    padding-left: 10px;
+    box-shadow: 0 3px 10px -2px rgba(0, 0, 0, 0.05), inset 0 1px 2px rgba(0, 0, 0, 0.02);
+    min-width: 320px;
+}
+
+#tourfic_options_metabox textarea{
+    height: auto;
+    line-height: 1.5;
+}
+
+#tourfic_options_metabox label{
+    font-weight: 600;
+    color: #666;
+}
+
+#tourfic_options_metabox .inside {
+    margin: 0 !important;
+    padding: 0;
+    clear: both;
+}
+
+.tf-tab-container-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
+
+.tf-box-head {
+    width: 20%;
+}
+
+.tf-box-content {
+    width: 80%;
+}
+
+.tf-tab-nav {
+    margin: 0;
+    border-right: 1px solid #ddd;
+    height: 100%;
+}
+
+.tf-tab-nav li {
+    margin: 0;
+}
+
+.tf-tab-nav a {
+    display: block;
+    line-height: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .3px;
+    color: #6a6f77;
+    text-decoration: none;
+    background: #f7f7f7;
+    padding: 13px 20px;
+    border-bottom: 1px solid #e3e3e3;
+    outline: 0;
+    box-shadow: none;
+    transition: all .2s ease;
+}
+
+.tf-tab-nav li.active a {
+    background: #008aff;
+    background: linear-gradient(95deg,#36a2ff 0,#008aff 50%,#0072ff 100%);
+    color: #fff;
+    margin: 0 -6px;
+    border-radius: 5px;
+    box-shadow: 0 2px 12px -5px #36a2ff;
+    border-bottom-color: transparent;
+    position: relative;
+}
+
+.tf-tab-container {
+    position: relative;
+    height: 100%;
+    padding: 30px 40px;
+}
+
+.tf-tab-content {
+    visibility: hidden;
+    opacity: 0;
+    width: 100%;
+    transform: translateX(15px);
+    transition: transform .1s ease;
+    height: 0;
+}
+
+.tf-tab-content.active {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+    height: auto;
+}
+
+.tf-field-wrap {
+    margin-bottom: 25px;
+}
+
+.tf-tab-container-wrap h4 {
+    text-transform: capitalize;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 6px;
+    margin: 0 0 16px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.tf_panel-header {
+    padding: 20px;
+    color: #fff;
+    background: #23282d;
+    background: linear-gradient( 95deg ,#23282d 0,#323940 50%,#23282d 100%);
+    color: #fff;
+    margin: 2px -6px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 12px -5px #23282d;
+    position: relative;
+}
+
+.tf_panel-header h2{
+	color: #fff;
+}
+
+/* End Option Panel */
+
+@media(min-width:960px){
+	.left-col{
+		width:70%;
+	}
+	.right-col{
+		width:30%;
+	}
+	td.left-col,
+	td.right-col{
+		vertical-align:top;
+	}
+}
