@@ -102,7 +102,7 @@ class ALD_Menu {
                 'visible_items' => get_option('ald_item_showe'),
                 'load_items' => get_option('ald_item_loade'),
                 'button_label' => get_option('ald_load_labele'),
-                'wrapper_type' => 'flex',
+                'display_type' => 'flex',
             );
         }
 
@@ -110,20 +110,7 @@ class ALD_Menu {
 
         ppr( $ald_options );
 
-        $load_more_button_wrapper = __( 'Load More Button Selector', 'aldtd' );
-        $load_more_button_wrapper_desc = __( 'Load more button will be insert end of this selector', 'aldtd' );
 
-        $load_more_item_selector = __( 'Load More Items Selector', 'aldtd' );
-        $load_more_item_selector_desc = __( 'Selector for load more items. Example: <code>.parent_selector .items</code>', 'aldtd' );
-
-        $visiable_items = __( 'Visiable Items', 'aldtd' );
-        $visiable_items_desc = __( 'How many item will show initially', 'aldtd' );
-
-        $load_items = __( 'Load Items', 'aldtd' );
-        $load_items_desc = __( 'How Many Item Will Load When Click Load More Button?', 'aldtd' );
-
-        $button_label = __( 'Load More Button Label', 'aldtd' );
-        $button_label_desc = __( 'Enter the name of Load More Button <br> Use <code>+[count]</code> for countable button like +15 more', 'aldtd' );
         ?>
         <div class="wrap ald-wrap">
             <h1></h1>

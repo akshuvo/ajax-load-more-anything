@@ -66,7 +66,7 @@
         // Field toggle
         $(document).on('click', '.ald-toggle-head', function(e){
         	e.preventDefault();
-            $(this).parent().find('.ald-toggle-wrap').slideToggle('fast');
+            $(this).parent().toggleClass('opened').find('.ald-toggle-wrap').slideToggle('fast');
             return false;
         });
 
