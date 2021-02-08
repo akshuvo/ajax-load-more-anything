@@ -26,10 +26,10 @@
         });
 
         // Add Room Ajax
-        $(document).on('click', '.tf_add-room', function(){
+        $(document).on('click', '.tf_add-general-wrapper', function(){
             var $this = $(this);
 
-            var keyLen = jQuery('.tf-add-single-room-wrap').length;
+            var keyLen = jQuery('.tf_gen_sel_field').length;
 
             var data = {
                 action: 'tf_add_new_room',
@@ -47,7 +47,7 @@
                 $this.prop('disabled', false);
 
                 // Data push
-                $('.tf_room-fields').append(res);
+                $('.tf_gen_sel_fields').append(res);
               },
               error: function( result ) {
                 $this.prop('disabled', false);
@@ -63,9 +63,10 @@
             return false;
         });
 
-        // Room Field toggle
-        $(document).on('click', '.room-expend', function(){
-            $(this).closest('.tf-add-single-room-wrap').toggleClass('active').find('.tf-add-single-room-body').slideToggle('fast');
+        // Field toggle
+        $(document).on('click', '.ald-toggle-head', function(e){
+        	e.preventDefault();
+            $(this).parent().find('.ald-toggle-wrap').slideToggle('fast');
             return false;
         });
 

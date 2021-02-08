@@ -40,7 +40,75 @@ class ALD_Menu {
      */
     public function plugin_page() {
 
+        $ald_options =  get_option( 'ald_options' ) ? get_option( 'ald_options' ) : array();
 
+        $general_loadmore = $ald_options['general_loadmore'] ? $ald_options['general_loadmore'] : array();
+
+
+        if ( get_option('ald_wrapper_class') ) {
+            $ald_options['general_loadmore'][] = array(
+                'btn_selector' => get_option('ald_wrapper_class'),
+                'load_selector' => get_option('ald_load_class'),
+                'visible_items' => get_option('ald_item_show'),
+                'load_items' => get_option('ald_item_load'),
+                'button_label' => get_option('ald_load_label'),
+                'wrapper_type' => 'normal',
+            );
+        }
+        if ( get_option('ald_wrapper_classa') ) {
+            $ald_options['general_loadmore'][] = array(
+                'btn_selector' => get_option('ald_wrapper_classa'),
+                'load_selector' => get_option('ald_load_classa'),
+                'visible_items' => get_option('ald_item_showa'),
+                'load_items' => get_option('ald_item_loada'),
+                'button_label' => get_option('ald_load_labela'),
+                'wrapper_type' => 'normal',
+            );
+        }
+        if ( get_option('ald_wrapper_classb') ) {
+            $ald_options['general_loadmore'][] = array(
+                'btn_selector' => get_option('ald_wrapper_classb'),
+                'load_selector' => get_option('ald_load_classb'),
+                'visible_items' => get_option('ald_item_showb'),
+                'load_items' => get_option('ald_item_loadb'),
+                'button_label' => get_option('ald_load_labelb'),
+                'wrapper_type' => 'normal',
+            );
+        }
+        if ( get_option('ald_wrapper_classc') ) {
+            $ald_options['general_loadmore'][] = array(
+                'btn_selector' => get_option('ald_wrapper_classc'),
+                'load_selector' => get_option('ald_load_classc'),
+                'visible_items' => get_option('ald_item_showc'),
+                'load_items' => get_option('ald_item_loadc'),
+                'button_label' => get_option('ald_load_labelc'),
+                'wrapper_type' => 'normal',
+            );
+        }
+        if ( get_option('ald_wrapper_classd') ) {
+            $ald_options['general_loadmore'][] = array(
+                'btn_selector' => get_option('ald_wrapper_classd'),
+                'load_selector' => get_option('ald_load_classd'),
+                'visible_items' => get_option('ald_item_showd'),
+                'load_items' => get_option('ald_item_loadd'),
+                'button_label' => get_option('ald_load_labeld'),
+                'wrapper_type' => 'normal',
+            );
+        }
+        if ( get_option('ald_wrapper_classe') ) {
+            $ald_options['general_loadmore'][] = array(
+                'btn_selector' => get_option('ald_wrapper_classe'),
+                'load_selector' => get_option('ald_load_classe'),
+                'visible_items' => get_option('ald_item_showe'),
+                'load_items' => get_option('ald_item_loade'),
+                'button_label' => get_option('ald_load_labele'),
+                'wrapper_type' => 'flex',
+            );
+        }
+
+        $general_loadmore = $ald_options['general_loadmore'] ? $ald_options['general_loadmore'] : array();
+
+        ppr( $ald_options );
 
         $load_more_button_wrapper = __( 'Load More Button Selector', 'aldtd' );
         $load_more_button_wrapper_desc = __( 'Load more button will be insert end of this selector', 'aldtd' );
@@ -97,18 +165,20 @@ class ALD_Menu {
 
 
                                                 <div class="tf-field-wrap">
-                                                    <div class="tf_room-fields">
-                                                        <?php if ( $tf_room ) {
-                                                            foreach ( $tf_room as $key => $room ) {
-                                                                echo tf_add_single_room_wrap( array(
+                                                    <div class="tf_gen_sel_fields">
+                                                        <?php
+
+                                                        if ( $general_loadmore ) {
+                                                            foreach ( $general_loadmore as $key => $selector ) {
+                                                                echo ald_add_general_loadmore_wrap( array(
                                                                     'key' => $key,
-                                                                    'room' => $room,
+                                                                    'selector' => $selector,
                                                                 ) );
                                                             }
                                                         } ?>
                                                     </div>
-                                                    <div class="tf_add-room-buttons">
-                                                        <button type="button" class="tf_add-room button"><?php esc_html_e( 'Add Room', 'aldtd' ); ?></button>
+                                                    <div class="tf_add-wrapper-buttons">
+                                                        <button type="button" class="tf_add-general-wrapper button"><?php esc_html_e( 'Add Wrapper', 'aldtd' ); ?></button>
                                                     </div>
                                                 </div>
 
@@ -146,6 +216,8 @@ class ALD_Menu {
                                     </div>
                                 </div>
                             </div>
+
+
 
                             <!-- Wrapper One Start -->
                             <div id="postimagediv" class="postbox">
