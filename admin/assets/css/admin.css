@@ -185,7 +185,7 @@
     background: #23282d;
     background: linear-gradient( 95deg ,#23282d 0,#323940 50%,#23282d 100%);
     color: #fff;
-    margin: 2px -6px 0;
+    margin: 0 -6px 2px;
     border-radius: 5px;
     box-shadow: 0 2px 12px -5px #23282d;
     position: relative;
@@ -193,6 +193,24 @@
 
 .tf_panel-header h2{
 	color: #fff;
+}
+
+.postbox.ald-postbox {
+    border-top: 0;
+}
+
+.ald-label label {
+    color: #23282d;
+    font-weight: 500;
+}
+
+.ald-label {
+    overflow: hidden;
+    margin-bottom: 9px;
+}
+
+.tf-field-wrap .CodeMirror {
+    border: 1px solid #ddd;
 }
 
 /* End Option Panel */

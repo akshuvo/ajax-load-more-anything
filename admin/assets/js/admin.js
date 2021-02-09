@@ -70,11 +70,9 @@
             return false;
         });
 
-        // Room title push on head
-        $(document).on('keyup change', '.tf_room-name', function(){
-            var thisVal = ( $(this).val() ) ? $(this).val() : "# Room Title";
-            $(this).closest('.tf-add-single-room-wrap').find('.tf-room-title').text( thisVal );
-        });
+        // Enable Code Editor
+        wp.codeEditor.initialize($('#ald_options_custom_css'), cm_settings);
+
 
 
 	});

@@ -42,9 +42,7 @@ class ALD_Menu {
 
         $ald_options =  get_option( 'ald_options' ) ? get_option( 'ald_options' ) : array();
 
-        $general_loadmore = $ald_options['general_loadmore'] ? $ald_options['general_loadmore'] : array();
-
-
+        // Get Old Options
         if ( get_option('ald_wrapper_class') ) {
             $ald_options['general_loadmore'][] = array(
                 'btn_selector' => get_option('ald_wrapper_class'),
@@ -106,7 +104,13 @@ class ALD_Menu {
             );
         }
 
+        // Get custom css from old options
+        if ( get_option('asr_ald_css_class') ) {
+            $ald_options['custom_css'] = get_option('asr_ald_css_class');
+        }
+
         $general_loadmore = $ald_options['general_loadmore'] ? $ald_options['general_loadmore'] : array();
+        $custom_css  = $ald_options['custom_css'] ? $ald_options['custom_css'] : "";
 
         ppr( $ald_options );
 
@@ -121,7 +125,7 @@ class ALD_Menu {
                 <table class="form-table">
                     <tr>
                         <td class="left-col">
-                            <div class="postbox">
+                            <div class="postbox ald-postbox">
                                 <div class="tf_panel-header">
                                     <h2><?php esc_html_e( 'Load More Anyting', 'aldtd' ); ?></h2>
                                 </div>
@@ -191,9 +195,11 @@ class ALD_Menu {
                                                     <div class="desc"><?php esc_html_e( 'Here you can add/modify custom css', 'aldtd' ); ?></div>
                                                 </h4>
                                                 <div class="tf-field-wrap">
-                                                    <div class="tf-label">
-                                                        <label for="additional_information"><?php esc_html_e( 'Add Property Informations', 'aldtd' ); ?></label>
+                                                    <div class="ald-label">
+                                                        <label for="ald_options_custom_css"><?php esc_html_e( 'Custom CSS', 'aldtd' ); ?></label>
                                                     </div>
+
+                                                    <textarea name="ald_options[custom_css]" class="wfull" rows="5" id="ald_options_custom_css"><?php _e( $custom_css ); ?></textarea>
 
                                                 </div>
 
@@ -203,314 +209,6 @@ class ALD_Menu {
                                     </div>
                                 </div>
                             </div>
-
-
-
-                            <!-- Wrapper One Start -->
-                            <div id="postimagediv" class="postbox">
-                                <a class="header" data-toggle="collapse" href="#divone">
-                                    <span id="poststuff">
-                                        <h2 class="hndle"><?php esc_html_e( 'Wrapper - 1', 'aldtd' ); ?></h2>
-                                    </span>
-                                </a>
-                                <div id="divone" class="collapse show">
-                                    <div class="inside">
-                                        <table class="form-table">
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_more_button_wrapper ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_wrapper_class" value="<?php echo esc_attr( get_option('ald_wrapper_class') ); ?>" />
-                                                    <p><?php _e( $load_more_button_wrapper_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_more_item_selector ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_load_class" value="<?php echo esc_attr( get_option('ald_load_class') ); ?>" />
-                                                    <p><?php _e( $load_more_item_selector_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $visiable_items ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="number" name="ald_item_show" value="<?php echo esc_attr( get_option('ald_item_show') ); ?>" />
-                                                    <p><?php _e( $visiable_items_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_items ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="number" name="ald_item_load" value="<?php echo esc_attr( get_option('ald_item_load') ); ?>" />
-                                                    <p><?php _e( $load_items_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $button_label ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_load_label" value="<?php echo esc_attr( get_option('ald_load_label') ); ?>" />
-                                                    <p><?php _e( $button_label_desc ) ?></p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Wrapper One end -->
-
-                            <!-- Wrapper Two Start -->
-                            <div id="postimagediv" class="postbox">
-                                <a class="header" data-toggle="collapse" href="#divtwo">
-                                    <span id="poststuff">
-                                        <h2 class="hndle"><?php esc_html_e( 'Wrapper - 2', 'aldtd' ); ?></h2>
-                                    </span>
-                                </a>
-                                <div id="divtwo" class="collapse">
-                                    <div class="inside">
-                                        <table class="form-table">
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_more_button_wrapper ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_wrapper_classa" value="<?php echo esc_attr( get_option('ald_wrapper_classa') ); ?>" />
-                                                    <p><?php _e( $load_more_button_wrapper_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_more_item_selector ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_load_classa" value="<?php echo esc_attr( get_option('ald_load_classa') ); ?>" />
-                                                    <p><?php _e( $load_more_item_selector_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $visiable_items ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="number" name="ald_item_showa" value="<?php echo esc_attr( get_option('ald_item_showa') ); ?>" />
-                                                    <p><?php _e( $visiable_items_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_items ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="number" name="ald_item_loada" value="<?php echo esc_attr( get_option('ald_item_loada') ); ?>" />
-                                                    <p><?php _e( $load_items_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $button_label ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_load_labela" value="<?php echo esc_attr( get_option('ald_load_labela') ); ?>" />
-                                                    <p><?php _e( $button_label_desc ) ?></p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Wrapper Two end -->
-
-                            <!-- Wrapper Three Start -->
-                            <div id="postimagediv" class="postbox">
-                                <a class="header" data-toggle="collapse" href="#divthree">
-                                    <span id="poststuff">
-                                        <h2 class="hndle"><?php esc_html_e( 'Wrapper - 3', 'aldtd' ); ?></h2>
-                                    </span>
-                                </a>
-                                <div id="divthree" class="collapse">
-                                    <div class="inside">
-                                        <table class="form-table">
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_more_button_wrapper ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_wrapper_classb" value="<?php echo esc_attr( get_option('ald_wrapper_classb') ); ?>" />
-                                                    <p><?php _e( $load_more_button_wrapper_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_more_item_selector ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_load_classb" value="<?php echo esc_attr( get_option('ald_load_classb') ); ?>" />
-                                                    <p><?php _e( $load_more_item_selector_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $visiable_items ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="number" name="ald_item_showb" value="<?php echo esc_attr( get_option('ald_item_showb') ); ?>" />
-                                                    <p><?php _e( $visiable_items_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_items ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="number" name="ald_item_loadb" value="<?php echo esc_attr( get_option('ald_item_loadb') ); ?>" />
-                                                    <p><?php _e( $load_items_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $button_label ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_load_labelb" value="<?php echo esc_attr( get_option('ald_load_labelb') ); ?>" />
-                                                    <p><?php _e( $button_label_desc ) ?></p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Wrapper Three end -->
-
-                            <!-- Wrapper Four Start -->
-                            <div id="postimagediv" class="postbox">
-                                <a class="header" data-toggle="collapse" href="#divfour">
-                                    <span id="poststuff">
-                                        <h2 class="hndle"><?php esc_html_e( 'Wrapper - 4', 'aldtd' ); ?></h2>
-                                    </span>
-                                </a>
-                                <div id="divfour" class="collapse">
-                                    <div class="inside">
-                                        <table class="form-table">
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_more_button_wrapper ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_wrapper_classc" value="<?php echo esc_attr( get_option('ald_wrapper_classc') ); ?>" />
-                                                    <p><?php _e( $load_more_button_wrapper_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_more_item_selector ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_load_classc" value="<?php echo esc_attr( get_option('ald_load_classc') ); ?>" />
-                                                    <p><?php _e( $load_more_item_selector_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $visiable_items ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="number" name="ald_item_showc" value="<?php echo esc_attr( get_option('ald_item_showc') ); ?>" />
-                                                    <p><?php _e( $visiable_items_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_items ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="number" name="ald_item_loadc" value="<?php echo esc_attr( get_option('ald_item_loadc') ); ?>" />
-                                                    <p><?php _e( $load_items_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $button_label ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_load_labelc" value="<?php echo esc_attr( get_option('ald_load_labelc') ); ?>" />
-                                                    <p><?php _e( $button_label_desc ) ?></p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Wrapper Four end -->
-
-                            <!-- Wrapper Five Start -->
-                            <div id="postimagediv" class="postbox">
-                                <a class="header" data-toggle="collapse" href="#divfive">
-                                    <span id="poststuff">
-                                        <h2 class="hndle"><?php esc_html_e( 'Wrapper - 5', 'aldtd' ); ?></h2>
-                                    </span>
-                                </a>
-                                <div id="divfive" class="collapse">
-                                    <div class="inside">
-                                        <table class="form-table">
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_more_button_wrapper ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_wrapper_classd" value="<?php echo esc_attr( get_option('ald_wrapper_classd') ); ?>" />
-                                                    <p><?php _e( $load_more_button_wrapper_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_more_item_selector ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_load_classd" value="<?php echo esc_attr( get_option('ald_load_classd') ); ?>" />
-                                                    <p><?php _e( $load_more_item_selector_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $visiable_items ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="number" name="ald_item_showd" value="<?php echo esc_attr( get_option('ald_item_showd') ); ?>" />
-                                                    <p><?php _e( $visiable_items_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_items ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="number" name="ald_item_loadd" value="<?php echo esc_attr( get_option('ald_item_loadd') ); ?>" />
-                                                    <p><?php _e( $load_items_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $button_label ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_load_labeld" value="<?php echo esc_attr( get_option('ald_load_labeld') ); ?>" />
-                                                    <p><?php _e( $button_label_desc ) ?></p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Wrapper Five end -->
-
-                            <!-- Wrapper Five Start -->
-                            <div id="postimagediv" class="postbox">
-                                <a class="header" data-toggle="collapse" href="#divsix">
-                                    <span id="poststuff">
-                                        <h2 class="hndle"><?php esc_html_e( 'Wrapper - 6 ( For Flex Display )', 'aldtd' ); ?></h2>
-                                    </span>
-                                </a>
-                                <div id="divsix" class="collapse">
-                                    <div class="inside">
-                                        <table class="form-table">
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_more_button_wrapper ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_wrapper_classe" value="<?php echo esc_attr( get_option('ald_wrapper_classe') ); ?>" />
-                                                    <p><?php _e( $load_more_button_wrapper_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_more_item_selector ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_load_classe" value="<?php echo esc_attr( get_option('ald_load_classe') ); ?>" />
-                                                    <p><?php _e( $load_more_item_selector_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $visiable_items ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="number" name="ald_item_showe" value="<?php echo esc_attr( get_option('ald_item_showe') ); ?>" />
-                                                    <p><?php _e( $visiable_items_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $load_items ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="number" name="ald_item_loade" value="<?php echo esc_attr( get_option('ald_item_loade') ); ?>" />
-                                                    <p><?php _e( $load_items_desc ); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row"><?php _e( $button_label ); ?></th>
-                                                <td>
-                                                    <input class="regular-text" type="text" name="ald_load_labele" value="<?php echo esc_attr( get_option('ald_load_labele') ); ?>" />
-                                                    <p><?php _e( $button_label_desc ) ?></p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Wrapper Five end -->
 
                         </td>
                         <td class="right-col">
@@ -570,6 +268,12 @@ class ALD_Menu {
     public function enqueue_assets() {
         wp_enqueue_style( 'ald-admin-styles' );
         wp_enqueue_script( 'ald-admin-scripts' );
+        //wp_enqueue_script( 'wp-codemirror' );
+
+        $cm_settings['codeEditor'] = wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
+        wp_localize_script('ald-admin-scripts', 'cm_settings', $cm_settings);
+        wp_enqueue_script('wp-theme-plugin-editor');
+        wp_enqueue_style('wp-codemirror');
     }
 }
 
