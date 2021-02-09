@@ -32,7 +32,7 @@
             var keyLen = jQuery('.tf_gen_sel_field').length;
 
             var data = {
-                action: 'tf_add_new_room',
+                action: 'ald_add_general_loadmore',
                 key: keyLen,
             }
 

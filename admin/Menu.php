@@ -52,7 +52,7 @@ class ALD_Menu {
                 'visible_items' => get_option('ald_item_show'),
                 'load_items' => get_option('ald_item_load'),
                 'button_label' => get_option('ald_load_label'),
-                'wrapper_type' => 'normal',
+                'display_type' => 'normal',
             );
         }
         if ( get_option('ald_wrapper_classa') ) {
@@ -62,7 +62,7 @@ class ALD_Menu {
                 'visible_items' => get_option('ald_item_showa'),
                 'load_items' => get_option('ald_item_loada'),
                 'button_label' => get_option('ald_load_labela'),
-                'wrapper_type' => 'normal',
+                'display_type' => 'normal',
             );
         }
         if ( get_option('ald_wrapper_classb') ) {
@@ -72,7 +72,7 @@ class ALD_Menu {
                 'visible_items' => get_option('ald_item_showb'),
                 'load_items' => get_option('ald_item_loadb'),
                 'button_label' => get_option('ald_load_labelb'),
-                'wrapper_type' => 'normal',
+                'display_type' => 'normal',
             );
         }
         if ( get_option('ald_wrapper_classc') ) {
@@ -82,7 +82,7 @@ class ALD_Menu {
                 'visible_items' => get_option('ald_item_showc'),
                 'load_items' => get_option('ald_item_loadc'),
                 'button_label' => get_option('ald_load_labelc'),
-                'wrapper_type' => 'normal',
+                'display_type' => 'normal',
             );
         }
         if ( get_option('ald_wrapper_classd') ) {
@@ -92,7 +92,7 @@ class ALD_Menu {
                 'visible_items' => get_option('ald_item_showd'),
                 'load_items' => get_option('ald_item_loadd'),
                 'button_label' => get_option('ald_load_labeld'),
-                'wrapper_type' => 'normal',
+                'display_type' => 'normal',
             );
         }
         if ( get_option('ald_wrapper_classe') ) {

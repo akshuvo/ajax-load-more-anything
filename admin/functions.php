@@ -1,7 +1,7 @@
 <?php
 
-add_action( 'wp_ajax_tf_add_new_room', 'tf_add_room_data_action' );
-function tf_add_room_data_action(){
+add_action( 'wp_ajax_ald_add_general_loadmore', 'ald_add_general_loadmore_action' );
+function ald_add_general_loadmore_action(){
 
     $key = sanitize_text_field( $_POST['key'] );
 
@@ -118,12 +118,25 @@ function ald_add_general_loadmore_wrap( $args ){
                     <tr valign="top">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="general_loadmore-button_label-<?php _e( $key ); ?>"><?php _e( $button_label ); ?></label>
+                                <label for="general_loadmore-button_label-<?php _e( $key ); ?>"><?php _e( $button_label_text ); ?></label>
                             </div>
                         </th>
                         <td>
                             <input id="general_loadmore-button_label-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][button_label]" value="<?php echo esc_attr( $button_label ); ?>" />
                             <p><?php _e( $button_label_desc ) ?></p>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row">
+                            <div class="tf-label">
+                                <label for="general_loadmore-display_type-<?php _e( $key ); ?>"><?php _e( 'Select display type', 'aldtd' ); ?></label>
+                            </div>
+                        </th>
+                        <td>
+                            <select id="general_loadmore-display_type-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][display_type]">
+                                <option value="normal" <?php selected( $display_type, 'normal' ); ?>><?php _e( 'Normal', 'aldtd' ); ?></option>
+                                <option value="flex" <?php selected( $display_type, 'flex' ); ?>><?php _e( 'Flex', 'aldtd' ); ?></option>
+                            </select>
                         </td>
                     </tr>
                 </table>
