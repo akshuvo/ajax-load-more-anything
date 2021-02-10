@@ -252,3 +252,12 @@ span.delete_field:hover{
 		vertical-align:top;
 	}
 }
+
+
+/* Hide show event type div */
+[data-id="custom_button_append"],
+[data-id="button_trigger_selector"],
+[data-id="hide_selector_wrapper"],
+[data-id="wrapper_to_hide"] {
+    display: none;
+}

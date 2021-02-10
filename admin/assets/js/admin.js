@@ -101,6 +101,48 @@
             return false;
         });
 
+        // Event Type Field Hide/Show
+        $(document).on('change', '.ajax_loadmore-event_type', function(){
+        	var $this = $(this);
+        	var value = $this.val();
+
+        	if ( value == "scroll_to_load" ) {
+
+        		$this.closest('.tf_ajax_sel_field').find('tr[data-id="hide_selector_wrapper"], tr[data-id="click_selector"]').fadeIn();
+
+        		$this.closest('.tf_ajax_sel_field').find('tr[data-id="button_trigger_selector"], tr[data-id="custom_button_append"]').hide();
+
+        	} else if( value == "custom_button" ) {
+
+        		$this.closest('.tf_ajax_sel_field').find('tr[data-id="hide_selector_wrapper"], tr[data-id="custom_button_append"], tr[data-id="button_trigger_selector"]').fadeIn();
+
+        		$this.closest('.tf_ajax_sel_field').find('tr[data-id="click_selector"]').hide();
+        	} else {
+
+        		$this.closest('.tf_ajax_sel_field').find('tr[data-id="click_selector"]').fadeIn();
+
+        		$this.closest('.tf_ajax_sel_field').find('[data-id="custom_button_append"], [data-id="button_trigger_selector"], [data-id="hide_selector_wrapper"], [data-id="wrapper_to_hide"]').hide();
+
+        	}
+
+        	console.log( $this.val() );
+
+
+        });
+
+        // Hide Selector Event Handle
+        $(document).on('change', '.ajax_loadmore-hide_selector_wrapper', function(){
+        	var $this = $(this);
+        	var value = $this.val();
+
+        	if ( value == "yes" ) {
+        		$this.closest('.tf_ajax_sel_field').find('tr[data-id="wrapper_to_hide"]').fadeIn();
+        	} else {
+        		$this.closest('.tf_ajax_sel_field').find('tr[data-id="wrapper_to_hide"]').hide();
+        	}
+
+        });
+
         // Enable Code Editor
         wp.codeEditor.initialize($('#ald_options_custom_css'), cm_settings);
 
@@ -124,8 +166,6 @@
                 success: function( res ) {
                   $this.find('[type="submit"]').prop('disabled', false);
 
-                  console.error( form_data );
-
                 },
                 error: function( res ) {
                   $this.find('[type="submit"]').prop('disabled', false);
@@ -140,5 +180,8 @@
         $('.gen_wrap_sl').each(function(i,el){
             $(this).text( parseInt( i + 1 ) );
         });
+
+        // Trigger on load
+        $('.ajax_loadmore-event_type, .ajax_loadmore-hide_selector_wrapper').trigger('change');
     });
 })(jQuery);

@@ -110,10 +110,11 @@ class ALD_Menu {
         }
 
         $general_loadmore = isset( $ald_options['general_loadmore'] ) ? $ald_options['general_loadmore'] : array();
-        $ajax_loadmore = isset( $ald_options['ajax_loadmore '] ) ? $ald_options['ajax_loadmore '] : array();
+        $ajax_loadmore = isset( $ald_options['ajax_loadmore'] ) ? $ald_options['ajax_loadmore'] : array();
         $custom_css  = isset( $ald_options['custom_css'] ) ? $ald_options['custom_css'] : "";
 
         ppr( $ald_options );
+        ppr( $ajax_loadmore );
 
 
         ?>
@@ -160,7 +161,7 @@ class ALD_Menu {
                                                         <?php
                                                         if ( $general_loadmore ) {
                                                             foreach ( $general_loadmore as $key => $selector ) {
-                                                                if ( isset( $selector['wrapper_title'] ) && $selector['wrapper_title'] != "" ) {
+                                                                if ( (isset( $selector['wrapper_title'] ) && $selector['wrapper_title'] != "") || (isset( $selector['btn_selector'] ) && $selector['btn_selector'] != "") ) {
                                                                     echo ald_add_general_loadmore_wrap( array(
                                                                         'key' => $key,
                                                                         'selector' => $selector,
@@ -187,12 +188,12 @@ class ALD_Menu {
                                                         <?php
                                                         if ( $ajax_loadmore ) {
                                                             foreach ( $ajax_loadmore as $key => $selector ) {
-                                                                if ( isset( $selector['wrapper_title'] ) && $selector['wrapper_title'] != "" ) {
+                                                                //if ( (isset( $selector['wrapper_title'] ) && $selector['wrapper_title'] != "") ) {
                                                                     echo ald_add_ajax_loadmore_wrap( array(
                                                                         'key' => $key,
                                                                         'selector' => $selector,
                                                                     ) );
-                                                                }
+                                                                //}
                                                             }
                                                         } ?>
                                                     </div>
