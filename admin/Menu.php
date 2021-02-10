@@ -235,7 +235,7 @@ class ALD_Menu {
                                         <strong>
                                             <h3 style=" margin: 0 0 2px 0; "><?php esc_html_e( 'Do you have any work need to be done ?', 'aldtd' ); ?></h3>
                                             <?php esc_html_e( 'We do WordPress Theme & Plugin development or Customization  and Website Maintainance', 'aldtd' ); ?>
-                                            <a class="button" title="Get me in touch if you have any custom request" href="mailto:akhtarujjamanshuvo@gmail.com" style="vertical-align: middle; margin-left: 4px;"><?php esc_html_e( 'Email Us', 'aldtd' ); ?></a>
+                                            <a class="button" title="Get me in touch if you have any custom request" href="mailto:addonmasterwp@gmail.com" style="vertical-align: middle; margin-left: 4px;"><?php esc_html_e( 'Email Us', 'aldtd' ); ?></a>
                                         </strong>
                                         <hr>
                                     </td>

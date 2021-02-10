@@ -218,7 +218,11 @@
     border: 1px solid #ddd;
 }
 
+input.ald_ajax_wrap_title {
+    border-color: #f3f3f3;
+}
 /* End Option Panel */
+
 span.delete_field {
     float: right;
     position: absolute;
