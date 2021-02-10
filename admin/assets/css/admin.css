@@ -214,6 +214,26 @@
 }
 
 /* End Option Panel */
+span.delete_field {
+    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
+    line-height: 1;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    width: 30px;
+    justify-content: center;
+    border-left: 1px solid #ccd0d4;
+    cursor: pointer;
+}
+
+span.delete_field:hover{
+    border-color: #dc3545;
+    background-color: #dc3545;
+    color: #fff;
+}
 
 @media(min-width:960px){
 	.left-col{

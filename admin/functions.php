@@ -197,7 +197,7 @@ function ald_add_general_loadmore_wrap( $args ){
     // Array key
     $key =  isset( $args['key'] ) ? $args['key'] : "";
 
-    $wrapper_key = $args['key']+1;
+    $wrapper_key = '<span class="gen_wrap_sl">'.($args['key']+1).'</span>';
 
     $load_more_button_wrapper = __( 'Load More Button Selector', 'aldtd' );
     $load_more_button_wrapper_desc = __( 'Load more button will be insert end of this selector', 'aldtd' );

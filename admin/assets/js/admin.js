@@ -56,10 +56,10 @@
             });
         });
 
-
-        // Add Room Ajax
-        $(document).on('click', '.room-remove', function(){
-            $(this).closest('.tf-add-single-room-wrap').remove();
+        // Delete field
+        $(document).on('click', 'span.delete_field', function(e){
+            e.preventDefault();
+            $(this).closest('.tf_gen_sel_field').remove();
             return false;
         });
 
@@ -102,7 +102,12 @@
                 }
             });
         });
-
-
 	});
+
+    $(window).load(function(){
+        // Reserialize wrappers
+        $('.gen_wrap_sl').each(function(i,el){
+            $(this).text( parseInt( i + 1 ) );
+        });
+    });
 })(jQuery);

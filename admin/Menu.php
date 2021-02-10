@@ -160,10 +160,12 @@ class ALD_Menu {
                                                         <?php
                                                         if ( $general_loadmore ) {
                                                             foreach ( $general_loadmore as $key => $selector ) {
-                                                                echo ald_add_general_loadmore_wrap( array(
-                                                                    'key' => $key,
-                                                                    'selector' => $selector,
-                                                                ) );
+                                                                if ( isset( $selector['btn_selector'] ) && $selector['btn_selector'] != "" ) {
+                                                                    echo ald_add_general_loadmore_wrap( array(
+                                                                        'key' => $key,
+                                                                        'selector' => $selector,
+                                                                    ) );
+                                                                }
                                                             }
                                                         } ?>
                                                     </div>
