@@ -32,37 +32,7 @@ function ald_review_admin_notices($args){
 }
 add_filter( 'addonmaster_admin_notice', 'ald_review_admin_notices' );
 
-/**
- *	Plugin footer admin script
- *
- */
-if( !function_exists('ald_plugin_admin_script') ){
-	function ald_plugin_admin_script(){
 
-		?>
-
-
-		<script type="text/javascript">
-			jQuery(function($){
-
-
-
-				jQuery('#postimagediv').each(function(){
-
-					$('#postimagediv [data-toggle]').on('click',function(e){
-						e.preventDefault();
-
-						var getID = $(this).attr('href');
-
-						$( '#postimagediv '+getID ).slideToggle();
-					})
-				});
-			})
-		</script>
-		<?php
-	}
-}
-add_action( 'admin_footer', 'ald_plugin_admin_script' );
 
 /*
 * Custom CSS script
@@ -116,13 +86,6 @@ function ald_button_label( $label = null ){
 	$label = str_replace("[count]", '<span class="ald-count"></span>', $label );
 
 	return $label;
-}
-
-/*
-* Ajax option Saving
-*/
-function ald_ajax_save_btn(){
-	submit_button();
 }
 
 

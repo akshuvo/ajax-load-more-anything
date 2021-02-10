@@ -261,3 +261,67 @@ span.delete_field:hover{
 [data-id="wrapper_to_hide"] {
     display: none;
 }
+
+/*Save Button*/
+.am_form_buttons {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    z-index: 1;
+}
+
+button.am_submit_button[type="submit"],
+button.am_submit_button[type="submit"]:focus {
+    background: #0074ff;
+    color: #fff;
+    border-bottom-color: transparent;
+    position: relative;
+    padding: 7px 20px;
+    cursor: pointer;
+    min-width: 125px;
+    position: relative;
+    border: 0;
+    border-radius: 0;
+    outline: 0;
+}
+
+button.am_submit_button[type="submit"]:hover {
+    background: #23282d;
+}
+
+button.am_submit_button[type="submit"][disabled]{
+
+}
+
+.am_spinner {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    left: 2px;
+    visibility: hidden;
+    opacity: 0;
+}
+
+button.am_submit_button[type="submit"][disabled] .am_spinner{
+	visibility: visible;
+    opacity: 1;
+}
+
+.am_spinner:before{
+    border-top: 2px solid #ddd;
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    right: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border-right: 2px solid transparent;
+    animation: am_spinner .6s linear infinite;
+}
+
+@keyframes am_spinner { to {transform: rotate(360deg); } }

@@ -482,3 +482,17 @@ function ald_add_ajax_loadmore_wrap( $args ){
 
     return $output;
 }
+
+/*
+* Submit Button
+*/
+function ald_ajax_save_btn(){
+    ?>
+    <div class="am_form_buttons">
+        <button type="submit" id="ald_submit_settings" class="am_submit_button">
+            <div class="am_spinner"></div>
+            <?php esc_html_e( 'Save Changes', 'aldtd' ); ?>
+        </button>
+    </div>
+    <?php
+}

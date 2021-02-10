@@ -143,6 +143,8 @@ class ALD_Menu {
                                     </div>
 
                                     <div class="tf-box-content">
+                                        <?php ald_ajax_save_btn(); ?>
+
                                         <div class="tf-tab-container">
 
                                             <div id="welcome" class="tf-tab-content active">
@@ -256,8 +258,6 @@ class ALD_Menu {
                         </td>
                     </tr>
                 </table>
-
-                <?php ald_ajax_save_btn(); ?>
 
             </form>
         </div>
