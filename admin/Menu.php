@@ -158,7 +158,6 @@ class ALD_Menu {
                                                 <div class="tf-field-wrap">
                                                     <div class="tf_gen_sel_fields">
                                                         <?php
-
                                                         if ( $general_loadmore ) {
                                                             foreach ( $general_loadmore as $key => $selector ) {
                                                                 echo ald_add_general_loadmore_wrap( array(

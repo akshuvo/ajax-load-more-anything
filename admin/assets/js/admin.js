@@ -25,7 +25,7 @@
             var a = /^#?chapter(\d+)-section(\d+)\/?$/i.exec(location.hash);
         });
 
-        // Add Room Ajax
+        // Add General Load More Ajax
         $(document).on('click', '.tf_add-general-wrapper', function(){
             var $this = $(this);
 
@@ -73,6 +73,35 @@
         // Enable Code Editor
         wp.codeEditor.initialize($('#ald_options_custom_css'), cm_settings);
 
+        // Save Options
+        $(document).on('submit', '#ald_option_form', function(e){
+            e.preventDefault();
+            var $this = $(this);
+
+            var form_data = new FormData(this);
+            form_data.append('action', 'ald_save_settings');
+
+            $.ajax({
+                url: ajaxurl,
+                data: form_data,
+                type: 'post',
+                contentType: false,
+                processData: false,
+                beforeSend : function ( xhr ) {
+                  $this.find('[type="submit"]').prop('disabled', true);
+                },
+                success: function( res ) {
+                  $this.find('[type="submit"]').prop('disabled', false);
+
+                  console.error( form_data );
+
+                },
+                error: function( res ) {
+                  $this.find('[type="submit"]').prop('disabled', false);
+
+                }
+            });
+        });
 
 
 	});
