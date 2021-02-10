@@ -1,17 +1,17 @@
 /**
  * Admin CSS
  */
-#postimagediv a.header {
+.ald-wrap .postbox a.header {
     text-transform: uppercase;
     text-decoration: none;
     display: block;
 }
 
-#postimagediv a.header + div {
+.ald-wrap .postbox a.header + div {
     border-top: 1px solid #ccd0d4;
 }
 
-#postimagediv a.header h2 {
+.ald-wrap .postbox a.header h2 {
 	cursor: pointer;
 }
 
@@ -26,6 +26,11 @@
     overflow: hidden;
     margin: 5px 0;
 }
+
+.ald-wrap #poststuff h2{
+    position: relative;
+}
+
 /* Start Option Panel */
 .tf-clearfix {
     clear: both;
@@ -220,7 +225,7 @@ span.delete_field {
     right: 0;
     top: 0;
     line-height: 1;
-    height: 35px;
+    height: 100%;
     display: flex;
     align-items: center;
     width: 30px;

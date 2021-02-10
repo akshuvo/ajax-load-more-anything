@@ -143,25 +143,6 @@ function update_option_ald_options_hook( $old_value, $value, $option ){
 }
 add_action( "update_option_ald_options", "update_option_ald_options_hook", 10, 3 );
 
-// Add general wrapper ajax
-add_action( 'wp_ajax_ald_add_general_loadmore', 'ald_add_general_loadmore_action' );
-function ald_add_general_loadmore_action(){
-
-    $key = sanitize_text_field( $_POST['key'] );
-
-    ob_start();
-
-    echo ald_add_general_loadmore_wrap( array(
-        'key' => $key,
-    ) );
-
-    $output = ob_get_clean();
-
-    echo $output;
-
-    die();
-}
-
 // Save option ajax
 add_action( 'wp_ajax_ald_save_settings', 'ald_save_option_ajax_function' );
 function ald_save_option_ajax_function(){
@@ -181,7 +162,26 @@ function ald_save_option_ajax_function(){
     die();
 }
 
-// Single room data
+// Add general wrapper action
+add_action( 'wp_ajax_ald_add_general_loadmore', 'ald_add_general_loadmore_action' );
+function ald_add_general_loadmore_action(){
+
+    $key = sanitize_text_field( $_POST['key'] );
+
+    ob_start();
+
+    echo ald_add_general_loadmore_wrap( array(
+        'key' => $key,
+    ) );
+
+    $output = ob_get_clean();
+
+    echo $output;
+
+    die();
+}
+
+// Single general loadmore data
 function ald_add_general_loadmore_wrap( $args ){
     $defaults = array (
         'key' => '',
@@ -198,6 +198,7 @@ function ald_add_general_loadmore_wrap( $args ){
     $key =  isset( $args['key'] ) ? $args['key'] : "";
 
     $wrapper_key = '<span class="gen_wrap_sl">'.($args['key']+1).'</span>';
+    $wrapper_title = 'Wrapper Title';
 
     $load_more_button_wrapper = __( 'Load More Button Selector', 'aldtd' );
     $load_more_button_wrapper_desc = __( 'Load more button will be insert end of this selector', 'aldtd' );
@@ -216,14 +217,14 @@ function ald_add_general_loadmore_wrap( $args ){
 
     ob_start();
     ?>
-    <!-- Wrapper One Start -->
-    <div id="postimagediv" class="postbox tf_gen_sel_field">
+    <div id="postimagediv" class="postbox tf_gen_sel_field"> <!-- Wrapper Start -->
         <a class="header ald-toggle-head" data-toggle="collapse">
             <span id="poststuff">
-                <h2 class="hndle"><?php echo sprintf( esc_html__( 'Wrapper - %s', 'aldtd' ), $wrapper_key ); ?></h2>
+                <h2 class="hndle">
+                    <input type="text" class="ald_ajax_wrap_title" name="" value="<?php esc_attr_e( $wrapper_title ); ?>">
+                    <span class="delete_field">x</span>
+                </h2>
             </span>
-
-            <span class="delete_field">x</span>
         </a>
         <div class="collapse ald-toggle-wrap">
             <div class="inside">
@@ -305,13 +306,166 @@ function ald_add_general_loadmore_wrap( $args ){
                 </table>
             </div>
         </div>
+    <!-- Wrapper end -->
     </div>
-    <!-- Wrapper One end -->
 
     <?php
     $output = ob_get_clean();
 
     return $output;
-
 }
 
+// Add ajax wrapper action
+add_action( 'wp_ajax_ald_add_ajax_loadmore', 'ald_add_ajax_loadmore_action' );
+function ald_add_ajax_loadmore_action(){
+
+    $key = sanitize_text_field( $_POST['key'] );
+
+    ob_start();
+
+    echo ald_add_ajax_loadmore_wrap( array(
+        'key' => $key,
+    ) );
+
+    $output = ob_get_clean();
+
+    echo $output;
+
+    die();
+}
+
+// Single ajax loadmore data
+function ald_add_ajax_loadmore_wrap( $args ){
+    $defaults = array (
+        'key' => '',
+        'selector' => '',
+    );
+
+    // Parse incoming $args into an array and merge it with $defaults
+    $args = wp_parse_args( $args, $defaults );
+
+    // Let's extract the array
+    extract( $args['selector'] );
+
+    // Array key
+    $key =  isset( $args['key'] ) ? $args['key'] : "";
+
+    $wrapper_key = '<span class="ajax_wrap_sl">'.($args['key']+1).'</span>';
+    $wrapper_title = 'Wrapper Title';
+
+    $load_more_button_wrapper = __( 'Load More Button Selector', 'aldtd' );
+    $load_more_button_wrapper_desc = __( 'Load more button will be insert end of this selector', 'aldtd' );
+
+    $load_more_item_selector = __( 'Load More Items Selector', 'aldtd' );
+    $load_more_item_selector_desc = __( 'Selector for load more items. Example: <code>.parent_selector .items</code>', 'aldtd' );
+
+    $visiable_items_text = __( 'Visiable Items', 'aldtd' );
+    $visiable_items_desc = __( 'How many item will show initially', 'aldtd' );
+
+    $load_items_text = __( 'Load Items', 'aldtd' );
+    $load_items_desc = __( 'How Many Item Will Load When Click Load More Button?', 'aldtd' );
+
+    $button_label_text = __( 'Load More Button Label', 'aldtd' );
+    $button_label_desc = __( 'Enter the name of Load More Button <br> Use <code>+[count]</code> for countable button like +15 more', 'aldtd' );
+
+    ob_start();
+    ?>
+
+    <div id="postimagediv" class="postbox tf_ajax_sel_field"> <!-- Wrapper Start -->
+        <a class="header ald-toggle-head" data-toggle="collapse">
+            <span id="poststuff">
+                <h2 class="hndle">
+                    <input type="text" class="ald_ajax_wrap_title" name="" value="<?php esc_attr_e( $wrapper_title ); ?>">
+                    <span class="delete_field">x</span>
+                </h2>
+            </span>
+        </a>
+        <div class="collapse ald-toggle-wrap">
+            <div class="inside">
+
+                <table class="form-table">
+
+                    <tr valign="top">
+                        <th scope="row">
+                            <div class="tf-label">
+                                <label for="general_loadmore-btn_selector-<?php _e( $key ); ?>"><?php _e( $load_more_button_wrapper ); ?></label>
+                            </div>
+                        </th>
+                        <td>
+                            <input id="general_loadmore-btn_selector-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][btn_selector]" value="<?php echo esc_attr( $btn_selector ); ?>" />
+                            <p><?php _e( $load_more_button_wrapper_desc ); ?></p>
+                        </td>
+                    </tr>
+
+                    <tr valign="top">
+                        <th scope="row">
+                            <div class="tf-label">
+                                <label for="general_loadmore-load_selector-<?php _e( $key ); ?>"><?php _e( $load_more_item_selector ); ?></label>
+                            </div>
+                        </th>
+                        <td>
+                            <input id="general_loadmore-load_selector-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][load_selector]" value="<?php echo esc_attr( $load_selector ); ?>" />
+                            <p><?php _e( $load_more_item_selector_desc ); ?></p>
+                        </td>
+                    </tr>
+
+                    <tr valign="top">
+                        <th scope="row">
+                            <div class="tf-label">
+                                <label for="general_loadmore-visible_items-<?php _e( $key ); ?>"><?php _e( $visiable_items_text ); ?></label>
+                            </div>
+                        </th>
+                        <td>
+                            <input id="general_loadmore-visible_items-<?php _e( $key ); ?>" class="regular-text" type="number" name="ald_options[general_loadmore][<?php _e( $key ); ?>][visible_items]" value="<?php echo esc_attr( $visible_items ); ?>" />
+                            <p><?php _e( $visiable_items_desc ); ?></p>
+                        </td>
+                    </tr>
+
+                    <tr valign="top">
+                        <th scope="row">
+                            <div class="tf-label">
+                                <label for="general_loadmore-load_items-<?php _e( $key ); ?>"><?php _e( $load_items_text ); ?></label>
+                            </div>
+                        </th>
+                        <td>
+                            <input id="general_loadmore-load_items-<?php _e( $key ); ?>" class="regular-text" type="number" name="ald_options[general_loadmore][<?php _e( $key ); ?>][load_items]" value="<?php echo esc_attr( $load_items ); ?>" />
+                            <p><?php _e( $load_items_desc ); ?></p>
+                        </td>
+                    </tr>
+
+                    <tr valign="top">
+                        <th scope="row">
+                            <div class="tf-label">
+                                <label for="general_loadmore-button_label-<?php _e( $key ); ?>"><?php _e( $button_label_text ); ?></label>
+                            </div>
+                        </th>
+                        <td>
+                            <input id="general_loadmore-button_label-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][button_label]" value="<?php echo esc_attr( $button_label ); ?>" />
+                            <p><?php _e( $button_label_desc ) ?></p>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row">
+                            <div class="tf-label">
+                                <label for="general_loadmore-display_type-<?php _e( $key ); ?>"><?php _e( 'Select display type', 'aldtd' ); ?></label>
+                            </div>
+                        </th>
+                        <td>
+                            <select id="general_loadmore-display_type-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][display_type]">
+                                <option value="normal" <?php selected( $display_type, 'normal' ); ?>><?php _e( 'Normal', 'aldtd' ); ?></option>
+                                <option value="flex" <?php selected( $display_type, 'flex' ); ?>><?php _e( 'Flex', 'aldtd' ); ?></option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    <!-- Wrapper end below -->
+    </div>
+
+
+    <?php
+    $output = ob_get_clean();
+
+    return $output;
+}

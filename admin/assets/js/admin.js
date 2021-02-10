@@ -25,7 +25,7 @@
             var a = /^#?chapter(\d+)-section(\d+)\/?$/i.exec(location.hash);
         });
 
-        // Add General Load More Ajax
+        // Add General Load More
         $(document).on('click', '.tf_add-general-wrapper', function(){
             var $this = $(this);
 
@@ -56,10 +56,41 @@
             });
         });
 
+        // Add Ajax Load More
+        $(document).on('click', '.tf_add-ajax-wrapper', function(){
+            var $this = $(this);
+
+            var keyLen = jQuery('.tf_ajax_sel_field').length;
+
+            var data = {
+                action: 'ald_add_ajax_loadmore',
+                key: keyLen,
+            }
+
+            $.ajax({
+              url: ajaxurl,
+              type: 'post',
+              data: data,
+              beforeSend : function ( xhr ) {
+                $this.prop('disabled', true);
+              },
+              success: function( res ) {
+                $this.prop('disabled', false);
+
+                // Data push
+                $('.tf_ajax_sel_fields').append(res);
+              },
+              error: function( result ) {
+                $this.prop('disabled', false);
+                console.error( result );
+              }
+            });
+        });
+
         // Delete field
         $(document).on('click', 'span.delete_field', function(e){
             e.preventDefault();
-            $(this).closest('.tf_gen_sel_field').remove();
+            $(this).closest('.tf_gen_sel_field, .tf_ajax_sel_field').remove();
             return false;
         });
 

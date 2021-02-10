@@ -109,8 +109,9 @@ class ALD_Menu {
             $ald_options['custom_css'] = get_option('asr_ald_css_class');
         }
 
-        $general_loadmore = $ald_options['general_loadmore'] ? $ald_options['general_loadmore'] : array();
-        $custom_css  = $ald_options['custom_css'] ? $ald_options['custom_css'] : "";
+        $general_loadmore = isset( $ald_options['general_loadmore'] ) ? $ald_options['general_loadmore'] : array();
+        $ajax_loadmore = isset( $ald_options['ajax_loadmore '] ) ? $ald_options['ajax_loadmore '] : array();
+        $custom_css  = isset( $ald_options['custom_css'] ) ? $ald_options['custom_css'] : "";
 
         ppr( $ald_options );
 
@@ -154,7 +155,6 @@ class ALD_Menu {
                                                     <div class="desc"><?php esc_html_e( 'Here you can enable load more items which are already visible in your web page', 'aldtd' ); ?></div>
                                                 </h4>
 
-
                                                 <div class="tf-field-wrap">
                                                     <div class="tf_gen_sel_fields">
                                                         <?php
@@ -181,11 +181,24 @@ class ALD_Menu {
                                                     <?php esc_html_e( 'Ajaxify Selector', 'aldtd' ); ?>
                                                     <div class="desc"><?php esc_html_e( 'This options is for ajax based load like: Posts, Products, Custom Post Type, etc', 'aldtd' ); ?></div>
                                                 </h4>
-                                                <div class="tf-field-wrap">
-                                                    <div class="tf-label">
-                                                        <label for="additional_information"><?php esc_html_e( 'Add Property Informations', 'aldtd' ); ?></label>
-                                                    </div>
 
+                                                <div class="tf-field-wrap">
+                                                    <div class="tf_ajax_sel_fields">
+                                                        <?php
+                                                        if ( $ajax_loadmore ) {
+                                                            foreach ( $ajax_loadmore as $key => $selector ) {
+                                                                if ( isset( $selector['btn_selector'] ) && $selector['btn_selector'] != "" ) {
+                                                                    echo ald_add_ajax_loadmore_wrap( array(
+                                                                        'key' => $key,
+                                                                        'selector' => $selector,
+                                                                    ) );
+                                                                }
+                                                            }
+                                                        } ?>
+                                                    </div>
+                                                    <div class="tf_add-wrapper-buttons">
+                                                        <button type="button" class="tf_add-ajax-wrapper button"><?php esc_html_e( 'Add Ajax Wrapper', 'aldtd' ); ?></button>
+                                                    </div>
                                                 </div>
 
                                             </div>
