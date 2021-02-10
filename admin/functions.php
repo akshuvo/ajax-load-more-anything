@@ -354,7 +354,10 @@ function ald_add_ajax_loadmore_wrap( $args ){
     $key =  isset( $args['key'] ) ? $args['key'] : "";
 
     $wrapper_key = '<span class="ajax_wrap_sl">'.($args['key']+1).'</span>';
-    $wrapper_title = 'Wrapper Title';
+
+    if ( !isset( $args['selector']['wrapper_title'] ) ) {
+        $wrapper_title = __('Wrapper Title', 'aldtd');
+    }
 
     $load_more_button_wrapper = __( 'Load More Button Selector', 'aldtd' );
     $load_more_button_wrapper_desc = __( 'Load more button will be insert end of this selector', 'aldtd' );
