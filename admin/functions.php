@@ -198,7 +198,10 @@ function ald_add_general_loadmore_wrap( $args ){
     $key =  isset( $args['key'] ) ? $args['key'] : "";
 
     $wrapper_key = '<span class="gen_wrap_sl">'.($args['key']+1).'</span>';
-    $wrapper_title = 'Wrapper Title';
+
+    if ( !isset( $args['selector']['wrapper_title'] ) ) {
+        $wrapper_title = __('Wrapper Title', 'aldtd');
+    }
 
     $load_more_button_wrapper = __( 'Load More Button Selector', 'aldtd' );
     $load_more_button_wrapper_desc = __( 'Load more button will be insert end of this selector', 'aldtd' );
@@ -221,7 +224,7 @@ function ald_add_general_loadmore_wrap( $args ){
         <a class="header ald-toggle-head" data-toggle="collapse">
             <span id="poststuff">
                 <h2 class="hndle">
-                    <input type="text" class="ald_ajax_wrap_title" name="" value="<?php esc_attr_e( $wrapper_title ); ?>">
+                    <input type="text" class="ald_ajax_wrap_title" name="ald_options[general_loadmore][<?php _e( $key ); ?>][wrapper_title]" value="<?php esc_attr_e( $wrapper_title ); ?>" title="<?php esc_attr_e( 'Change title to anything you like. Ex: For Homepage', 'aldtd' ); ?>">
                     <span class="delete_field">x</span>
                 </h2>
             </span>
@@ -375,7 +378,7 @@ function ald_add_ajax_loadmore_wrap( $args ){
         <a class="header ald-toggle-head" data-toggle="collapse">
             <span id="poststuff">
                 <h2 class="hndle">
-                    <input type="text" class="ald_ajax_wrap_title" name="" value="<?php esc_attr_e( $wrapper_title ); ?>">
+                    <input type="text" class="ald_ajax_wrap_title" name="ald_options[general_loadmore][<?php _e( $key ); ?>][wrapper_title]" value="<?php esc_attr_e( $wrapper_title ); ?>" title="<?php esc_attr_e( 'Change title to anything you like. Ex: Homepage Posts', 'aldtd' ); ?>">
                     <span class="delete_field">x</span>
                 </h2>
             </span>

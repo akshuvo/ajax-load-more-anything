@@ -160,7 +160,7 @@ class ALD_Menu {
                                                         <?php
                                                         if ( $general_loadmore ) {
                                                             foreach ( $general_loadmore as $key => $selector ) {
-                                                                if ( isset( $selector['btn_selector'] ) && $selector['btn_selector'] != "" ) {
+                                                                if ( isset( $selector['wrapper_title'] ) && $selector['wrapper_title'] != "" ) {
                                                                     echo ald_add_general_loadmore_wrap( array(
                                                                         'key' => $key,
                                                                         'selector' => $selector,
@@ -187,7 +187,7 @@ class ALD_Menu {
                                                         <?php
                                                         if ( $ajax_loadmore ) {
                                                             foreach ( $ajax_loadmore as $key => $selector ) {
-                                                                if ( isset( $selector['btn_selector'] ) && $selector['btn_selector'] != "" ) {
+                                                                if ( isset( $selector['wrapper_title'] ) && $selector['wrapper_title'] != "" ) {
                                                                     echo ald_add_ajax_loadmore_wrap( array(
                                                                         'key' => $key,
                                                                         'selector' => $selector,
