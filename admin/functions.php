@@ -539,10 +539,10 @@ function ald_add_ajax_loadmore_wrap( $args ){
                                     <!-- Blank Row  -->
                                     <tr class="data_implement_selectors_row disr_empty-row screen-reader-texts">
                                         <td>
-                                            <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][###][data_selector]" />
+                                            <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][${j}][data_selector]" />
                                         </td>
                                         <td>
-                                            <select type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][###][implement_type]">
+                                            <select type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][${j}][implement_type]">
                                                 <option value="replace_data"><?php _e( 'Replace Data', 'aldtd' ); ?></option>
                                                 <option value="insert_before"><?php _e( 'Insert Before', 'aldtd' ); ?></option>
                                                 <option value="insert_after"><?php _e( 'Insert After', 'aldtd' ); ?></option>

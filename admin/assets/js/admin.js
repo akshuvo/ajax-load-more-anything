@@ -101,11 +101,29 @@
             return false;
         });
 
+        // Generate unique ID
+		function makeid(length) {
+		   var result           = '';
+		   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		   var charactersLength = characters.length;
+		   for ( var i = 0; i < length; i++ ) {
+		      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		   }
+		   return result;
+		}
+
         // Add Data Implement Row
         $(document).on('click', '.add_disr', function(e){
         	var $this = $(this);
             var row = $this.closest('tbody').find('.disr_empty-row').clone(true);
             row.removeClass( 'disr_empty-row screen-reader-text' );
+
+            row.html(function(i, oldHTML) {
+		        return oldHTML.replace(/\${j}/g, makeid(3));
+		    });
+
+            console.log( row );
+
             row.insertBefore( $this.closest('table').find('tbody>tr:last') );
             return false;
         });
