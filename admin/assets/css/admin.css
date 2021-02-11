@@ -329,3 +329,63 @@ button.am_submit_button[type="submit"][disabled] .am_spinner{
 }
 
 @keyframes am_spinner { to {transform: rotate(360deg); } }
+
+.data_implement_selectors_wrap {
+    box-shadow: 0 0 0 transparent;
+    border-radius: 4px;
+    border: 1px solid #7e8993;
+    background-color: #fff;
+    color: #32373c;
+    padding: 0 8px;
+    max-width: 30em;
+}
+
+.data_implement_selectors_wrap table {max-width: 100%;width: 100%;}
+
+.form-table .data_implement_selectors_wrap th {
+    padding: 8px 0 0;
+}
+
+.form-table .data_implement_selectors_wrap td {
+    padding: 0 0 8px;
+}
+
+
+.data_implement_selectors_wrap input {
+	width: 200px;
+}
+
+.disr_action {
+    display: flex;
+    align-items: center;
+    width: 90px;
+    height: 30px;
+}
+
+.disr_action a {
+    cursor: pointer;
+    display: inline-flex;
+    height: 100%;
+    align-items: center;
+    width: 30px;
+    justify-content: center;
+    box-shadow: 0 0 0 transparent;
+    border-radius: 4px;
+    border: 1px solid #7e8993;
+    background-color: #fff;
+    color: #7e8993;
+    margin-right: 4px;
+}
+
+.disr_action a:hover {
+    color: #333;
+    border-color: #333;
+}
+
+a.add_disr {
+    display: none;
+}
+
+.data_implement_selectors_wrap tr:nth-last-child(2) .add_disr {
+    display:inline-flex;
+}

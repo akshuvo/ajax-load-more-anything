@@ -359,6 +359,11 @@ function ald_add_ajax_loadmore_wrap( $args ){
         $wrapper_title = __('Wrapper Title', 'aldtd');
     }
 
+    // data_implement_selectors
+    if ( !isset( $args['selector']['data_implement_selectors'] ) ) {
+        $data_implement_selectors = array();
+    }
+
     $load_more_button_wrapper = __( 'Load More Button Selector', 'aldtd' );
     $load_more_button_wrapper_desc = __( 'Load more button will be insert end of this selector', 'aldtd' );
 
@@ -409,36 +414,36 @@ function ald_add_ajax_loadmore_wrap( $args ){
                     <tr valign="top" data-id="custom_button_append">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="ajax_loadmore-custom_button_append-<?php _e( $key ); ?>"><?php esc_html_e( 'Button Insert Selector', 'default' ); ?></label>
+                                <label for="ajax_loadmore-custom_button_append-<?php _e( $key ); ?>"><?php esc_html_e( 'Button Insert Selector', 'aldtd' ); ?></label>
                             </div>
                         </th>
                         <td>
                             <input id="ajax_loadmore-custom_button_append-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][custom_button_append]" value="<?php echo esc_attr( $custom_button_append ); ?>" />
-                            <p><?php esc_html_e( 'Button will be insert after this selector.', 'default' ); ?></p>
+                            <p><?php esc_html_e( 'Button will be insert after this selector.', 'aldtd' ); ?></p>
                         </td>
                     </tr>
 
                     <tr valign="top" data-id="button_trigger_selector">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="ajax_loadmore-button_trigger_selector-<?php _e( $key ); ?>"><?php esc_html_e( 'Button click trigger Selector', 'default' ); ?></label>
+                                <label for="ajax_loadmore-button_trigger_selector-<?php _e( $key ); ?>"><?php esc_html_e( 'Button click trigger Selector', 'aldtd' ); ?></label>
                             </div>
                         </th>
                         <td>
                             <input id="ajax_loadmore-button_trigger_selector-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][button_trigger_selector]" value="<?php echo esc_attr( $button_trigger_selector ); ?>" />
-                            <p><?php esc_html_e( 'This selector will be trigger when the button clicked.', 'default' ); ?></p>
+                            <p><?php esc_html_e( 'This selector will be trigger when the button clicked.', 'aldtd' ); ?></p>
                         </td>
                     </tr>
 
                     <tr valign="top" data-id="click_selector">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="ajax_loadmore-click_selector-<?php _e( $key ); ?>"><?php esc_html_e( 'Enter Selector', 'default' ); ?></label>
+                                <label for="ajax_loadmore-click_selector-<?php _e( $key ); ?>"><?php esc_html_e( 'Enter Selector', 'aldtd' ); ?></label>
                             </div>
                         </th>
                         <td>
                             <input id="ajax_loadmore-click_selector-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][click_selector]" value="<?php echo esc_attr( $click_selector ); ?>" />
-                            <p><?php esc_html_e( 'Selector should be correct, otherwise ajax will fail to load contents', 'default' ); ?></p>
+                            <p><?php esc_html_e( 'Selector should be correct, otherwise ajax will fail to load contents', 'aldtd' ); ?></p>
                         </td>
                     </tr>
 
@@ -459,12 +464,101 @@ function ald_add_ajax_loadmore_wrap( $args ){
                     <tr valign="top" data-id="wrapper_to_hide">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="ajax_loadmore-wrapper_to_hide-<?php _e( $key ); ?>"><?php esc_html_e( 'Wrapper Selector to hide', 'default' ); ?></label>
+                                <label for="ajax_loadmore-wrapper_to_hide-<?php _e( $key ); ?>"><?php esc_html_e( 'Wrapper Selector to hide', 'aldtd' ); ?></label>
                             </div>
                         </th>
                         <td>
                             <input id="ajax_loadmore-wrapper_to_hide-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][wrapper_to_hide]" value="<?php echo esc_attr( $wrapper_to_hide ); ?>" />
-                            <p><?php esc_html_e( 'Enter the selector of the wrapper which you want to hide from visitors', 'default' ); ?></p>
+                            <p><?php esc_html_e( 'Enter the selector of the wrapper which you want to hide from visitors', 'aldtd' ); ?></p>
+                        </td>
+                    </tr>
+
+                    <tr valign="top">
+                        <th scope="row">
+                            <div class="tf-label">
+                                <label for="ajax_loadmore-data_implement_selectors-<?php _e( $key ); ?>"><?php esc_html_e( 'Data Implement Selectors', 'aldtd' ); ?></label>
+                            </div>
+                        </th>
+                        <td>
+                            <?php
+                            $dis_key = uniqid();
+                            ?>
+                            <div class="data_implement_selectors_wrap">
+                                <table>
+                                    <tr>
+                                        <th><?php esc_html_e( 'Data Selector', 'aldtd' ); ?></th>
+                                        <th><?php esc_html_e( 'Implement Type', 'aldtd' ); ?></th>
+                                    </tr>
+
+                                    <?php if( $data_implement_selectors ) : ?>
+                                        <?php foreach( $data_implement_selectors as $dis_key => $value ) :
+
+                                            $data_selector = isset( $value['data_selector'] ) ? $value['data_selector'] : "";
+                                            $implement_type = isset( $value['implement_type'] ) ? $value['implement_type'] : "";
+                                            ?>
+                                            <tr class="data_implement_selectors_row">
+                                                <td>
+                                                    <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][<?php _e( $dis_key ); ?>][data_selector]" value="<?php echo esc_attr( $data_selector ); ?>" />
+                                                </td>
+                                                <td>
+                                                    <select type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][<?php _e( $dis_key ); ?>][implement_type]">
+                                                        <option value="replace_data" <?php selected( $implement_type, 'replace_data' ); ?>><?php _e( 'Replace Data', 'aldtd' ); ?></option>
+                                                        <option value="insert_before" <?php selected( $implement_type, 'insert_before' ); ?>><?php _e( 'Insert Before', 'aldtd' ); ?></option>
+                                                        <option value="insert_after" <?php selected( $implement_type, 'insert_after' ); ?>><?php _e( 'Insert After', 'aldtd' ); ?></option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <div class="disr_action">
+                                                        <a class="delete_disr">&minus;</a>
+                                                        <a class="add_disr">&plus;</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php else : ?>
+                                        <tr class="data_implement_selectors_row">
+                                            <td>
+                                                <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][0][data_selector]" />
+                                            </td>
+                                            <td>
+                                                <select type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][0][implement_type]">
+                                                    <option value="replace_data"><?php _e( 'Replace Data', 'aldtd' ); ?></option>
+                                                    <option value="insert_before"><?php _e( 'Insert Before', 'aldtd' ); ?></option>
+                                                    <option value="insert_after"><?php _e( 'Insert After', 'aldtd' ); ?></option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <div class="disr_action">
+                                                    <a class="delete_disr">&minus;</a>
+                                                    <a class="add_disr">&plus;</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
+
+                                    <!-- Blank Row  -->
+                                    <tr class="data_implement_selectors_row disr_empty-row screen-reader-texts">
+                                        <td>
+                                            <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][###][data_selector]" />
+                                        </td>
+                                        <td>
+                                            <select type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][###][implement_type]">
+                                                <option value="replace_data"><?php _e( 'Replace Data', 'aldtd' ); ?></option>
+                                                <option value="insert_before"><?php _e( 'Insert Before', 'aldtd' ); ?></option>
+                                                <option value="insert_after"><?php _e( 'Insert After', 'aldtd' ); ?></option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <div class="disr_action">
+                                                <a class="delete_disr">&minus;</a>
+                                                <a class="add_disr">&plus;</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+                                </table>
+                            </div>
                         </td>
                     </tr>
 

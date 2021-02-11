@@ -101,6 +101,21 @@
             return false;
         });
 
+        // Add Data Implement Row
+        $(document).on('click', '.add_disr', function(e){
+        	var $this = $(this);
+            var row = $this.closest('tbody').find('.disr_empty-row').clone(true);
+            row.removeClass( 'disr_empty-row screen-reader-text' );
+            row.insertBefore( $this.closest('table').find('tbody>tr:last') );
+            return false;
+        });
+
+        // Remove Data Implement Row
+        $(document).on('click', '.delete_disr', function(e){
+            $(this).closest('tr').remove();
+            return false;
+        });
+
         // Event Type Field Hide/Show
         $(document).on('change', '.ajax_loadmore-event_type', function(){
         	var $this = $(this);
