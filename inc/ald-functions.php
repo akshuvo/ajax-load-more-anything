@@ -32,53 +32,105 @@ function ald_review_admin_notices($args){
 }
 add_filter( 'addonmaster_admin_notice', 'ald_review_admin_notices' );
 
-
+// CSS Minifier => http://ideone.com/Q5USEF + improvement(s)
+function ald_minify_css($input) {
+    if(trim($input) === "") return $input;
+    return preg_replace(
+        array(
+            // Remove comment(s)
+            '#("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\')|\/\*(?!\!)(?>.*?\*\/)|^\s*|\s*$#s',
+            // Remove unused white-space(s)
+            '#("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\'|\/\*(?>.*?\*\/))|\s*+;\s*+(})\s*+|\s*+([*$~^|]?+=|[{};,>~]|\s(?![0-9\.])|!important\b)\s*+|([[(:])\s++|\s++([])])|\s++(:)\s*+(?!(?>[^{}"\']++|"(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\')*+{)|^\s++|\s++\z|(\s)\s+#si',
+            // Replace `0(cm|em|ex|in|mm|pc|pt|px|vh|vw|%)` with `0`
+            '#(?<=[\s:])(0)(cm|em|ex|in|mm|pc|pt|px|vh|vw|%)#si',
+            // Replace `:0 0 0 0` with `:0`
+            '#:(0\s+0|0\s+0\s+0\s+0)(?=[;\}]|\!important)#i',
+            // Replace `background-position:0` with `background-position:0 0`
+            '#(background-position):0(?=[;\}])#si',
+            // Replace `0.6` with `.6`, but only when preceded by `:`, `,`, `-` or a white-space
+            '#(?<=[\s:,\-])0+\.(\d+)#s',
+            // Minify string value
+            '#(\/\*(?>.*?\*\/))|(?<!content\:)([\'"])([a-z_][a-z0-9\-_]*?)\2(?=[\s\{\}\];,])#si',
+            '#(\/\*(?>.*?\*\/))|(\burl\()([\'"])([^\s]+?)\3(\))#si',
+            // Minify HEX color code
+            '#(?<=[\s:,\-]\#)([a-f0-6]+)\1([a-f0-6]+)\2([a-f0-6]+)\3#i',
+            // Replace `(border|outline):none` with `(border|outline):0`
+            '#(?<=[\{;])(border|outline):none(?=[;\}\!])#',
+            // Remove empty selector(s)
+            '#(\/\*(?>.*?\*\/))|(^|[\{\}])(?:[^\s\{\}]+)\{\}#s'
+        ),
+        array(
+            '$1',
+            '$1$2$3$4$5$6$7',
+            '$1',
+            ':0',
+            '$1:0 0',
+            '.$1',
+            '$1$3',
+            '$1$2$4$5',
+            '$1$2$3',
+            '$1:0',
+            '$1$2'
+        ),
+    $input);
+}
 
 /*
 * Custom CSS script
 */
-function ald_custom_style(){?>
+function ald_custom_style(){
+
+	$ald_options =  get_option( 'ald_options' ) ? get_option( 'ald_options' ) : array();
+    $general_loadmore = isset( $ald_options['general_loadmore'] ) ? $ald_options['general_loadmore'] : array();
+    $ajax_loadmore = isset( $ald_options['ajax_loadmore'] ) ? $ald_options['ajax_loadmore'] : array();
+    $custom_css  = isset( $ald_options['custom_css'] ) ? $ald_options['custom_css'] : "";
+
+    ob_start();
+	?>
 	<style type="text/css">
-		<?php
-		if(!empty(get_option('ald_load_class'))){
-			echo __( get_option('ald_load_class') );
-		}
-		if(!empty(get_option('ald_load_classa'))){
-			echo ','.__( get_option('ald_load_classa') );
-		}
-		if(!empty(get_option('ald_load_classb'))){
-			echo ','.__( get_option('ald_load_classb') );
-		}
-		if(!empty(get_option('ald_load_classc'))){
-			echo ','.__( get_option('ald_load_classc') );
-		}
-		if(!empty(get_option('ald_load_classd'))){
-			echo ','.__( get_option('ald_load_classd') );
-		}
-		?>{
-			display: none;
-		}
+		<?php if( $general_loadmore ) : $glcount = 1; ?>
+			<?php foreach ( $general_loadmore as $key => $value ) : ?>
+				<?php $ald_load_class =  $value['load_selector'];?>
+				<?php _e( $ald_load_class ); ?><?php if ( $glcount < count( $general_loadmore ) ) { _e( "," ); } ?>
+				<?php $glcount++; ?>
+			<?php endforeach; ?> { display: none; }
+		<?php endif;?>
 
-		<?php
+		/* Custom CSS */
+		<?php _e( $custom_css );?>
 
-		$default = '
-		.btn.loadMoreBtn {
-			color: #333333;
-			text-align: center;
-		}
+	</style><?php
+	$output = ob_get_clean();
+	echo ald_minify_css( $output );
+}
+add_action( 'wp_head', 'ald_custom_style', 999 ); // Set high priority for execute later
 
-		.btn.loadMoreBtn:hover {
-		  text-decoration: none;
-		}';
 
-		echo __( get_option('asr_ald_css_class', $default) );
-		?>
-
-	</style>
-<?php }
-
-add_action('wp_head','ald_custom_style');
-
+// JavaScript Minifier
+function ald_minify_js($input) {
+    if(trim($input) === "") return $input;
+    return preg_replace(
+        array(
+            // Remove comment(s)
+            '#\s*("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\')\s*|\s*\/\*(?!\!|@cc_on)(?>[\s\S]*?\*\/)\s*|\s*(?<![\:\=])\/\/.*(?=[\n\r]|$)|^\s*|\s*$#',
+            // Remove white-space(s) outside the string and regex
+            '#("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\'|\/\*(?>.*?\*\/)|\/(?!\/)[^\n\r]*?\/(?=[\s.,;]|[gimuy]|$))|\s*([!%&*\(\)\-=+\[\]\{\}|;:,.<>?\/])\s*#s',
+            // Remove the last semicolon
+            '#;+\}#',
+            // Minify object attribute(s) except JSON attribute(s). From `{'foo':'bar'}` to `{foo:'bar'}`
+            '#([\{,])([\'])(\d+|[a-z_][a-z0-9_]*)\2(?=\:)#i',
+            // --ibid. From `foo['bar']` to `foo.bar`
+            '#([a-z0-9_\)\]])\[([\'"])([a-z_][a-z0-9_]*)\2\]#i'
+        ),
+        array(
+            '$1',
+            '$1$2',
+            '}',
+            '$1$3',
+            '$1.$3'
+        ),
+    $input);
+}
 
 // button label
 function ald_button_label( $label = null ){
@@ -92,7 +144,16 @@ function ald_button_label( $label = null ){
 /**
  * Custom JS
  */
-function ald_custom_code(){?>
+function ald_custom_javascript_code(){
+
+	$ald_options =  get_option( 'ald_options' ) ? get_option( 'ald_options' ) : array();
+    $general_loadmore = isset( $ald_options['general_loadmore'] ) ? $ald_options['general_loadmore'] : array();
+    $ajax_loadmore = isset( $ald_options['ajax_loadmore'] ) ? $ald_options['ajax_loadmore'] : array();
+    $custom_css  = isset( $ald_options['custom_css'] ) ? $ald_options['custom_css'] : "";
+
+    ob_start();
+
+	?>
 	<script type="text/javascript">
 		(function($) {
 			'use strict';
@@ -102,269 +163,95 @@ function ald_custom_code(){?>
 				var noItemMsg = "Load more button hidden because no more item to load";
 
 				//wrapper 1
-				<?php if(!empty(get_option('ald_wrapper_class'))):?>
+				<?php if( $general_loadmore ) : ?>
 
-					<?php $ald_wrapper_class = get_option('ald_wrapper_class'); ?>
-					<?php $ald_load_class = get_option('ald_load_class'); ?>
-					<?php $ald_load_label = get_option('ald_load_label'); ?>
-					<?php $ald_item_show = get_option('ald_item_show'); ?>
-					<?php $ald_item_load = get_option('ald_item_load'); ?>
+					<?php foreach ( $general_loadmore as $key => $value ) : ?>
 
-					// Append the Load More Button
-					$("<?php _e( $ald_wrapper_class ); ?>").append('<a href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
+						<?php //ppr($value);  ?>
+						<?php $ald_wrapper_class = $value['btn_selector']; ?>
+						<?php $ald_load_class =  $value['load_selector'];?>
+						<?php $ald_item_show = $value['visible_items']; ?>
+						<?php $ald_item_load = $value['load_items']; ?>
+						<?php $ald_load_label = $value['button_label'];?>
+						<?php $display_type = $value['display_type'];?>
 
-					// Show the initial visible items
-					$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).show();
+						// Append the Load More Button
+						$("<?php _e( $ald_wrapper_class ); ?>").append('<a href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
 
-					// Calculate the hidden items
-					$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
+						<?php if ( $display_type == "flex" ) : ?>
 
-					// Button Click Trigger
-					$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
-						e.preventDefault();
+							$("<?php _e( $ald_load_class ); ?>").hide();
 
-						// Show the hidden items
-						$("<?php _e( $ald_load_class ); ?>:hidden").slice(0, <?php _e( $ald_item_load ); ?>).slideDown();
+							// Show the initial visible items
+							$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).css({ 'display': 'flex' });
 
-						// Hide if no more to load
+							// Calculate the hidden items
+							$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
+
+							// Button Click Trigger
+							$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
+								e.preventDefault();
+
+								// Show the hidden items
+								$("<?php _e( $ald_load_class ); ?>:hidden").slice(0, <?php _e( $ald_item_load ); ?>).css({ 'display': 'flex' });
+
+								// Hide if no more to load
+								if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
+									$(this).fadeOut('slow');
+								}
+
+								// ReCalculate the hidden items
+								$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
+
+							});
+
+
+						<?php else: ?>
+
+							// Show the initial visible items
+							$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).show();
+
+							// Calculate the hidden items
+							$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
+
+							// Button Click Trigger
+							$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
+								e.preventDefault();
+
+								// Show the hidden items
+								$("<?php _e( $ald_load_class ); ?>:hidden").slice(0, <?php _e( $ald_item_load ); ?>).slideDown();
+
+								// Hide if no more to load
+								if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
+									$(this).fadeOut('slow');
+								}
+
+								// ReCalculate the hidden items
+								$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
+
+							});
+
+						<?php endif; ?>
+
+						// Hide on initial if no div to show
 						if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-							$(this).fadeOut('slow');
+							$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").fadeOut('slow');
+							console.log( noItemMsg );
 						}
 
-						// ReCalculate the hidden items
-						$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
-
-					});
-
-					// Hide on initial if no div to show
-					if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-						$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").fadeOut('slow');
-						console.log( noItemMsg );
-					}
-
+					<?php endforeach; ?>
 
 				<?php endif;?>
 				// end wrapper 1
 
-				//wrapper 2
-				<?php if(!empty(get_option('ald_wrapper_classa'))):?>
-
-					<?php $ald_wrapper_class = get_option('ald_wrapper_classa'); ?>
-					<?php $ald_load_class = get_option('ald_load_classa'); ?>
-					<?php $ald_load_label = get_option('ald_load_labela'); ?>
-					<?php $ald_item_show = get_option('ald_item_showa'); ?>
-					<?php $ald_item_load = get_option('ald_item_loada'); ?>
-
-					// Append the Load More Button
-					$("<?php _e( $ald_wrapper_class ); ?>").append('<a href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
-
-					// Show the initial visible items
-					$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).show();
-
-					// Calculate the hidden items
-					$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
-
-					// Button Click Trigger
-					$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
-						e.preventDefault();
-
-						// Show the hidden items
-						$("<?php _e( $ald_load_class ); ?>:hidden").slice(0, <?php _e( $ald_item_load ); ?>).slideDown();
-
-						// Hide if no more to load
-						if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-							$(this).fadeOut('slow');
-						}
-
-						// ReCalculate the hidden items
-						$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
-
-					});
-
-					// Hide on initial if no div to show
-					if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-						$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").fadeOut('slow');
-						console.log( noItemMsg );
-					}
-				<?php endif;?>
-				// end wrapper 2
-
-				// wrapper 3
-				<?php if(!empty(get_option('ald_wrapper_classb'))):?>
-
-					<?php $ald_wrapper_class = get_option('ald_wrapper_classb'); ?>
-					<?php $ald_load_class = get_option('ald_load_classb'); ?>
-					<?php $ald_load_label = get_option('ald_load_labelb'); ?>
-					<?php $ald_item_show = get_option('ald_item_showb'); ?>
-					<?php $ald_item_load = get_option('ald_item_loadb'); ?>
-
-					// Append the Load More Button
-					$("<?php _e( $ald_wrapper_class ); ?>").append('<a href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
-
-					// Show the initial visible items
-					$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).show();
-
-					// Calculate the hidden items
-					$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
-
-					// Button Click Trigger
-					$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
-						e.preventDefault();
-
-						// Show the hidden items
-						$("<?php _e( $ald_load_class ); ?>:hidden").slice(0, <?php _e( $ald_item_load ); ?>).slideDown();
-
-						// Hide if no more to load
-						if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-							$(this).fadeOut('slow');
-						}
-
-						// ReCalculate the hidden items
-						$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
-
-					});
-
-					// Hide on initial if no div to show
-					if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-						$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").fadeOut('slow');
-						console.log( noItemMsg );
-					}
-				<?php endif;?>
-				// end wrapper 3
-
-				//wraper 4
-				<?php if(!empty(get_option('ald_wrapper_classc'))):?>
-					<?php $ald_wrapper_class = get_option('ald_wrapper_classc'); ?>
-					<?php $ald_load_class = get_option('ald_load_classc'); ?>
-					<?php $ald_load_label = get_option('ald_load_labelc'); ?>
-					<?php $ald_item_show = get_option('ald_item_showc'); ?>
-					<?php $ald_item_load = get_option('ald_item_loadc'); ?>
-
-					// Append the Load More Button
-					$("<?php _e( $ald_wrapper_class ); ?>").append('<a href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
-
-					// Show the initial visible items
-					$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).show();
-
-					// Calculate the hidden items
-					$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
-
-					// Button Click Trigger
-					$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
-						e.preventDefault();
-
-						// Show the hidden items
-						$("<?php _e( $ald_load_class ); ?>:hidden").slice(0, <?php _e( $ald_item_load ); ?>).slideDown();
-
-						// Hide if no more to load
-						if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-							$(this).fadeOut('slow');
-						}
-
-						// ReCalculate the hidden items
-						$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
-
-					});
-
-					// Hide on initial if no div to show
-					if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-						$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").fadeOut('slow');
-						console.log( noItemMsg );
-					}
-				<?php endif;?>
-				// end wrapper 4
-
-				//wrapper 5
-				<?php if(!empty(get_option('ald_wrapper_classd'))):?>
-					<?php $ald_wrapper_class = get_option('ald_wrapper_classd'); ?>
-					<?php $ald_load_class = get_option('ald_load_classd'); ?>
-					<?php $ald_load_label = get_option('ald_load_labeld'); ?>
-					<?php $ald_item_show = get_option('ald_item_showd'); ?>
-					<?php $ald_item_load = get_option('ald_item_loadd'); ?>
-
-					// Append the Load More Button
-					$("<?php _e( $ald_wrapper_class ); ?>").append('<a href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
-
-					// Show the initial visible items
-					$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).show();
-
-					// Calculate the hidden items
-					$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
-
-					// Button Click Trigger
-					$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
-						e.preventDefault();
-
-						// Show the hidden items
-						$("<?php _e( $ald_load_class ); ?>:hidden").slice(0, <?php _e( $ald_item_load ); ?>).slideDown();
-
-						// Hide if no more to load
-						if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-							$(this).fadeOut('slow');
-						}
-
-						// ReCalculate the hidden items
-						$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
-
-					});
-
-					// Hide on initial if no div to show
-					if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-						$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").fadeOut('slow');
-						console.log( noItemMsg );
-					}
-				<?php endif;?>
-				// end wrapper 5
-
-				//wrapper 6
-				<?php if(!empty(get_option('ald_wrapper_classe'))):?>
-
-					<?php $ald_wrapper_class = get_option('ald_wrapper_classe'); ?>
-					<?php $ald_load_class = get_option('ald_load_classe'); ?>
-					<?php $ald_load_label = get_option('ald_load_labele'); ?>
-					<?php $ald_item_show = get_option('ald_item_showe'); ?>
-					<?php $ald_item_load = get_option('ald_item_loade'); ?>
-
-					// Append the Load More Button
-					$("<?php _e( $ald_wrapper_class ); ?>").append('<a href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
-
-					$("<?php _e( $ald_load_class ); ?>").hide();
-
-					// Show the initial visible items
-					$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).css({ 'display': 'flex' });
-
-					// Calculate the hidden items
-					$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
-
-					// Button Click Trigger
-					$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
-						e.preventDefault();
-
-						// Show the hidden items
-						$("<?php _e( $ald_load_class ); ?>:hidden").slice(0, <?php _e( $ald_item_load ); ?>).css({ 'display': 'flex' });
-
-						// Hide if no more to load
-						if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-							$(this).fadeOut('slow');
-						}
-
-						// ReCalculate the hidden items
-						$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
-
-					});
-
-					// Hide on initial if no div to show
-					if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-						$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").fadeOut('slow');
-						console.log( noItemMsg );
-					}
-				<?php endif;?>
-				// end wrapper 6
 
 			});
 
 		})(jQuery);
 	</script>
-<?php }
+	<?php
+	$output = ob_get_clean();
+	echo ald_minify_js( $output );
+}
 
-add_action('wp_footer','ald_custom_code');
+add_action('wp_footer','ald_custom_javascript_code');

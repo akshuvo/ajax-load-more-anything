@@ -484,6 +484,30 @@ function ald_add_ajax_loadmore_wrap( $args ){
                             $dis_key = uniqid();
                             ?>
                             <div class="data_implement_selectors_wrap">
+                                <table class="uptade-browser-title-url-field">
+                                    <tr>
+                                        <th>
+                                            <label for="ajax_loadmore-update_browser_url-<?php _e( $key ); ?>"><?php esc_html_e( 'Update Browser URL?', 'aldtd' ); ?></label>
+                                        </th>
+                                        <th>
+                                            <label for="ajax_loadmore-update_page_title-<?php _e( $key ); ?>"><?php esc_html_e( 'Update Page Title?', 'aldtd' ); ?></label>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <select id="ajax_loadmore-update_browser_url-<?php _e( $key ); ?>" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][update_browser_url]">
+                                                <option value="no" <?php selected( $update_browser_url, 'no' ); ?>><?php _e( 'No', 'aldtd' ); ?></option>
+                                                <option value="yes" <?php selected( $update_browser_url, 'yes' ); ?>><?php _e( 'Yes', 'aldtd' ); ?></option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select id="ajax_loadmore-update_page_title-<?php _e( $key ); ?>" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][update_page_title]">
+                                                <option value="no" <?php selected( $update_page_title, 'no' ); ?>><?php _e( 'No', 'aldtd' ); ?></option>
+                                                <option value="yes" <?php selected( $update_page_title, 'yes' ); ?>><?php _e( 'Yes', 'aldtd' ); ?></option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
                                 <table>
                                     <tr>
                                         <th><?php esc_html_e( 'Data Selector', 'aldtd' ); ?></th>

@@ -395,3 +395,7 @@ a.add_disr {
     cursor: not-allowed;
     opacity: .4;
 }
+
+.uptade-browser-title-url-field select {
+	min-width: 120px;
+}
