@@ -495,6 +495,10 @@ function ald_add_ajax_loadmore_wrap( $args ){
 
                                             $data_selector = isset( $value['data_selector'] ) ? $value['data_selector'] : "";
                                             $implement_type = isset( $value['implement_type'] ) ? $value['implement_type'] : "";
+
+                                            if ( !$data_selector ) {
+                                                continue;
+                                            }
                                             ?>
                                             <tr class="data_implement_selectors_row">
                                                 <td>
@@ -537,7 +541,7 @@ function ald_add_ajax_loadmore_wrap( $args ){
                                     <?php endif; ?>
 
                                     <!-- Blank Row  -->
-                                    <tr class="data_implement_selectors_row disr_empty-row screen-reader-texts">
+                                    <tr class="data_implement_selectors_row disr_empty-row screen-reader-text">
                                         <td>
                                             <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][${j}][data_selector]" />
                                         </td>

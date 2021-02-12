@@ -375,6 +375,7 @@ button.am_submit_button[type="submit"][disabled] .am_spinner{
     background-color: #fff;
     color: #7e8993;
     margin-right: 4px;
+    user-select: none;
 }
 
 .disr_action a:hover {
@@ -388,4 +389,9 @@ a.add_disr {
 
 .data_implement_selectors_wrap tr:nth-last-child(2) .add_disr {
     display:inline-flex;
+}
+
+.disr_action a.disabled {
+    cursor: not-allowed;
+    opacity: .4;
 }

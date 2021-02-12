@@ -115,6 +115,9 @@
         // Add Data Implement Row
         $(document).on('click', '.add_disr', function(e){
         	var $this = $(this);
+
+        	$this.closest('.data_implement_selectors_row').find('.delete_disr').removeClass('disabled');
+
             var row = $this.closest('tbody').find('.disr_empty-row').clone(true);
             row.removeClass( 'disr_empty-row screen-reader-text' );
 
@@ -130,7 +133,13 @@
 
         // Remove Data Implement Row
         $(document).on('click', '.delete_disr', function(e){
-            $(this).closest('tr').remove();
+
+            if( $(this).closest('tbody').find('.data_implement_selectors_row').length > 2 ) {
+            	$(this).closest('.data_implement_selectors_row').remove();
+            } else {
+            	$(this).addClass('disabled');
+            }
+
             return false;
         });
 
