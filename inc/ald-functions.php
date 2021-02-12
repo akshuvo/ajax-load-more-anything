@@ -292,7 +292,10 @@ function ald_custom_javascript_code(){
 								}
 				        	}
 
-		                    document.title = $(data).filter('title').text();
+				        	if ( args['update_page_title'] && args['update_page_title'] == "yes" ) {
+				        		document.title = $(data).filter('title').text();
+				        	}
+
 
 		                    flag = false;
 
@@ -303,30 +306,6 @@ function ald_custom_javascript_code(){
 		        };
 		        // End Ajax Handle Function
 
-
-
-        // Feed Click Trigger
-        $( window ).on('scroll', function(e){
-            $('.tf_posts_navigation a.next.page-numbers').each(function(i,el){
-
-                var $this = $(this);
-
-                var H = $(window).height(),
-                    r = el.getBoundingClientRect(),
-                    t=r.top,
-                    b=r.bottom;
-
-                var tAdj = parseInt(t-(H/2));
-
-                if ( flag === false && (H >= tAdj) ) {
-                    console.log( 'inview' );
-                    $this.trigger('click');
-                } else {
-                    console.log( 'outview' );
-                }
-            });
-        });
-        // End Feed Click Trigger
 
 				// Start Ajax based
 				<?php if( $ajax_loadmore ) : ?>
@@ -344,10 +323,7 @@ function ald_custom_javascript_code(){
 						<?php $data_implement_selectors = isset( $value['data_implement_selectors'] ) ? $value['data_implement_selectors'] : array(); ?>
 
 
-
-
-
-						<?php if( $event_type == "selectors_click" ) : ?>
+						<?php if( $event_type == "selectors_click" || $event_type == "scroll_to_load" ) : ?>
 
 					        $( document ).on('click', '<?php _e( $click_selector ); ?>', function(e){
 					        	e.preventDefault();
@@ -376,6 +352,33 @@ function ald_custom_javascript_code(){
 
 					            console.log( args );
 
+					        });
+
+						<?php endif; ?>
+
+
+						<?php if( $event_type == "scroll_to_load"  ) : ?>
+
+					        $( window ).on('scroll', function(e){
+					            $('<?php _e( $click_selector ); ?>').each(function(i,el){
+
+					                var $this = $(this);
+
+					                var H = $(window).height(),
+					                    r = el.getBoundingClientRect(),
+					                    t=r.top,
+					                    b=r.bottom;
+
+					                var tAdj = parseInt(t-(H/2));
+
+					                if ( flag === false && (H >= tAdj) ) {
+					                    console.log( 'inview' );
+					                    $this.click();
+					                    $this.trigger('click');
+					                } else {
+					                    console.log( 'outview' );
+					                }
+					            });
 					        });
 
 						<?php endif; ?>
