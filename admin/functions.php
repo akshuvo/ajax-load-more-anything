@@ -531,8 +531,8 @@ function ald_add_ajax_loadmore_wrap( $args ){
                                                 <td>
                                                     <select type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][<?php _e( $dis_key ); ?>][implement_type]">
                                                         <option value="replace_data" <?php selected( $implement_type, 'replace_data' ); ?>><?php _e( 'Replace Data', 'aldtd' ); ?></option>
-                                                        <option value="insert_before" <?php selected( $implement_type, 'insert_before' ); ?>><?php _e( 'Insert Before', 'aldtd' ); ?></option>
                                                         <option value="insert_after" <?php selected( $implement_type, 'insert_after' ); ?>><?php _e( 'Insert After', 'aldtd' ); ?></option>
+                                                        <option value="insert_before" <?php selected( $implement_type, 'insert_before' ); ?>><?php _e( 'Insert Before', 'aldtd' ); ?></option>
                                                     </select>
                                                 </td>
                                                 <td>
