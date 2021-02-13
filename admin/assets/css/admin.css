@@ -423,3 +423,48 @@ a.add_disr {
 .tf_panel-header button.am_submit_button[type="submit"] {
     padding: 10px 30px;
 }
+
+/* Pro Modal */
+.am_go-pro-modal-outer{
+    display: none;
+}
+.am_go-pro-modal-outer .am_shadow{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: #000;
+    opacity: 0.5;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+}
+
+.am_go-pro-modal-inner {
+    background: #fff;
+    border-radius: 15px;
+    padding: 30px 40px;
+    max-width: 457px;
+    text-align: center;
+    position: fixed;
+    margin: 0 auto;
+    z-index: 9999;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    right: 0;
+}
+
+.am-modal-close {
+    position: absolute;
+    right: 10px;
+    top: 6px;
+    font-size: 30px;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    width: 25px;
+    text-align: center;
+    height: 25px;
+}

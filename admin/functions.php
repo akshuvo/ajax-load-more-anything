@@ -639,3 +639,24 @@ function ald_plugin_name_data(){
     <?php
 }
 add_action( 'ald_left_panel', 'ald_plugin_name_data', 10 );
+
+/**
+ * Plugin Pro Modal
+ */
+function ald_plugin_pro_modal(){
+    ?>
+    <div id="ald_go-pro" class="am_go-pro-modal-outer">
+        <div class="am_shadow"></div>
+        <div class="am_go-pro-modal-inner">
+            <div class="am_go-pro-modal">
+                <div class="am-modal-close">&times;</div>
+
+                <div class="am_go-pro-modal-content">
+                    <h2>It's time to go pro</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+add_action( 'admin_footer', 'ald_plugin_pro_modal', 10 );

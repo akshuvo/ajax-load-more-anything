@@ -300,13 +300,18 @@ function ald_custom_javascript_code(){
 								    var type = dis[key].implement_type;
 
 								    if ( selector ) {
+								    	var newData = $(selector, data).html();
+
+								    	console.log( newData );
+
 								    	if ( type == "insert_before" ) {
-								    		$( selector ).prepend( $(selector, data).html() );
+								    		$( selector ).prepend( newData );
 								    	} else if ( type == "insert_after" ) {
-								    		$( selector ).append( $(selector, data).html() );
+								    		$( selector ).append( newData );
 								    	} else {
-								    		$( selector ).html( $(selector, data).html() );
+								    		$( selector ).html( newData );
 								    	}
+
 								    }
 								}
 				        	}

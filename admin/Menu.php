@@ -113,14 +113,11 @@ class ALD_Menu {
         $ajax_loadmore = isset( $ald_options['ajax_loadmore'] ) ? $ald_options['ajax_loadmore'] : array();
         $custom_css  = isset( $ald_options['custom_css'] ) ? $ald_options['custom_css'] : "";
 
-        ppr( $ald_options );
-
         ?>
         <div class="wrap ald-wrap">
             <h1></h1>
 
             <form method="post" id="ald_option_form">
-
 
                 <table class="form-table">
                     <tr>
@@ -264,6 +261,8 @@ class ALD_Menu {
                 </table>
 
             </form>
+
+            <?php do_action( 'ald_form_end' ); ?>
         </div>
         <?php
     }

@@ -2,6 +2,21 @@
 	"use strict";
 	$(document).ready(function(){
 
+        // Modal Show Function
+        function am_modal_show( id ){
+            if ( id ) {
+                $(document).find(id).fadeIn();
+            }
+        }
+
+        $( document ).on('am_modal_show', function(e,data){
+            am_modal_show( data );
+        });
+
+        $( document ).on('click', '.am-modal-close', function(e){
+            $(this).closest('.am_go-pro-modal-outer').fadeOut();
+        });
+
 		// Tab controlling
 	    $('.tf-tab-nav a').on('click',function(e){
 	    	e.preventDefault();
@@ -167,8 +182,6 @@
 
         	}
 
-        	console.log( $this.val() );
-
 
         });
 
@@ -215,6 +228,7 @@
                 }
             });
         });
+
 	});
 
     $(window).load(function(){
