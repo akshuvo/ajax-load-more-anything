@@ -90,17 +90,44 @@ function ald_custom_style(){
 	<style type="text/css">
 		<?php if( $general_loadmore ) : $glcount = 1; ?>
 			<?php foreach ( $general_loadmore as $key => $value ) : ?>
-				<?php $ald_load_class =  $value['load_selector'];?>
-				<?php _e( $ald_load_class ); ?><?php if ( $glcount < count( $general_loadmore ) ) { _e( "," ); } ?>
-				<?php $glcount++; ?>
+
+				<?php if( $value['load_selector'] != "" ) : ?>
+
+					<?php _e( $value['load_selector'] ); ?>
+
+					<?php if ( $glcount < count( $general_loadmore )  ) { _e( "," ); } ?>
+					<?php $glcount++; ?>
+
+				<?php endif; ?>
+
 			<?php endforeach; ?> { display: none; }
 		<?php endif;?>
+
+		/* Ajax Selector Handle */
+		<?php if( $ajax_loadmore ) : $alcount = 1; ?>
+			<?php foreach ( $ajax_loadmore as $key => $alvalue ) : ?>
+
+				<?php if( $alvalue['event_type'] != "selectors_click" && $alvalue['hide_selector_wrapper'] == "yes" && $alvalue['wrapper_to_hide'] != "" ) : ?>
+
+					<?php _e( $alvalue['wrapper_to_hide'] ); ?>
+
+					<?php if ( $alcount < count( $ajax_loadmore ) ) { _e( "," ); } ?>
+
+					<?php $alcount++; ?>
+
+				<?php endif; ?>
+
+			<?php endforeach; ?> { visibility: hidden; }
+		<?php endif;?>
+
+
 
 		/* Custom CSS */
 		<?php _e( $custom_css );?>
 
 	</style><?php
 	$output = ob_get_clean();
+	//echo _e( $output );
 	echo ald_minify_css( $output );
 }
 add_action( 'wp_head', 'ald_custom_style', 999 ); // Set high priority for execute later
@@ -312,18 +339,23 @@ function ald_custom_javascript_code(){
 
 					<?php foreach ( $ajax_loadmore as $key => $value ) : ?>
 
-						<?php $event_type = isset( $value['event_type'] ) ? $value['event_type'] : ""; ?>
+						<?php $event_type = isset( $value['event_type'] ) ? $value['event_type'] : "selectors_click"; ?>
 						<?php $custom_button_append =  isset( $value['custom_button_append'] ) ? $value['custom_button_append'] : ""; ?>
+
 						<?php $button_trigger_selector = isset( $value['button_trigger_selector'] ) ? $value['button_trigger_selector'] : ""; ?>
 						<?php $click_selector = isset( $value['click_selector'] ) ? $value['click_selector'] : ""; ?>
+
 						<?php $hide_selector_wrapper = isset( $value['hide_selector_wrapper'] ) ? $value['hide_selector_wrapper'] : ""; ?>
 						<?php $wrapper_to_hide = isset( $value['wrapper_to_hide'] ) ? $value['wrapper_to_hide'] : ""; ?>
 						<?php $update_browser_url = isset( $value['update_browser_url'] ) ? $value['update_browser_url'] : ""; ?>
 						<?php $update_page_title = isset( $value['update_page_title'] ) ? $value['update_page_title'] : ""; ?>
 						<?php $data_implement_selectors = isset( $value['data_implement_selectors'] ) ? $value['data_implement_selectors'] : array(); ?>
 
+						<?php if( $event_type == "custom_button" ) : ?>
+							<?php $click_selector = $button_trigger_selector; ?>
+						<?php endif; ?>
 
-						<?php if( $event_type == "selectors_click" || $event_type == "scroll_to_load" ) : ?>
+						<?php if( $click_selector ) : ?>
 
 					        $( document ).on('click', '<?php _e( $click_selector ); ?>', function(e){
 					        	e.preventDefault();
@@ -356,6 +388,32 @@ function ald_custom_javascript_code(){
 
 						<?php endif; ?>
 
+
+						<?php if( $event_type == "scroll_to_load"  ) : ?>
+
+					        $( window ).on('scroll', function(e){
+					            $('<?php _e( $click_selector ); ?>').each(function(i,el){
+
+					                var $this = $(this);
+
+					                var H = $(window).height(),
+					                    r = el.getBoundingClientRect(),
+					                    t=r.top,
+					                    b=r.bottom;
+
+					                var tAdj = parseInt(t-(H/2));
+
+					                if ( flag === false && (H >= tAdj) ) {
+					                    console.log( 'inview', r );
+					                    $this.click();
+					                    $this.trigger('click');
+					                } else {
+					                    console.log( 'outview', r );
+					                }
+					            });
+					        });
+
+						<?php endif; ?>
 
 						<?php if( $event_type == "scroll_to_load"  ) : ?>
 

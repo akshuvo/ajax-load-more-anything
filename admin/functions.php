@@ -618,3 +618,13 @@ function ald_ajax_save_btn(){
     </div>
     <?php
 }
+
+/**
+ * Plugin Name Data
+ */
+function ald_plugin_name_data(){
+    ?>
+    <h2><?php esc_html_e( 'Load More Anyting', 'aldtd' ); ?></h2>
+    <?php
+}
+add_action( 'ald_left_panel', 'ald_plugin_name_data', 10 );

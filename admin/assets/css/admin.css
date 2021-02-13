@@ -194,6 +194,9 @@
     border-radius: 5px;
     box-shadow: 0 2px 12px -5px #23282d;
     position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
 .tf_panel-header h2{
@@ -287,6 +290,7 @@ button.am_submit_button[type="submit"]:focus {
     border: 0;
     border-radius: 0;
     outline: 0;
+    border: 1px solid #0074ff;
 }
 
 button.am_submit_button[type="submit"]:hover {
@@ -398,4 +402,24 @@ a.add_disr {
 
 .uptade-browser-title-url-field select {
 	min-width: 120px;
+}
+
+.tf_panel-header .left-panel {
+    width: 50%;
+    text-align: left;
+}
+
+.tf_panel-header .right-panel {
+    width: 50%;
+    text-align: right;
+}
+
+.tf_panel-header .am_form_buttons {
+    position: relative;
+    bottom: unset;
+    right: unset;
+}
+
+.tf_panel-header button.am_submit_button[type="submit"] {
+    padding: 10px 30px;
 }

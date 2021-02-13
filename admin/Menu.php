@@ -114,8 +114,6 @@ class ALD_Menu {
         $custom_css  = isset( $ald_options['custom_css'] ) ? $ald_options['custom_css'] : "";
 
         ppr( $ald_options );
-        ppr( $ajax_loadmore );
-
 
         ?>
         <div class="wrap ald-wrap">
@@ -129,7 +127,13 @@ class ALD_Menu {
                         <td class="left-col">
                             <div class="postbox ald-postbox">
                                 <div class="tf_panel-header">
-                                    <h2><?php esc_html_e( 'Load More Anyting', 'aldtd' ); ?></h2>
+                                    <div class="left-panel">
+                                        <?php do_action( 'ald_left_panel' ); ?>
+                                    </div>
+                                    <div class="right-panel">
+                                        <?php ald_ajax_save_btn(); ?>
+                                    </div>
+
                                 </div>
                                 <div class="tf-tab-container-wrap">
                                     <div class="tf-box-head">
