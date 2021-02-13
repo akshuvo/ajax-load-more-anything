@@ -13,6 +13,7 @@
             am_modal_show( data );
         });
 
+        // Modal Close
         $( document ).on('click', '.am-modal-close', function(e){
             $(this).closest('.am_go-pro-modal-outer').fadeOut();
         });
