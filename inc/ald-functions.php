@@ -274,29 +274,24 @@ function ald_custom_javascript_code(){
 
 		        var LoadMorePushAjax = function( url, args ){
 
-
 		        	if ( args['data_implement_selectors'] ) {
 		        		var dis = JSON.parse( args['data_implement_selectors'] );
 		        	}
-
-
 
 		            if(main_xhr && main_xhr.readyState != 4){
 		                main_xhr.abort();
 		            }
 
+		            console.log( args );
+
 		            main_xhr = $.ajax({
 		                url: url,
 		                asynch: true,
 		                beforeSend: function() {
-		                    $( document ).find( '.tf_posts_navigation' ).addClass( 'loading' );
+		                    //$( document ).find( '.tf_posts_navigation' ).addClass( 'loading' );
 		                    flag = true;
 		                },
 		                success: function(data) {
-		                    //console.log(data);
-		                    //$('.site-main').append($('.site-main', data).html());
-
-		                    //$('.content-area').html($('.content-area', data).html());
 
 		                    // Data Implement
 		                    if ( dis ) {
@@ -312,11 +307,7 @@ function ald_custom_javascript_code(){
 								    	} else {
 								    		$( selector ).html( $(selector, data).html() );
 								    	}
-
-								    	console.log( selector, type );
 								    }
-
-
 								}
 				        	}
 
@@ -328,6 +319,13 @@ function ald_custom_javascript_code(){
 		                    flag = false;
 
 		                    $( document ).find( '.tf_posts_navigation' ).removeClass( 'loading' );
+
+		                    // Remove loading class
+							$('.ald-ajax-btn[data-alm-click-selector]').each(function(){
+								if ( $(this).data('alm-click-selector') == args['click_selector'] ) {
+									$(this).removeClass('loading');
+								}
+							});
 
 		                }
 		            });
@@ -379,8 +377,6 @@ function ald_custom_javascript_code(){
 								args['update_page_title'] = "<?php _e( $update_page_title ); ?>";
 								args['data_implement_selectors'] = '<?php echo json_encode( $data_implement_selectors ); ?>';
 
-
-
 					            var targetUrl = ( e.target.href ) ? e.target.href : $(this).context.href;
 					            LoadMorePushAjax( targetUrl, args );
 
@@ -388,9 +384,6 @@ function ald_custom_javascript_code(){
 					            	window.history.pushState({url: "" + targetUrl + ""}, "", targetUrl);
 					            <?php endif; ?>
 
-
-					            console.log( args );
-
 					        });
 
 						<?php endif; ?>
@@ -411,37 +404,10 @@ function ald_custom_javascript_code(){
 					                var tAdj = parseInt(t-(H/2));
 
 					                if ( flag === false && (H >= tAdj) ) {
-					                    console.log( 'inview', r );
-					                    $this.click();
+					                    //console.log( 'inview' );
 					                    $this.trigger('click');
 					                } else {
-					                    console.log( 'outview', r );
-					                }
-					            });
-					        });
-
-						<?php endif; ?>
-
-						<?php if( $event_type == "scroll_to_load"  ) : ?>
-
-					        $( window ).on('scroll', function(e){
-					            $('<?php _e( $click_selector ); ?>').each(function(i,el){
-
-					                var $this = $(this);
-
-					                var H = $(window).height(),
-					                    r = el.getBoundingClientRect(),
-					                    t=r.top,
-					                    b=r.bottom;
-
-					                var tAdj = parseInt(t-(H/2));
-
-					                if ( flag === false && (H >= tAdj) ) {
-					                    console.log( 'inview' );
-					                    $this.click();
-					                    $this.trigger('click');
-					                } else {
-					                    console.log( 'outview' );
+					                    //console.log( 'outview' );
 					                }
 					            });
 					        });
@@ -453,10 +419,17 @@ function ald_custom_javascript_code(){
 					// Ajax Custom Button Trigger
 					$( document ).on('click', 'button.ald-ajax-btn', function(e){
 						if ( $(this).data('alm-click-selector') ) {
-							$(this).addClass('loading');
-							$( document ).find($(this).data('alm-click-selector')).trigger('click');
-						}
 
+							var selector = $( document ).find($(this).data('alm-click-selector'));
+
+							if ( selector.length ) {
+								$(this).addClass('loading');
+								selector.trigger('click');
+							} else {
+								$(this).find('.ald-btn-label').text('No New Data Found');
+							}
+
+						}
 					});
 
 				<?php endif; ?> // End Ajax Selector
