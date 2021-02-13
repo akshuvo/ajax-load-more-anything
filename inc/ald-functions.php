@@ -200,7 +200,7 @@ function ald_custom_javascript_code(){
 						<?php $display_type = $value['display_type'];?>
 
 						// Append the Load More Button
-						$("<?php _e( $ald_wrapper_class ); ?>").append('<a href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
+						$("<?php _e( $ald_wrapper_class ); ?>").append('<a data-glm-button-selector="<?php esc_attr_e( $ald_wrapper_class ); ?>"  href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
 
 						<?php if ( $display_type == "flex" ) : ?>
 
@@ -340,7 +340,9 @@ function ald_custom_javascript_code(){
 					<?php foreach ( $ajax_loadmore as $key => $value ) : ?>
 
 						<?php $event_type = isset( $value['event_type'] ) ? $value['event_type'] : "selectors_click"; ?>
+
 						<?php $custom_button_append =  isset( $value['custom_button_append'] ) ? $value['custom_button_append'] : ""; ?>
+						<?php $button_label =  isset( $value['button_label'] ) ? $value['button_label'] : ""; ?>
 
 						<?php $button_trigger_selector = isset( $value['button_trigger_selector'] ) ? $value['button_trigger_selector'] : ""; ?>
 						<?php $click_selector = isset( $value['click_selector'] ) ? $value['click_selector'] : ""; ?>
@@ -353,6 +355,8 @@ function ald_custom_javascript_code(){
 
 						<?php if( $event_type == "custom_button" ) : ?>
 							<?php $click_selector = $button_trigger_selector; ?>
+
+							$("<?php _e($custom_button_append); ?>").append('<button data-alm-click-selector="<?php esc_attr_e( $click_selector ); ?>" type="ald-ajax-btn button" class="button"><span class="ald-btn-label"><?php esc_attr_e( $button_label ); ?></span></button>');
 						<?php endif; ?>
 
 						<?php if( $click_selector ) : ?>
@@ -365,6 +369,7 @@ function ald_custom_javascript_code(){
 								args['event_type'] = "<?php _e( $event_type ); ?>";
 								args['custom_button_append'] = "<?php _e( $custom_button_append ); ?>";
 								args['button_trigger_selector'] = "<?php _e( $button_trigger_selector ); ?>";
+								args['button_label'] = "<?php _e( $button_label ); ?>";
 								args['click_selector'] = "<?php _e( $click_selector ); ?>";
 								args['hide_selector_wrapper'] = "<?php _e( $hide_selector_wrapper ); ?>";
 								args['wrapper_to_hide'] = "<?php _e( $wrapper_to_hide ); ?>";

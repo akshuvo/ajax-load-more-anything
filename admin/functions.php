@@ -435,6 +435,17 @@ function ald_add_ajax_loadmore_wrap( $args ){
                         </td>
                     </tr>
 
+                    <tr valign="top" data-id="button_trigger_selector">
+                        <th scope="row">
+                            <div class="tf-label">
+                                <label for="ajax_loadmore-button_label-<?php _e( $key ); ?>"><?php esc_html_e( 'Button Label', 'aldtd' ); ?></label>
+                            </div>
+                        </th>
+                        <td>
+                            <input id="ajax_loadmore-button_label-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][button_label]" value="<?php echo ( $button_label ) ? esc_attr( $button_label ) : esc_attr( 'Load More', 'aldtd' ); ?>" />
+                        </td>
+                    </tr>
+
                     <tr valign="top" data-id="click_selector">
                         <th scope="row">
                             <div class="tf-label">
