@@ -186,6 +186,7 @@ function ald_custom_javascript_code(){
 
 			jQuery(document).ready(function() {
 
+				var loader = '<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>';
 
 				<?php if( $general_loadmore ) : ?>
 
@@ -356,7 +357,8 @@ function ald_custom_javascript_code(){
 						<?php if( $event_type == "custom_button" ) : ?>
 							<?php $click_selector = $button_trigger_selector; ?>
 
-							$("<?php _e($custom_button_append); ?>").append('<button data-alm-click-selector="<?php esc_attr_e( $click_selector ); ?>" type="ald-ajax-btn button" class="button"><span class="ald-btn-label"><?php esc_attr_e( $button_label ); ?></span></button>');
+							$("<?php _e($custom_button_append); ?>").after('<button data-alm-click-selector="<?php esc_attr_e( $click_selector ); ?>" type="button" class="ald-ajax-btn button">'+loader+'<span class="ald-btn-label"><?php esc_attr_e( $button_label ); ?></span></button>');
+
 						<?php endif; ?>
 
 						<?php if( $click_selector ) : ?>
@@ -446,14 +448,16 @@ function ald_custom_javascript_code(){
 
 						<?php endif; ?>
 
-
-
-						<?php //ppr( $value );  ?>
-
-
-
-
 					<?php endforeach; ?>
+
+					// Ajax Custom Button Trigger
+					$( document ).on('click', 'button.ald-ajax-btn', function(e){
+						if ( $(this).data('alm-click-selector') ) {
+							$(this).addClass('loading');
+							$( document ).find($(this).data('alm-click-selector')).trigger('click');
+						}
+
+					});
 
 				<?php endif; ?> // End Ajax Selector
 
