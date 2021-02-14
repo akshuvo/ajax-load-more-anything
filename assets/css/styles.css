@@ -69,3 +69,33 @@
 .ald-ajax-btn.loading .lds-ellipsis{
 	display: inline-block;
 }
+
+/* Laser Loader */
+.ald_laser_loader {
+	visibility: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #e1e4e8;
+    z-index: 99999;
+    width: 100%;
+}
+
+.ald_laser_loader.show {
+    visibility: visible;
+}
+
+.ald_loader_progress {
+    background: linear-gradient(to left, rgb(35, 13, 194), rgb(255, 146, 0));
+    box-shadow: rgb(35 13 194) 0px 0px 10px;
+    height: 100%;
+    position: absolute;
+    z-index: 99999;
+    left: 0px;
+    width: 100%;
+    top: 0px;
+    transform: translate3d(-100%, 0px, 0px);
+    transition: all 2000ms cubic-bezier(0, 0, 0.2, 1) 0s;
+}

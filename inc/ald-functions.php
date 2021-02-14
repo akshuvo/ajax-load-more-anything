@@ -274,6 +274,12 @@ function ald_custom_javascript_code(){
 
 		        var LoadMorePushAjax = function( url, args ){
 
+		        	$('.ald_loader_progress').css({
+							    "-webkit-transform":"translate3d(-100%, 0px, 0px)",
+							    "-ms-transform":"translate3d(-100%, 0px, 0px)",
+							    "transform":"translate3d(-100%, 0px, 0px)",
+							});
+
 		        	if ( args['data_implement_selectors'] ) {
 		        		var dis = JSON.parse( args['data_implement_selectors'] );
 		        	}
@@ -288,7 +294,14 @@ function ald_custom_javascript_code(){
 		                url: url,
 		                asynch: true,
 		                beforeSend: function() {
-		                    //$( document ).find( '.tf_posts_navigation' ).addClass( 'loading' );
+		                	$('.ald_laser_loader').addClass('show');
+		                    $('.ald_loader_progress').css({
+		                    	"transition-duration": "2000ms",
+							    "-webkit-transform":"translate3d(-20%, 0px, 0px)",
+							    "-ms-transform":"translate3d(-20%, 0px, 0px)",
+							    "transform":"translate3d(-20%, 0px, 0px)",
+							});
+
 		                    flag = true;
 		                },
 		                success: function(data) {
@@ -331,6 +344,25 @@ function ald_custom_javascript_code(){
 									$(this).removeClass('loading');
 								}
 							});
+
+							// Finish the loading
+							$('.ald_loader_progress').css({
+								"transition-duration": "500ms",
+							    "-webkit-transform":"translate3d(0%, 0px, 0px)",
+							    "-ms-transform":"translate3d(0%, 0px, 0px)",
+							    "transform":"translate3d(0%, 0px, 0px)",
+							});
+
+							// Reset the loader
+							setTimeout(function(){
+								$('.ald_laser_loader').removeClass('show');
+								$('.ald_loader_progress').css({
+									"transition-duration": "0ms",
+								    "-webkit-transform":"translate3d(-100%, 0px, 0px)",
+								    "-ms-transform":"translate3d(-100%, 0px, 0px)",
+								    "transform":"translate3d(-100%, 0px, 0px)",
+								});
+							}, 300);
 
 		                }
 		            });
@@ -452,3 +484,16 @@ function ald_custom_javascript_code(){
 }
 
 add_action('wp_footer','ald_custom_javascript_code');
+
+/**
+ * Ajax Loader on top
+ *
+ */
+function ald_ajax_laser_loader(){
+	?>
+	<div class="ald_laser_loader">
+		<div class="ald_loader_progress"></div>
+	</div>
+	<?php
+}
+add_action('wp_footer', 'ald_ajax_laser_loader');
