@@ -150,6 +150,23 @@ class ALD_Menu {
 
                                             <div id="welcome" class="tf-tab-content active">
                                                 <h1><?php echo esc_html__( 'Welcome On Board', 'aldtd' ); ?></h1>
+                                                <div class="welcome-boxes">
+                                                    <div class="single-box">
+                                                        <div class="box-inner">
+                                                            sample content
+                                                        </div>
+                                                    </div>
+                                                    <div class="single-box">
+                                                        <div class="box-inner">
+                                                            sample content
+                                                        </div>
+                                                    </div>
+                                                    <div class="single-box">
+                                                        <div class="box-inner">
+                                                            sample content
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div id="general" class="tf-tab-content">

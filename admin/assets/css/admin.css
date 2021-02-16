@@ -12,11 +12,11 @@
 }
 
 .ald-wrap .postbox a.header h2 {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .ald-wrap .collapse{
-	display: none;
+    display: none;
 }
 
 .ald-wrap .desc {
@@ -200,7 +200,7 @@
 }
 
 .tf_panel-header h2{
-	color: #fff;
+    color: #fff;
 }
 
 .postbox.ald-postbox {
@@ -223,6 +223,30 @@
 
 input.ald_ajax_wrap_title {
     border-color: #f3f3f3;
+}
+
+.welcome-boxes {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.single-box {
+    margin-bottom: 25px;
+    width: 50%;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.box-inner{
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border: 1px solid transparent;
+}
+
+.single-box:hover .box-inner{
+    border: 1px solid #eee;
 }
 /* End Option Panel */
 
@@ -248,16 +272,16 @@ span.delete_field:hover{
 }
 
 @media(min-width:960px){
-	.left-col{
-		width:70%;
-	}
-	.right-col{
-		width:30%;
-	}
-	td.left-col,
-	td.right-col{
-		vertical-align:top;
-	}
+    .left-col{
+        width:70%;
+    }
+    .right-col{
+        width:30%;
+    }
+    td.left-col,
+    td.right-col{
+        vertical-align:top;
+    }
 }
 
 
@@ -314,7 +338,7 @@ button.am_submit_button[type="submit"][disabled]{
 }
 
 button.am_submit_button[type="submit"][disabled] .am_spinner{
-	visibility: visible;
+    visibility: visible;
     opacity: 1;
 }
 
@@ -356,7 +380,7 @@ button.am_submit_button[type="submit"][disabled] .am_spinner{
 
 
 .data_implement_selectors_wrap input {
-	width: 200px;
+    width: 200px;
 }
 
 .disr_action {
@@ -401,7 +425,7 @@ a.add_disr {
 }
 
 .uptade-browser-title-url-field select {
-	min-width: 120px;
+    min-width: 120px;
 }
 
 .tf_panel-header .left-panel {
