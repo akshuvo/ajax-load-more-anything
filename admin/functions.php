@@ -219,6 +219,7 @@ function ald_add_general_loadmore_wrap( $args ){
     $button_label_desc = __( 'Enter the name of Load More Button <br> Use <code>+[count]</code> for countable button like +15 more', 'aldtd' );
 
     ob_start();
+    do_action( 'ald_general_loadmore_before_wrap', $args );
     ?>
     <div id="postimagediv" class="postbox tf_gen_sel_field"> <!-- Wrapper Start -->
         <a class="header ald-toggle-head" data-toggle="collapse">
@@ -311,11 +312,9 @@ function ald_add_general_loadmore_wrap( $args ){
         </div>
     <!-- Wrapper end -->
     </div>
-
     <?php
     $output = ob_get_clean();
-
-    return $output;
+    return do_action( 'ald_general_loadmore_after_wrap', $output, $args );
 }
 
 // Add ajax wrapper action
@@ -380,6 +379,7 @@ function ald_add_ajax_loadmore_wrap( $args ){
     $button_label_desc = __( 'Enter the name of Load More Button <br> Use <code>+[count]</code> for countable button like +15 more', 'aldtd' );
 
     ob_start();
+    do_action( 'ald_ajax_loadmore_before_wrap', $args );
     ?>
 
     <div id="postimagediv" class="postbox tf_ajax_sel_field"> <!-- Wrapper Start -->
@@ -608,12 +608,10 @@ function ald_add_ajax_loadmore_wrap( $args ){
         </div>
     <!-- Wrapper end below -->
     </div>
-
-
     <?php
     $output = ob_get_clean();
 
-    return $output;
+    return do_action( 'ald_ajax_loadmore_after_wrap', $output, $args );
 }
 
 /*

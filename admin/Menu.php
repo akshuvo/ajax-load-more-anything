@@ -10,6 +10,8 @@ class ALD_Menu {
      */
     function __construct() {
         add_action( 'admin_menu', [ $this, 'admin_menu' ] );
+        add_action( 'ald_general_loadmore_after_wrap', [ $this, '_general_content' ], 10, 2 );
+        add_action( 'ald_ajax_loadmore_after_wrap', [ $this, '_ajax_content' ], 10, 2 );
     }
 
     /**
@@ -180,12 +182,15 @@ class ALD_Menu {
                                                     <div class="tf_gen_sel_fields">
                                                         <?php
                                                         if ( $general_loadmore ) {
+                                                            $i = 0;
                                                             foreach ( $general_loadmore as $key => $selector ) {
                                                                 if ( (isset( $selector['wrapper_title'] ) && $selector['wrapper_title'] != "") || (isset( $selector['btn_selector'] ) && $selector['btn_selector'] != "") ) {
                                                                     echo ald_add_general_loadmore_wrap( array(
                                                                         'key' => $key,
+                                                                        'thiskey' => $i,
                                                                         'selector' => $selector,
                                                                     ) );
+                                                                    $i++;
                                                                 }
                                                             }
                                                         } ?>
@@ -207,12 +212,15 @@ class ALD_Menu {
                                                     <div class="tf_ajax_sel_fields">
                                                         <?php
                                                         if ( $ajax_loadmore ) {
+                                                            $i = 0;
                                                             foreach ( $ajax_loadmore as $key => $selector ) {
                                                                 //if ( (isset( $selector['wrapper_title'] ) && $selector['wrapper_title'] != "") ) {
                                                                     echo ald_add_ajax_loadmore_wrap( array(
                                                                         'key' => $key,
+                                                                        'thiskey' => $i,
                                                                         'selector' => $selector,
                                                                     ) );
+                                                                    $i++;
                                                                 //}
                                                             }
                                                         } ?>
@@ -284,6 +292,25 @@ class ALD_Menu {
         <?php
     }
 
+    // General Content Render
+    function _general_content( $output, $args ){
+        if ( isset( $args['thiskey'] ) && $args['thiskey'] > 0 ) {
+            //return;
+        }
+
+        ppr( $args );
+
+        echo $output;
+    }
+
+    // Ajax Content Render
+    function _ajax_content( $output, $args ){
+        if ( isset( $args['thiskey'] ) && $args['thiskey'] > 0 ) {
+            return;
+        }
+
+        echo $output;
+    }
 
     /**
      * Enqueue scripts and styles
