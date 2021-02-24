@@ -294,11 +294,9 @@ class ALD_Menu {
 
     // General Content Render
     function _general_content( $output, $args ){
-        if ( isset( $args['thiskey'] ) && $args['thiskey'] > 0 ) {
-            //return;
+        if ( isset( $args['thiskey'] ) && $args['thiskey'] > 5 ) {
+            return;
         }
-
-        ppr( $args );
 
         echo $output;
     }

@@ -5,7 +5,7 @@
         // Modal Show Function
         function am_modal_show( id ){
             if ( id ) {
-                $(document).find(id).fadeIn();
+                $(document).find(id).fadeIn('fast');
             }
         }
 
@@ -47,9 +47,15 @@
 
             var keyLen = jQuery('.tf_gen_sel_field').length;
 
+            if ( keyLen >= 6 ) {
+                jQuery(document).trigger('am_modal_show', '#ald_go-pro');
+                return;
+            }
+
             var data = {
                 action: 'ald_add_general_loadmore',
                 key: keyLen,
+                thiskey: keyLen,
             }
 
             $.ajax({
@@ -78,9 +84,15 @@
 
             var keyLen = jQuery('.tf_ajax_sel_field').length;
 
+            if ( keyLen >= 1 ) {
+                jQuery(document).trigger('am_modal_show', '#ald_go-pro');
+                return;
+            }
+
             var data = {
                 action: 'ald_add_ajax_loadmore',
                 key: keyLen,
+                thiskey: keyLen,
             }
 
             $.ajax({
@@ -140,8 +152,6 @@
             row.html(function(i, oldHTML) {
 		        return oldHTML.replace(/\${j}/g, makeid(3));
 		    });
-
-            console.log( row );
 
             row.insertBefore( $this.closest('table').find('tbody>tr:last') );
             return false;

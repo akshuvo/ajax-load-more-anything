@@ -172,6 +172,7 @@ function ald_add_general_loadmore_action(){
 
     echo ald_add_general_loadmore_wrap( array(
         'key' => $key,
+        'thiskey' => $key,
     ) );
 
     $output = ob_get_clean();
@@ -327,6 +328,7 @@ function ald_add_ajax_loadmore_action(){
 
     echo ald_add_ajax_loadmore_wrap( array(
         'key' => $key,
+        'thiskey' => $key,
     ) );
 
     $output = ob_get_clean();
