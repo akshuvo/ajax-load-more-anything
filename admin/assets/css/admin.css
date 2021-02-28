@@ -489,7 +489,7 @@ a.add_disr {
     right: 0;
     left: 0;
     background: #000;
-    opacity: 0.5;
+    opacity: 0.7;
     z-index: 1000;
     width: 100%;
     height: 100%;
@@ -497,8 +497,8 @@ a.add_disr {
 
 .am_go-pro-modal-inner {
     background: #fff;
-    border-radius: 7px;
-    padding: 20px;
+    border-radius: 0px;
+    padding: 16px;
     max-width: 457px;
     text-align: center;
     position: fixed;
@@ -521,4 +521,16 @@ a.add_disr {
     width: 25px;
     text-align: center;
     height: 25px;
+}
+
+.very-top {
+    text-align: center;
+    background: #f8f8f8;
+    margin: -16px -16px 0 -16px;
+    padding: 15px;
+    overflow: hidden;
+}
+
+.very-bottom {
+    margin: 0 -16px -16px -16px;
 }

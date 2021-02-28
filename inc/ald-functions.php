@@ -192,7 +192,6 @@ function ald_custom_javascript_code(){
 
 					<?php foreach ( $general_loadmore as $key => $value ) : ?>
 
-						<?php //ppr($value);  ?>
 						<?php $ald_wrapper_class = $value['btn_selector']; ?>
 						<?php $ald_load_class =  $value['load_selector'];?>
 						<?php $ald_item_show = $value['visible_items']; ?>

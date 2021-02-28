@@ -653,9 +653,14 @@ function ald_plugin_pro_modal(){
         <div class="am_go-pro-modal-inner">
             <div class="am_go-pro-modal">
                 <div class="am-modal-close">&times;</div>
-
                 <div class="am_go-pro-modal-content">
-                    <h2>It's time to go pro</h2>
+                    <div class="very-top">
+                        <h2>It's time to go pro</h2>
+                    </div>
+                    <div class="in-middle"></div>
+                    <div class="very-top very-bottom">
+                        <b>100% No-Risk Money Back Guarantee!</b> If you don't like the plugin over the next 7 days, we will happily refund 100% of your money. No questions asked! Payments are processed by our merchant of records - <a href="https://paddle.com/" target="_blank">Paddle</a>.
+                    </div>
                 </div>
             </div>
         </div>
@@ -669,13 +674,55 @@ add_action( 'admin_footer', 'ald_plugin_pro_modal', 10 );
  */
 function ald_plugin_options_custom_js(){
     ?>
-    <div class="tf-field-wrap" data-modal-show="#ald_go-pro">
+    <div class="tf-field-wrap">
         <h4>
             <?php esc_html_e( 'Custom JavaScript', 'aldtd' ); ?>
             <div class="desc"><?php esc_html_e( 'You can trigger custom functions from here.', 'aldtd' ); ?></div>
         </h4>
-        <textarea class="wfull" rows="5" id="ald_options_custom_js"></textarea>
+        <div class="pro-lock" data-modal-show="ald_go-pro" onclick="triggerGoPro()">
+            <textarea class="wfull" rows="5" id="ald_options_custom_js"></textarea>
+        </div>
     </div>
+    <style>
+    .pro-lock {
+        position: relative;
+        cursor: pointer;
+    }
+    .pro-lock:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background: #ffffff8c;
+        z-index: 9;
+    }
+    .pro-lock:after {
+        content: 'Enable JavaScript';
+        position: absolute;
+        z-index: 10;
+        top: 50%;
+        transform: translateY(-50%);
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #9a9a9a;
+        color: #fff;
+        width: 320px;
+        visibility: visible;
+    }
+    .pro-lock[data-modal-show="ald_go-pro"]:hover:after {background: #000;}
+    </style>
+    <script>
+    function triggerGoPro() {
+        jQuery(document).trigger('am_modal_show', '#ald_go-pro');
+    }
+    </script>
     <?php
 }
 add_action( 'ald_options_js', 'ald_plugin_options_custom_js', 10 );
