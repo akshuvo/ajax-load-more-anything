@@ -243,7 +243,7 @@ function ald_add_general_loadmore_wrap( $args ){
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-btn_selector-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][btn_selector]" value="<?php echo esc_attr( $btn_selector ); ?>" />
+                            <input id="general_loadmore-btn_selector-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][btn_selector]" value="<?php echo esc_attr( $btn_selector ); ?>" placeholder="<?php echo esc_attr( '.selector, #selector' ); ?>" />
                             <p><?php _e( $load_more_button_wrapper_desc ); ?></p>
                         </td>
                     </tr>
@@ -255,7 +255,7 @@ function ald_add_general_loadmore_wrap( $args ){
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-load_selector-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][load_selector]" value="<?php echo esc_attr( $load_selector ); ?>" />
+                            <input id="general_loadmore-load_selector-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][load_selector]" value="<?php echo esc_attr( $load_selector ); ?>" placeholder="<?php echo esc_attr( '.selector .repeated_selector, #selector .repeated_selector' ); ?>" />
                             <p><?php _e( $load_more_item_selector_desc ); ?></p>
                         </td>
                     </tr>
@@ -267,7 +267,7 @@ function ald_add_general_loadmore_wrap( $args ){
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-visible_items-<?php _e( $key ); ?>" class="regular-text" type="number" name="ald_options[general_loadmore][<?php _e( $key ); ?>][visible_items]" value="<?php echo esc_attr( $visible_items ); ?>" />
+                            <input id="general_loadmore-visible_items-<?php _e( $key ); ?>" class="regular-text" type="number" name="ald_options[general_loadmore][<?php _e( $key ); ?>][visible_items]" value="<?php echo esc_attr( $visible_items ); ?>" placeholder="<?php echo esc_attr( '6' ); ?>"/>
                             <p><?php _e( $visiable_items_desc ); ?></p>
                         </td>
                     </tr>
@@ -279,7 +279,7 @@ function ald_add_general_loadmore_wrap( $args ){
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-load_items-<?php _e( $key ); ?>" class="regular-text" type="number" name="ald_options[general_loadmore][<?php _e( $key ); ?>][load_items]" value="<?php echo esc_attr( $load_items ); ?>" />
+                            <input id="general_loadmore-load_items-<?php _e( $key ); ?>" class="regular-text" type="number" name="ald_options[general_loadmore][<?php _e( $key ); ?>][load_items]" value="<?php echo esc_attr( $load_items ); ?>" placeholder="<?php echo esc_attr( '3' ); ?>" />
                             <p><?php _e( $load_items_desc ); ?></p>
                         </td>
                     </tr>
@@ -291,7 +291,7 @@ function ald_add_general_loadmore_wrap( $args ){
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-button_label-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][button_label]" value="<?php echo esc_attr( $button_label ); ?>" />
+                            <input id="general_loadmore-button_label-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][button_label]" value="<?php echo esc_attr( $button_label ); ?>" placeholder="<?php echo esc_attr( 'Load +[count] more' ); ?>" />
                             <p><?php _e( $button_label_desc ) ?></p>
                         </td>
                     </tr>
@@ -306,6 +306,7 @@ function ald_add_general_loadmore_wrap( $args ){
                                 <option value="normal" <?php selected( $display_type, 'normal' ); ?>><?php _e( 'Normal', 'aldtd' ); ?></option>
                                 <option value="flex" <?php selected( $display_type, 'flex' ); ?>><?php _e( 'Flex', 'aldtd' ); ?></option>
                             </select>
+                            <p><?php _e( '<strong>Normal</strong> means other than <code>display: flex;</code>', 'aldtd' ); ?></p>
                         </td>
                     </tr>
                 </table>
