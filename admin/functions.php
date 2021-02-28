@@ -186,7 +186,7 @@ function ald_add_general_loadmore_action(){
 function ald_add_general_loadmore_wrap( $args ){
     $defaults = array (
         'key' => '',
-        'selector' => '',
+        'selector' => array(),
     );
 
     // Parse incoming $args into an array and merge it with $defaults
@@ -344,7 +344,7 @@ function ald_add_ajax_loadmore_action(){
 function ald_add_ajax_loadmore_wrap( $args ){
     $defaults = array (
         'key' => '',
-        'selector' => '',
+        'selector' => array(),
     );
 
     // Parse incoming $args into an array and merge it with $defaults
@@ -673,6 +673,9 @@ add_action( 'admin_footer', 'ald_plugin_pro_modal', 10 );
  * Plugin Pro Modal
  */
 function ald_plugin_options_custom_js(){
+    if ( defined('ALD_PRO_PLUGIN_VERSION') ) {
+        return;
+    }
     ?>
     <div class="tf-field-wrap">
         <h4>

@@ -534,3 +534,7 @@ a.add_disr {
 .very-bottom {
     margin: 0 -16px -16px -16px;
 }
+
+.in-middle {
+    min-height: 100px;
+}
