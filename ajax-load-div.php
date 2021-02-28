@@ -216,10 +216,10 @@ add_action( 'admin_init', 'register_ald_plugin_settings' );
  * @since 1.0.0
  * @version 4.0.0
  */
-function wi_plugin_action_links( $links ) {
+function ald_lite_plugin_action_links( $links ) {
 	$plugin_links = array(
 		'<a href="options-general.php?page=ald_setting">' . esc_html__( 'Settings', 'ald' ) . '</a>',
 	);
 	return array_merge( $plugin_links, $links );
 }
-add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'wi_plugin_action_links' );
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'ald_lite_plugin_action_links' );
