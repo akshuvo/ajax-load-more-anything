@@ -227,6 +227,7 @@ function ald_add_general_loadmore_wrap( $args ){
             <span id="poststuff">
                 <h2 class="hndle">
                     <input type="text" class="ald_ajax_wrap_title" name="ald_options[general_loadmore][<?php _e( $key ); ?>][wrapper_title]" value="<?php esc_attr_e( $wrapper_title ); ?>" title="<?php esc_attr_e( 'Change title to anything you like. Ex: For Homepage', 'aldtd' ); ?>">
+                    <span class="dashicons indicator_field"></span>
                     <span class="delete_field">&times;</span>
                 </h2>
             </span>
@@ -390,6 +391,7 @@ function ald_add_ajax_loadmore_wrap( $args ){
             <span id="poststuff">
                 <h2 class="hndle">
                     <input type="text" class="ald_ajax_wrap_title" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][wrapper_title]" value="<?php esc_attr_e( $wrapper_title ); ?>" title="<?php esc_attr_e( 'Change title to anything you like. Ex: Homepage Posts', 'aldtd' ); ?>">
+                    <span class="dashicons indicator_field"></span>
                     <span class="delete_field">&times;</span>
                 </h2>
             </span>

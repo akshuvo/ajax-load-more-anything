@@ -223,6 +223,7 @@
 
 input.ald_ajax_wrap_title {
     border-color: #f3f3f3;
+    background: transparent;
 }
 
 .welcome-boxes {
@@ -446,6 +447,35 @@ a.add_disr {
 
 .tf_panel-header button.am_submit_button[type="submit"] {
     padding: 10px 30px;
+}
+
+/*Indicator*/
+.indicator_field {
+    float: right;
+    position: absolute;
+    right: 30px;
+    top: 0;
+    line-height: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    width: 30px;
+    justify-content: center;
+    font-size: 16px;
+    transition: all .3s ease;
+}
+
+.postbox.opened .indicator_field {
+    transform: rotateZ(180deg);
+}
+
+.indicator_field:before {
+    content: "\f347";
+}
+
+.ald-toggle-head:hover,
+.postbox.opened .ald-toggle-head{
+    background-color: #f9f9f9;
 }
 
 /* Pro Modal */
