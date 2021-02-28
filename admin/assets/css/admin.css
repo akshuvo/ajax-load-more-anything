@@ -497,8 +497,8 @@ a.add_disr {
 
 .am_go-pro-modal-inner {
     background: #fff;
-    border-radius: 15px;
-    padding: 30px 40px;
+    border-radius: 7px;
+    padding: 20px;
     max-width: 457px;
     text-align: center;
     position: fixed;

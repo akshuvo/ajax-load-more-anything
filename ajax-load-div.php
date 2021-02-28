@@ -2,10 +2,10 @@
 /**
  * Plugin Name:  Load More Anything
  * Plugin URI:   https://github.com/akshuvo/load-more-anything/
- * Author:       Akhtarujjaman Shuvo
- * Author URI:   https://www.facebook.com/akhterjshuvo/
+ * Author:       Addon Master
+ * Author URI:   https://addonmaster.com/contact
  * Version: 	  2.4.1
- * Description:  A simple plugin that help you to Load more any item with jQuery. You can use Ajaxify Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce Product, Images, Photos, Videos, custom Div or whatever you want.
+ * Description:  A simple plugin that help you to Load more any item with jQuery/Ajax. You can use Ajaxify Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce Product, Images, Photos, Videos, custom selector or whatever you want.
  * License:      GPL2
  * License URI:  https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:  aldtd
@@ -27,7 +27,7 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 define( 'ALD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 if ( !defined('ALD_PLUGIN_VERSION') ) {
-	define('ALD_PLUGIN_VERSION', '2.4.0' );
+	define('ALD_PLUGIN_VERSION', '2.4.1' );
 }
 
 /**
@@ -44,12 +44,12 @@ final class Ajax_Load_More_Anything {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ), 100 );
 
-		// Added plugin action link
-		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
-
 		// trigger upon plugin activation/deactivation
 		register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
+
+		// Action link
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 
 	}
 
@@ -64,16 +64,6 @@ final class Ajax_Load_More_Anything {
         }
 
         return $instance;
-	}
-
-	/**
-	 * Adds plugin action links.
-	 */
-	function action_links( $links ) {
-		$plugin_links = array(
-			'<a href="' . admin_url( 'admin.php?page=license-manager-wppt' ) . '">' . esc_html__( 'License Manager', 'lmfwppt' ) . '</a>',
-		);
-		return array_merge( $plugin_links, $links );
 	}
 
 	/**
@@ -102,8 +92,9 @@ final class Ajax_Load_More_Anything {
          	array(
          	    'nonce' => wp_create_nonce( 'ald_nonce' ),
          	    'ajaxurl' => admin_url( 'admin-ajax.php' ),
+         	    'ald_pro' => ( defined('ALD_PRO_PLUGIN_VERSION') ) ? '1' : '0',
          	)
-         );
+        );
 
 	}
 
@@ -132,15 +123,38 @@ final class Ajax_Load_More_Anything {
 	 *
 	 */
 	function admin_scripts( $hook ) {
-	    if ( 'options-permalink.php' != $hook ) {
-	        //return;
+	    if ( 'toplevel_page_ald_setting' != $hook ) {
+	        return;
 	    }
 
 	    $ver = current_time( 'timestamp' );
 
 	    wp_register_style( 'ald-admin-styles', ALD_PLUGIN_URL . 'admin/assets/css/admin.css', null, $ver );
 	    wp_register_script( 'ald-admin-scripts', ALD_PLUGIN_URL . 'admin/assets/js/admin.js', array('jquery'), $ver );
+
+	    // Ajax Params
+	    wp_localize_script( 'ald-admin-scripts', 'alda_params',
+         	array(
+         	    'nonce' => wp_create_nonce( 'ald_nonce' ),
+         	    'ajaxurl' => admin_url( 'admin-ajax.php' ),
+         	    'ald_pro' => ( defined('ALD_PRO_PLUGIN_VERSION') ) ? '1' : '0',
+         	)
+        );
 	}
+
+	/**
+	 * Adds plugin action links.
+	 *
+	 * @since 1.0.0
+	 * @version 4.0.0
+	 */
+	function plugin_action_links( $links ) {
+		$plugin_links = array(
+			'<a href="admin.php?page=ald_setting">' . esc_html__( 'Settings', 'ald' ) . '</a>',
+		);
+		return array_merge( $plugin_links, $links );
+	}
+
 
 }
 
@@ -154,16 +168,3 @@ function ajax_load_more_anything(){
 // Let's start it
 ajax_load_more_anything();
 
-/**
- * Adds plugin action links.
- *
- * @since 1.0.0
- * @version 4.0.0
- */
-function ald_lite_plugin_action_links( $links ) {
-	$plugin_links = array(
-		'<a href="options-general.php?page=ald_setting">' . esc_html__( 'Settings', 'ald' ) . '</a>',
-	);
-	return array_merge( $plugin_links, $links );
-}
-add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'ald_lite_plugin_action_links' );

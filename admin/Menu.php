@@ -141,7 +141,7 @@ class ALD_Menu {
                                             <li><a href="#general"><?php echo esc_html__( 'General Selectors', 'aldtd' ); ?></a></li>
                                             <li><a href="#ajax-based"><?php echo esc_html__( 'Ajax Based', 'aldtd' ); ?></a></li>
                                             <li><a href="#custom-code"><?php echo esc_html__( 'Custom Code', 'aldtd' ); ?></a></li>
-
+                                            <?php do_action( 'ald_options_menu', $ald_options ); ?>
                                         </ul>
                                     </div>
 
@@ -246,7 +246,10 @@ class ALD_Menu {
 
                                                 </div>
 
+                                                <?php do_action( 'ald_options_js', $ald_options ); ?>
+
                                             </div>
+                                            <?php do_action( 'ald_options_content', $ald_options ); ?>
 
                                         </div>
                                     </div>
@@ -320,8 +323,10 @@ class ALD_Menu {
         wp_enqueue_script( 'ald-admin-scripts' );
         //wp_enqueue_script( 'wp-codemirror' );
 
-        $cm_settings['codeEditor'] = wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
-        wp_localize_script('ald-admin-scripts', 'cm_settings', $cm_settings);
+        $cmcss_settings['codeEditor'] = wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
+        $cmjs_settings['codeEditor'] = wp_enqueue_code_editor( array( 'type' => 'text/javascript' ) );
+        wp_localize_script('ald-admin-scripts', 'cmcss_settings', $cmcss_settings);
+        wp_localize_script('ald-admin-scripts', 'cmjs_settings', $cmjs_settings);
         wp_enqueue_script('wp-theme-plugin-editor');
         wp_enqueue_style('wp-codemirror');
     }

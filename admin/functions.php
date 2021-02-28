@@ -244,7 +244,7 @@ function ald_add_general_loadmore_wrap( $args ){
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-btn_selector-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][btn_selector]" value="<?php echo esc_attr( $btn_selector ); ?>" placeholder="<?php echo esc_attr( '.selector, #selector' ); ?>" />
+                            <input id="general_loadmore-btn_selector-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][btn_selector]" value="<?php echo esc_attr( $btn_selector ); ?>" placeholder="<?php echo esc_attr( '#selector' ); ?>" />
                             <p><?php _e( $load_more_button_wrapper_desc ); ?></p>
                         </td>
                     </tr>
@@ -256,7 +256,7 @@ function ald_add_general_loadmore_wrap( $args ){
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-load_selector-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][load_selector]" value="<?php echo esc_attr( $load_selector ); ?>" placeholder="<?php echo esc_attr( '.selector .repeated_selector, #selector .repeated_selector' ); ?>" />
+                            <input id="general_loadmore-load_selector-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][load_selector]" value="<?php echo esc_attr( $load_selector ); ?>" placeholder="<?php echo esc_attr( '#selector .repeated_selector' ); ?>" />
                             <p><?php _e( $load_more_item_selector_desc ); ?></p>
                         </td>
                     </tr>
@@ -663,3 +663,19 @@ function ald_plugin_pro_modal(){
     <?php
 }
 add_action( 'admin_footer', 'ald_plugin_pro_modal', 10 );
+
+/**
+ * Plugin Pro Modal
+ */
+function ald_plugin_options_custom_js(){
+    ?>
+    <div class="tf-field-wrap" data-modal-show="#ald_go-pro">
+        <h4>
+            <?php esc_html_e( 'Custom JavaScript', 'aldtd' ); ?>
+            <div class="desc"><?php esc_html_e( 'You can trigger custom functions from here.', 'aldtd' ); ?></div>
+        </h4>
+        <textarea class="wfull" rows="5" id="ald_options_custom_js"></textarea>
+    </div>
+    <?php
+}
+add_action( 'ald_options_js', 'ald_plugin_options_custom_js', 10 );

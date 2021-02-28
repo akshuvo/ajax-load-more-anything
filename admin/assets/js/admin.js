@@ -210,7 +210,8 @@
         });
 
         // Enable Code Editor
-        wp.codeEditor.initialize($('#ald_options_custom_css'), cm_settings);
+        wp.codeEditor.initialize($('#ald_options_custom_css'), cmcss_settings);
+        wp.codeEditor.initialize($('#ald_options_custom_js'), cmjs_settings);
 
         // Save Options
         $(document).on('submit', '#ald_option_form', function(e){
