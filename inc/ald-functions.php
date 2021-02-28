@@ -78,7 +78,7 @@ function ald_minify_css($input) {
 /*
 * Custom CSS script
 */
-function ald_custom_style(){
+function ald_lite_custom_style(){
 
 	$ald_options =  get_option( 'ald_options' ) ? get_option( 'ald_options' ) : array();
     $general_loadmore = isset( $ald_options['general_loadmore'] ) ? $ald_options['general_loadmore'] : array();
@@ -130,7 +130,7 @@ function ald_custom_style(){
 	//echo _e( $output );
 	echo ald_minify_css( $output );
 }
-add_action( 'wp_head', 'ald_custom_style', 999 ); // Set high priority for execute later
+add_action( 'wp_head', 'ald_lite_custom_style', 999 ); // Set high priority for execute later
 
 
 // JavaScript Minifier
@@ -275,10 +275,10 @@ function ald_custom_javascript_code(){
 		        var LoadMorePushAjax = function( url, args ){
 
 		        	$('.ald_loader_progress').css({
-							    "-webkit-transform":"translate3d(-100%, 0px, 0px)",
-							    "-ms-transform":"translate3d(-100%, 0px, 0px)",
-							    "transform":"translate3d(-100%, 0px, 0px)",
-							});
+					    "-webkit-transform":"translate3d(-100%, 0px, 0px)",
+					    "-ms-transform":"translate3d(-100%, 0px, 0px)",
+					    "transform":"translate3d(-100%, 0px, 0px)",
+					});
 
 		        	if ( args['data_implement_selectors'] ) {
 		        		var dis = JSON.parse( args['data_implement_selectors'] );
@@ -287,8 +287,6 @@ function ald_custom_javascript_code(){
 		            if(main_xhr && main_xhr.readyState != 4){
 		                main_xhr.abort();
 		            }
-
-		            console.log( args );
 
 		            main_xhr = $.ajax({
 		                url: url,
@@ -332,7 +330,6 @@ function ald_custom_javascript_code(){
 				        	if ( args['update_page_title'] && args['update_page_title'] == "yes" ) {
 				        		document.title = $(data).filter('title').text();
 				        	}
-
 
 		                    flag = false;
 
