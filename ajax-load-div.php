@@ -16,8 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
-
-
 /**
 * Including Plugin file for security
 * Include_once
@@ -31,8 +29,6 @@ define( 'ALD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 if ( !defined('ALD_PLUGIN_VERSION') ) {
 	define('ALD_PLUGIN_VERSION', '2.4.0' );
 }
-
-
 
 /**
  *	Plugin Main Class
@@ -148,7 +144,6 @@ final class Ajax_Load_More_Anything {
 
 }
 
-
 /**
  * Initialize plugin
  */
@@ -158,57 +153,6 @@ function ajax_load_more_anything(){
 
 // Let's start it
 ajax_load_more_anything();
-
-
-/*
-* Register settings fields to database
-*/
-function register_ald_plugin_settings() {
-
-	// wrapper one option data
-	register_setting( 'ald-plugin-settings-group', 'ald_wrapper_class' );
-	register_setting( 'ald-plugin-settings-group', 'ald_load_class' );
-	register_setting( 'ald-plugin-settings-group', 'ald_item_show' );
-	register_setting( 'ald-plugin-settings-group', 'ald_item_load' );
-	register_setting( 'ald-plugin-settings-group', 'ald_load_label' );
-	register_setting( 'ald-plugin-settings-group', 'asr_ald_css_class' );
-
-	// wrapper two option data
-	register_setting( 'ald-plugin-settings-group', 'ald_wrapper_classa' );
-	register_setting( 'ald-plugin-settings-group', 'ald_load_classa' );
-	register_setting( 'ald-plugin-settings-group', 'ald_item_showa' );
-	register_setting( 'ald-plugin-settings-group', 'ald_item_loada' );
-	register_setting( 'ald-plugin-settings-group', 'ald_load_labela' );
-
-	// wrapper three option data
-	register_setting( 'ald-plugin-settings-group', 'ald_wrapper_classb' );
-	register_setting( 'ald-plugin-settings-group', 'ald_load_classb' );
-	register_setting( 'ald-plugin-settings-group', 'ald_item_showb' );
-	register_setting( 'ald-plugin-settings-group', 'ald_item_loadb' );
-	register_setting( 'ald-plugin-settings-group', 'ald_load_labelb' );
-
-	// wrapper four option data
-	register_setting( 'ald-plugin-settings-group', 'ald_wrapper_classc' );
-	register_setting( 'ald-plugin-settings-group', 'ald_load_classc' );
-	register_setting( 'ald-plugin-settings-group', 'ald_item_showc' );
-	register_setting( 'ald-plugin-settings-group', 'ald_item_loadc' );
-	register_setting( 'ald-plugin-settings-group', 'ald_load_labelc' );
-
-	// wrapper five option data
-	register_setting( 'ald-plugin-settings-group', 'ald_wrapper_classd' );
-	register_setting( 'ald-plugin-settings-group', 'ald_load_classd' );
-	register_setting( 'ald-plugin-settings-group', 'ald_item_showd' );
-	register_setting( 'ald-plugin-settings-group', 'ald_item_loadd' );
-	register_setting( 'ald-plugin-settings-group', 'ald_load_labeld' );
-
-	// wrapper five option data
-	register_setting( 'ald-plugin-settings-group', 'ald_wrapper_classe' );
-	register_setting( 'ald-plugin-settings-group', 'ald_load_classe' );
-	register_setting( 'ald-plugin-settings-group', 'ald_item_showe' );
-	register_setting( 'ald-plugin-settings-group', 'ald_item_loade' );
-	register_setting( 'ald-plugin-settings-group', 'ald_load_labele' );
-}
-add_action( 'admin_init', 'register_ald_plugin_settings' );
 
 /**
  * Adds plugin action links.
