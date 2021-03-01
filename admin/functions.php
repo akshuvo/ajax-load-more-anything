@@ -648,7 +648,7 @@ add_action( 'ald_left_panel', 'ald_plugin_name_data', 10 );
  */
 function ald_plugin_pro_modal(){
     ?>
-    <div id="ald_go-pro" class="am_go-pro-modal-outer">
+    <div id="ald_go-pro" class="am_go-pro-modal-outer" style="display: none;">
         <div class="am_shadow"></div>
         <div class="am_go-pro-modal-inner">
             <div class="am_go-pro-modal">
