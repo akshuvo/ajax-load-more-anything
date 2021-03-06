@@ -241,9 +241,11 @@ input.ald_ajax_wrap_title {
 }
 
 .box-inner{
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
     border: 1px solid transparent;
+    padding: 20px;
+    box-shadow: 0px 10px 30px rgb(0 0 0 / 8%);
+    border-radius: 10px;
+    margin-bottom: 16px;
 }
 
 .single-box:hover .box-inner{
@@ -292,6 +294,42 @@ span.delete_field:hover{
 [data-id="hide_selector_wrapper"],
 [data-id="wrapper_to_hide"] {
     display: none;
+}
+
+ul.ald-list li {
+    width: 50%;
+    float: left;
+    padding-right: 15px;
+}
+
+ul.ald-list li:before {
+    font-family: dashicons;
+    display: inline-block;
+    line-height: 1;
+    font-weight: 400;
+    font-style: normal;
+    speak: never;
+    text-decoration: inherit;
+    text-transform: none;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    vertical-align: top;
+    text-align: center;
+    transition: color .1s ease-in;
+    content: "\f15e";
+    margin-right: 8px;
+}
+
+ul.ald-list li:hover{
+    color: #2b74ff;
+}
+
+ul.ald-list {
+    overflow: hidden;
 }
 
 /*Save Button*/

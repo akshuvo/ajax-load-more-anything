@@ -151,21 +151,59 @@ class ALD_Menu {
                                         <div class="tf-tab-container">
 
                                             <div id="welcome" class="tf-tab-content active">
-                                                <h1><?php echo esc_html__( 'Welcome On Board', 'aldtd' ); ?></h1>
                                                 <div class="welcome-boxes">
-                                                    <div class="single-box">
+                                                    <div class="single-box" style=" width: 100%; ">
                                                         <div class="box-inner">
-                                                            sample content
+                                                            <h4><?php esc_html_e( 'Welcome to Load More Anything', 'aldtd' ); ?></h4>
+                                                            <div class="box-content">
+                                                                <p>Checkout our new features.</p>
+                                                                <ul class="ald-list">
+                                                                    <li>Ajax wrapper added</li>
+                                                                    <li>Make ajax data loading</li>
+                                                                    <li>Zero coding/ Hassle free installation</li>
+                                                                    <li>Full control over all data</li>
+                                                                    <li>Custom Event Selector</li>
+                                                                    <li>Infinite Scroll</li>
+                                                                    <li>Add custom button trigger</li>
+                                                                    <li>Button Insert Selector Options</li>
+                                                                    <li>Button Label Change options</li>
+                                                                    <li>Ajax response Data Implement</li>
+                                                                    <li>Update Browser URL on Ajax Action</li>
+                                                                    <li>Update Page Title on Ajax Action</li>
+                                                                    <li>Insert Ajax data anywhere</li>
+                                                                    <li>Append/Prepend Ajax response data</li>
+                                                                    <li>Unlimited Data Implement Selector</li>
+                                                                    <li>Wrapper Title Option</li>
+                                                                    <li>JavaScript Based Load More</li>
+                                                                    <li>Display type options</li>
+                                                                    <li>Controls for Hidden/Visible items</li>
+                                                                    <li>Custom CSS & Custom JS</li>
+                                                                    <li>Nice UI Panel</li>
+                                                                </ul>
+                                                                <table class="table ald-table">
+                                                                    
+                                                                </table>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="single-box">
                                                         <div class="box-inner">
-                                                            sample content
+                                                            <h4><?php esc_html_e( 'Awesome Support', 'aldtd' ); ?></h4>
+                                                            <div class="box-content">
+                                                                <p>We are ready to give you the best support. If you facing any kind of technical or non-technical issues just create a support topic. We will response real fast.</p>
+                                                                <br>
+                                                                <p><a class="button" target="_blank" href="https://wordpress.org/support/plugin/ajax-load-more-anything"><?php esc_html_e( 'View Support Forum', 'aldtd' ); ?></a></p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="single-box">
                                                         <div class="box-inner">
-                                                            sample content
+                                                            <h4><?php esc_html_e( 'Show your Love', 'aldtd' ); ?></h4>
+                                                            <div class="box-content">
+                                                                <p>If you want to show me some love, The review section is always open for you :). Your awesome review provides me energy to continue development for free.</p>
+                                                                <br>
+                                                                <p><a class="button" target="_blank" href="https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/#new-post"><?php esc_html_e( 'Write a Review Now', 'aldtd' ); ?></a></p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
