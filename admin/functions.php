@@ -184,6 +184,8 @@ function ald_add_general_loadmore_action(){
 
 // Single general loadmore data
 function ald_add_general_loadmore_wrap( $args ){
+    // Load Blank variable
+    $btn_selector = $load_selector = $visible_items = $load_items = $button_label = $display_type = '';
     $defaults = array (
         'key' => '',
         'selector' => array(),
