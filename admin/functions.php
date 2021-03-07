@@ -656,8 +656,105 @@ function ald_plugin_pro_modal(){
                 <div class="am_go-pro-modal-content">
                     <div class="very-top">
                         <h2>It's time to go pro</h2>
+                        <p>21% OFF only for you. Coupon Code: <input type="text" value="WPUSER" readonly style=" width: 90px; "></p>
+                        <p><a class="button button-primary" target="_blank" href="https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser">(<del>$25</del> <strong>$19.75</strong>) <?php esc_html_e( 'Upgrade to Pro', 'aldtd' ); ?></a><br><small>100% secure transaction</small></p>
                     </div>
-                    <div class="in-middle"></div>
+                    <div class="in-middle">
+                        <p>Checkout more features on <strong>Load More Anything Pro</strong></p>
+                        <table class="table ald-table">
+                            <thead>
+                                <tr>
+                                    <th>Load More Anything</th>
+                                    <th>Free</th>
+                                    <th>Pro</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>General Wrapper</td>
+                                    <td><span class="dashicons dashicons-yes"></span></td>
+                                    <td><span class="dashicons dashicons-yes"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Ajax Based Wrapper</td>
+                                    <td><span class="dashicons dashicons-yes"></span></td>
+                                    <td><span class="dashicons dashicons-yes"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>General Wrapper Limit</td>
+                                    <td>5</td>
+                                    <td>Unlimited</td>
+                                </tr>
+                                <tr>
+                                    <td>Ajax Based Wrapper Limit</td>
+                                    <td>1</td>
+                                    <td>Unlimited</td>
+                                </tr>                                                                 
+                                <tr>
+                                    <td>Selector Type</td>
+                                    <td>Any</td>
+                                    <td>Any</td>
+                                </tr>
+                                <tr>
+                                    <td>Custom CSS</td>
+                                    <td><span class="dashicons dashicons-yes"></span></td>
+                                    <td><span class="dashicons dashicons-yes"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Custom JavaScript</td>
+                                    <td><span class="dashicons dashicons-no-alt"></span></td>
+                                    <td><span class="dashicons dashicons-yes"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Support Limit</td>
+                                    <td>Limited</td>
+                                    <td>Unlimited</td>
+                                </tr>
+                                <tr>
+                                    <td>Priority Support</td>
+                                    <td><span class="dashicons dashicons-no-alt"></span></td>
+                                    <td><span class="dashicons dashicons-yes"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Unlimited Usage:</td>
+                                    <td>
+                                        <span class="dashicons dashicons-no-alt"></span> Comments <br>
+                                        <span class="dashicons dashicons-no-alt"></span> Custom Post Type <br>
+                                        <span class="dashicons dashicons-no-alt"></span> WooCommerce<br>
+                                        <span class="dashicons dashicons-no-alt"></span> Products<br>
+                                        <span class="dashicons dashicons-no-alt"></span> Easy Digital Downloads<br>
+                                        <span class="dashicons dashicons-no-alt"></span> Posts<br>
+                                        <span class="dashicons dashicons-no-alt"></span> Pages<br>
+                                        <span class="dashicons dashicons-no-alt"></span> Archives<br>
+                                        <span class="dashicons dashicons-no-alt"></span> Search Results<br>
+                                        <span class="dashicons dashicons-no-alt"></span> Mostly Anywhere<br>              
+                                    </td>
+                                    <td>
+                                        <span class="dashicons dashicons-yes"></span> Comments <br>
+                                        <span class="dashicons dashicons-yes"></span> Custom Post Type <br>
+                                        <span class="dashicons dashicons-yes"></span> WooCommerce<br>
+                                        <span class="dashicons dashicons-yes"></span> Products<br>
+                                        <span class="dashicons dashicons-yes"></span> Easy Digital Downloads<br>
+                                        <span class="dashicons dashicons-yes"></span> Posts<br>
+                                        <span class="dashicons dashicons-yes"></span> Pages<br>
+                                        <span class="dashicons dashicons-yes"></span> Archives<br>
+                                        <span class="dashicons dashicons-yes"></span> Search Results<br>
+                                        <span class="dashicons dashicons-yes"></span> Mostly Anywhere<br>  
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td colspan="2">
+                                        <p>21% OFF only for you. Coupon Code: <input type="text" value="WPUSER" readonly style=" width: 90px; "></p>
+                                        <p><a class="button button-primary" target="_blank" href="https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popup&utm_campaign=wpuser">(<del>$25</del> <strong>$19.75</strong>) <?php esc_html_e( 'Upgrade to Pro', 'aldtd' ); ?></a><br><small>100% secure transaction</small></p>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <br>
                     <div class="very-top very-bottom">
                         <b>100% No-Risk Money Back Guarantee!</b> If you don't like the plugin over the next 7 days, we will happily refund 100% of your money. No questions asked! Payments are processed by our merchant of records - <a href="https://paddle.com/" target="_blank">Paddle</a>.
                     </div>

@@ -537,7 +537,7 @@ a.add_disr {
     background: #fff;
     border-radius: 0px;
     padding: 16px;
-    max-width: 457px;
+    max-width: 590px;
     text-align: center;
     position: fixed;
     margin: 0 auto;
@@ -546,6 +546,26 @@ a.add_disr {
     transform: translateY(-50%);
     left: 0;
     right: 0;
+    overflow: auto;
+    max-height: 88%;
+}
+
+.am_go-pro-modal-inner::-webkit-scrollbar {
+  width: 4px;
+}
+ 
+.am_go-pro-modal-inner::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+ 
+.am_go-pro-modal-inner::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.in-middle tfoot p {
+    margin-top: 0;
+    margin-bottom: 3px;
 }
 
 .am-modal-close {
@@ -575,4 +595,27 @@ a.add_disr {
 
 .in-middle {
     min-height: 100px;
+}
+
+/* Price Table */
+.ald-table {
+    border-collapse: collapse;
+}
+
+.ald-table  td, .ald-table th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  vertical-align:top;
+}
+
+.ald-table  td:first-child, .ald-table th:first-child {
+    text-align: right;
+}
+
+.ald-table .dashicons-no-alt {
+    color: #ff0000ad;
+}
+.ald-table .dashicons-yes {
+    color: #2473aa;
 }
