@@ -120,8 +120,6 @@ function ald_lite_custom_style(){
 			<?php endforeach; ?> { visibility: hidden; }
 		<?php endif;?>
 
-
-
 		/* Custom CSS */
 		<?php _e( $custom_css );?>
 
@@ -166,7 +164,6 @@ function ald_button_label( $label = null ){
 
 	return $label;
 }
-
 
 /**
  * Custom JS
