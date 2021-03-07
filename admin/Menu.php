@@ -180,6 +180,7 @@ class ALD_Menu {
                                                                     <li>Custom CSS & Custom JS</li>
                                                                     <li>Nice UI Panel</li>
                                                                 </ul>
+                                                                <?php if ( !defined('ALD_PRO_PLUGIN_VERSION') ) : ?>
                                                                 <hr>
                                                                 <h3>Checkout more features on <strong>Load More Anything Pro</strong></h3>
                                                                 <table class="table ald-table">
@@ -274,6 +275,7 @@ class ALD_Menu {
                                                                         </tr>
                                                                     </tfoot>
                                                                 </table>
+                                                            <?php endif; ?>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -643,7 +643,12 @@ function ald_ajax_save_btn(){
  */
 function ald_plugin_name_data(){
     ?>
-    <h2><?php esc_html_e( 'Load More Anyting', 'aldtd' ); ?></h2>
+    <h2>
+        <?php esc_html_e( 'Load More Anyting', 'aldtd' ); ?>
+        <?php if ( defined('ALD_PRO_PLUGIN_VERSION') ) : ?>
+            <sup>pro</sup>
+        <?php endif; ?>
+    </h2>
     <?php
 }
 add_action( 'ald_left_panel', 'ald_plugin_name_data', 10 );
