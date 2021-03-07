@@ -342,6 +342,9 @@ function ald_add_ajax_loadmore_action(){
 
 // Single ajax loadmore data
 function ald_add_ajax_loadmore_wrap( $args ){
+    // Load Blank variable
+    $event_type = $custom_button_append = $button_trigger_selector = $button_label = $click_selector = $hide_selector_wrapper = $wrapper_to_hide = $update_browser_url = $update_page_title = '';
+
     $defaults = array (
         'key' => '',
         'selector' => array(),
