@@ -652,6 +652,9 @@ add_action( 'ald_left_panel', 'ald_plugin_name_data', 10 );
  * Plugin Pro Modal
  */
 function ald_plugin_pro_modal(){
+    if ( defined('ALD_PRO_PLUGIN_VERSION') ) {
+        return;
+    }
     ?>
     <div id="ald_go-pro" class="am_go-pro-modal-outer" style="display: none;">
         <div class="am_shadow"></div>

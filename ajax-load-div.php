@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:  Load More Anything
- * Plugin URI:   https://github.com/akshuvo/load-more-anything/
+ * Plugin URI:   https://github.com/akshuvo/ajax-load-more-anything/
  * Author:       Addon Master
  * Author URI:   https://addonmaster.com/contact
  * Version: 	  2.4.1

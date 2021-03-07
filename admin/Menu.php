@@ -408,7 +408,7 @@ class ALD_Menu {
 
                                         <a class="button" target="_blank" href="https://wordpress.org/support/plugin/ajax-load-more-anything" style="margin-left: 4px; "><?php esc_html_e( 'View Support Forum', 'aldtd' ); ?></a>
 
-                                        <a class="button" target="_blank" href="https://github.com/akshuvo/load-more-anything/issues" style="margin-left: 4px; "><?php esc_html_e( 'Create Issue on Github', 'aldtd' ); ?></a>
+                                        <a class="button" target="_blank" href="https://github.com/akshuvo/ajax-load-more-anything/issues" style="margin-left: 4px; "><?php esc_html_e( 'Create Issue on Github', 'aldtd' ); ?></a>
                                     </td>
                                 </tr>
 
@@ -426,7 +426,12 @@ class ALD_Menu {
 
     // General Content Render
     function _general_content( $output, $args ){
-        if ( isset( $args['thiskey'] ) && $args['thiskey'] > 5 ) {
+        /**
+         * Show Some Respect to my hard work and don't try to use the pro plugin illegally
+         * It's only about $20. Here is coupon for you: WPUSER
+         * Purchase Link: https://addonmaster.com/load-more-anything/?utm_source=code&utm_medium=php&utm_campaign=wpuser
+         */
+        if ( isset( $args['thiskey'] ) && $args['thiskey'] > 5 && !defined('ALD_PRO_PLUGIN_VERSION') ) {
             echo "<script>triggerGoPro();</script>";
             return;
         }
@@ -436,7 +441,12 @@ class ALD_Menu {
 
     // Ajax Content Render
     function _ajax_content( $output, $args ){
-        if ( isset( $args['thiskey'] ) && $args['thiskey'] > 0 ) {
+        /**
+         * Show Some Respect to my hard work and don't try to use the pro plugin illegally
+         * It's only about $20. Here is coupon for you: WPUSER
+         * Purchase Link: https://addonmaster.com/load-more-anything/?utm_source=code&utm_medium=php&utm_campaign=wpuser
+         */
+        if ( isset( $args['thiskey'] ) && $args['thiskey'] > 0 && !defined('ALD_PRO_PLUGIN_VERSION') ) {
             echo "<script>triggerGoPro();</script>";
             return;
         }
