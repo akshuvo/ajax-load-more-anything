@@ -46,7 +46,7 @@ final class Ajax_Load_More_Anything {
 
 		// trigger upon plugin activation/deactivation
 		register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
-		register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
+		//register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
 
 		// Action link
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
