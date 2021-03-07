@@ -427,6 +427,7 @@ class ALD_Menu {
     // General Content Render
     function _general_content( $output, $args ){
         if ( isset( $args['thiskey'] ) && $args['thiskey'] > 5 ) {
+            echo "<script>triggerGoPro();</script>";
             return;
         }
 
@@ -436,6 +437,7 @@ class ALD_Menu {
     // Ajax Content Render
     function _ajax_content( $output, $args ){
         if ( isset( $args['thiskey'] ) && $args['thiskey'] > 0 ) {
+            echo "<script>triggerGoPro();</script>";
             return;
         }
 
