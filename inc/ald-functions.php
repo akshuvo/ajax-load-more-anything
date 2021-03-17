@@ -300,6 +300,9 @@ function ald_custom_javascript_code(){
 		                },
 		                success: function(data) {
 
+		                	// Custom Trigger: Before Load
+							jQuery(document).trigger('ald_ajax_content_ready', data);
+
 		                    // Data Implement
 		                    if ( dis ) {
 								for( var key in dis ) {
@@ -356,6 +359,9 @@ function ald_custom_javascript_code(){
 								    "transform":"translate3d(-100%, 0px, 0px)",
 								});
 							}, 300);
+
+							// Custom Trigger: Loaded
+							jQuery(document).trigger('ald_ajax_content_loaded', data);
 
 		                }
 		            });
