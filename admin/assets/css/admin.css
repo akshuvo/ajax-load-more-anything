@@ -299,7 +299,6 @@ span.delete_field:hover{
 ul.ald-list li {
     width: 50%;
     float: left;
-    padding-right: 15px;
 }
 
 ul.ald-list li:before {
