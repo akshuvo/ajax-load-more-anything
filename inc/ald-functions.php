@@ -178,8 +178,7 @@ function ald_custom_javascript_code(){
 
 	?>
 	<script type="text/javascript">
-		(function($) {
-			'use strict';
+		jQuery(function($){
 
 			jQuery(document).ready(function() {
 
@@ -189,12 +188,16 @@ function ald_custom_javascript_code(){
 
 					<?php foreach ( $general_loadmore as $key => $value ) : ?>
 
-						<?php $ald_wrapper_class = $value['btn_selector']; ?>
-						<?php $ald_load_class =  $value['load_selector'];?>
-						<?php $ald_item_show = $value['visible_items']; ?>
-						<?php $ald_item_load = $value['load_items']; ?>
-						<?php $ald_load_label = $value['button_label'];?>
-						<?php $display_type = $value['display_type'];?>
+						<?php $ald_wrapper_class = isset( $value['btn_selector'] ) && !empty( $value['btn_selector'] ) ? sanitize_text_field( $value['btn_selector'] ) : ''; ?>
+						<?php $ald_load_class =  isset( $value['load_selector'] ) && !empty( $value['load_selector'] ) ? sanitize_text_field( $value['load_selector'] ) : '';?>
+						<?php $ald_item_show = isset( $value['visible_items'] ) && !empty( $value['visible_items'] ) ? sanitize_text_field( $value['visible_items'] ) : '3'; ?>
+						<?php $ald_item_load = isset( $value['load_items'] ) && !empty( $value['load_items'] ) ? sanitize_text_field( $value['load_items'] ) : '3'; ?>
+						<?php $ald_load_label = isset( $value['button_label'] ) && !empty( $value['button_label'] ) ? sanitize_text_field( $value['button_label'] ) : __( 'Load More', 'aldtd' );?>
+						<?php $display_type = isset( $value['display_type'] ) && !empty( $value['display_type'] ) ? sanitize_text_field( $value['display_type'] ) : '';?>
+
+						<?php if( empty( $ald_wrapper_class ) || empty( $ald_load_class ) ) :?>
+							<?php continue; ?>
+						<?php endif; ?>
 
 						// Append the Load More Button
 						$("<?php _e( $ald_wrapper_class ); ?>").append('<a data-glm-button-selector="<?php esc_attr_e( $ald_wrapper_class ); ?>"  href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
@@ -474,7 +477,7 @@ function ald_custom_javascript_code(){
 
 			});
 
-		})(jQuery);
+		});
 	</script>
 	<?php
 	$output = ob_get_clean();
@@ -482,7 +485,7 @@ function ald_custom_javascript_code(){
 	echo $output;
 }
 
-add_action('wp_footer','ald_custom_javascript_code');
+add_action('wp_footer','ald_custom_javascript_code', 9999);
 
 /**
  * Ajax Loader on top
