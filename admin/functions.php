@@ -166,7 +166,8 @@ function ald_save_option_ajax_function(){
 add_action( 'wp_ajax_ald_add_general_loadmore', 'ald_add_general_loadmore_action' );
 function ald_add_general_loadmore_action(){
 
-    $key = sanitize_text_field( $_POST['key'] );
+    //$key = sanitize_text_field( $_POST['key'] );
+    $key = wp_generate_password( 3, false );
 
     ob_start();
 
@@ -200,7 +201,7 @@ function ald_add_general_loadmore_wrap( $args ){
     // Array key
     $key =  isset( $args['key'] ) ? $args['key'] : "";
 
-    $wrapper_key = '<span class="gen_wrap_sl">'.($args['key']+1).'</span>';
+    $wrapper_key = '<span class="gen_wrap_sl">'.($args['key']).'</span>';
 
     if ( !isset( $args['selector']['wrapper_title'] ) ) {
         $wrapper_title = __('Wrapper Title', 'aldtd');
@@ -326,7 +327,8 @@ function ald_add_general_loadmore_wrap( $args ){
 add_action( 'wp_ajax_ald_add_ajax_loadmore', 'ald_add_ajax_loadmore_action' );
 function ald_add_ajax_loadmore_action(){
 
-    $key = sanitize_text_field( $_POST['key'] );
+    //$key = sanitize_text_field( $_POST['key'] );
+    $key = wp_generate_password( 3, false );
 
     ob_start();
 
@@ -361,7 +363,7 @@ function ald_add_ajax_loadmore_wrap( $args ){
     // Array key
     $key =  isset( $args['key'] ) ? $args['key'] : "";
 
-    $wrapper_key = '<span class="ajax_wrap_sl">'.($args['key']+1).'</span>';
+    $wrapper_key = '<span class="ajax_wrap_sl">'.($args['key']).'</span>';
 
     if ( !isset( $args['selector']['wrapper_title'] ) ) {
         $wrapper_title = __('Wrapper Title', 'aldtd');
