@@ -178,6 +178,7 @@ function ald_custom_javascript_code(){
 
 	?>
 	<script type="text/javascript">
+		window.onload = function(){
 		jQuery(function($){
 
 			jQuery(document).ready(function() {
@@ -478,6 +479,7 @@ function ald_custom_javascript_code(){
 			});
 
 		});
+};
 	</script>
 	<?php
 	$output = ob_get_clean();
