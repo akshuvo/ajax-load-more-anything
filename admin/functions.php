@@ -152,12 +152,14 @@ function ald_save_option_ajax_function(){
         return;
     }
 
-    //Update entire array
+    $options = apply_filters( 'ald_before_options_save', $options );
+
+    // Update entire array
     update_option('ald_options', $options);
 
     $my_multi_options = get_option('ald_options');
 
-    print_r( $my_multi_options );
+    echo wp_json_encode($my_multi_options);
 
     die();
 }

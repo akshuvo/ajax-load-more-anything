@@ -261,7 +261,7 @@ function ald_custom_javascript_code(){
 						// Hide on initial if no div to show
 						if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
 							$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").fadeOut('slow');
-							console.log( 'Load more button hidden because no more item to load' );
+							//console.log( 'Load more button hidden because no more item to load' );
 						}
 
 					<?php endforeach; ?>
