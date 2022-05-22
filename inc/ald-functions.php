@@ -303,9 +303,9 @@ function ald_custom_javascript_code(){
 		                    flag = true;
 		                },
 		                success: function(data) {
-
+		                	
 		                	// Custom Trigger: Before Load
-							jQuery(document).trigger('ald_ajax_content_ready', data);
+							jQuery(document).trigger('ald_ajax_content_ready', [data, args]);
 
 		                    // Data Implement
 		                    if ( dis ) {
@@ -316,7 +316,7 @@ function ald_custom_javascript_code(){
 								    if ( selector ) {
 								    	var newData = $(selector, data).html();
 
-								    	console.log( newData );
+								    	// console.log( newData );
 
 								    	if ( type == "insert_before" ) {
 								    		$( selector ).prepend( newData );
@@ -330,9 +330,7 @@ function ald_custom_javascript_code(){
 								}
 				        	}
 
-				        	if ( args['update_page_title'] && args['update_page_title'] == "yes" ) {
-				        		document.title = $(data).filter('title').text();
-				        	}
+
 
 		                    flag = false;
 
@@ -420,9 +418,8 @@ function ald_custom_javascript_code(){
 					            var targetUrl = ( e.target.href ) ? e.target.href : $(this).context.href;
 					            LoadMorePushAjax( targetUrl, args );
 
-					            <?php if ( $update_browser_url == "yes" ) : ?>
-					            	window.history.pushState({url: "" + targetUrl + ""}, "", targetUrl);
-					            <?php endif; ?>
+					            <?php do_action( 'after_load_more_push_ajax', $value ); ?>
+					            
 
 					        });
 
