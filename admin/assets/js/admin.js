@@ -258,6 +258,23 @@
             });
         });
 
+        // Trigger Pro modal on option selection
+        $(document).on('change', '.option-select-lmapro-modal-trigger', function(){
+
+            if ( ald_pro == "0" ) {
+                var $this = $(this);
+
+                var value = $this.val();
+                var checkVal = $this.attr('data-pro-val');
+
+                if ( value == checkVal ) {
+                    jQuery(document).trigger('am_modal_show', '#ald_go-pro');
+                    return;
+                }
+            }
+        });
+        
+
 	});
 
     $(window).load(function(){

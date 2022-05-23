@@ -303,7 +303,7 @@ function ald_custom_javascript_code(){
 		                    flag = true;
 		                },
 		                success: function(data) {
-		                	
+
 		                	// Custom Trigger: Before Load
 							jQuery(document).trigger('ald_ajax_content_ready', [data, args]);
 
@@ -329,7 +329,6 @@ function ald_custom_javascript_code(){
 								    }
 								}
 				        	}
-
 
 
 		                    flag = false;
@@ -373,6 +372,7 @@ function ald_custom_javascript_code(){
 
 				// Start Ajax based
 				<?php if( $ajax_loadmore ) : ?>
+				<?php do_action( 'load_more_anything_ajax_loadmore', $ajax_loadmore ); ?>
 
 					<?php foreach ( $ajax_loadmore as $key => $value ) : ?>
 
@@ -480,11 +480,15 @@ function ald_custom_javascript_code(){
 	</script>
 	<?php
 	$output = ob_get_clean();
-	//echo ald_minify_js( $output );
+
+	// Minify
+	// $output = ald_minify_js( $output );
+
+	// Output
 	echo $output;
 }
 
-add_action('wp_footer','ald_custom_javascript_code', 9999);
+add_action('wp_footer','ald_custom_javascript_code', 999);
 
 /**
  * Ajax Loader on top

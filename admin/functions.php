@@ -417,10 +417,10 @@ function ald_add_ajax_loadmore_wrap( $args ){
                             </div>
                         </th>
                         <td>
-                            <select id="ajax_loadmore-event_type-<?php _e( $key ); ?>" class="regular-text ajax_loadmore-event_type" type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][event_type]">
+                            <select id="ajax_loadmore-event_type-<?php _e( $key ); ?>" data-pro-val="custom_button" class="option-select-lmapro-modal-trigger regular-text ajax_loadmore-event_type" type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][event_type]">
                                 <option value="selectors_click" <?php selected( $event_type, 'selectors_click' ); ?>><?php _e( 'Selector(s) Click', 'aldtd' ); ?></option>
                                 <option value="scroll_to_load" <?php selected( $event_type, 'scroll_to_load' ); ?>><?php _e( 'Scroll to Load (Infinite Scroll)', 'aldtd' ); ?></option>
-                                <option value="custom_button" <?php selected( $event_type, 'custom_button' ); ?>><?php _e( 'Add Custom Button', 'aldtd' ); ?></option>
+                                <option value="custom_button" <?php selected( $event_type, 'custom_button' ); ?>><?php _e( 'Add Custom Button', 'aldtd' ); ?><?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' (Available in Pro) '; ?></option>
                             </select>
                         </td>
                     </tr>
@@ -522,13 +522,13 @@ function ald_add_ajax_loadmore_wrap( $args ){
                                         <td>
                                             <select id="ajax_loadmore-update_browser_url-<?php _e( $key ); ?>" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][update_browser_url]">
                                                 <option value="no" <?php selected( $update_browser_url, 'no' ); ?>><?php _e( 'No', 'aldtd' ); ?></option>
-                                                <option value="yes" <?php selected( $update_browser_url, 'yes' ); ?>><?php _e( 'Yes', 'aldtd' ); ?></option>
+                                                <option value="yes" <?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' disabled '; selected( $update_browser_url, 'yes' ); ?>><?php _e( 'Yes', 'aldtd' ); ?><?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' (Available in Pro) '; ?></option>
                                             </select>
                                         </td>
                                         <td>
                                             <select id="ajax_loadmore-update_page_title-<?php _e( $key ); ?>" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][update_page_title]">
                                                 <option value="no" <?php selected( $update_page_title, 'no' ); ?>><?php _e( 'No', 'aldtd' ); ?></option>
-                                                <option value="yes" <?php selected( $update_page_title, 'yes' ); ?>><?php _e( 'Yes', 'aldtd' ); ?></option>
+                                                <option value="yes" <?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' disabled '; selected( $update_page_title, 'yes' ); ?>><?php _e( 'Yes', 'aldtd' ); ?><?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' (Available in Pro) '; ?></option>
                                             </select>
                                         </td>
                                     </tr>
