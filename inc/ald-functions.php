@@ -85,43 +85,40 @@ function ald_lite_custom_style(){
     $ajax_loadmore = isset( $ald_options['ajax_loadmore'] ) ? $ald_options['ajax_loadmore'] : array();
     $custom_css  = isset( $ald_options['custom_css'] ) ? $ald_options['custom_css'] : "";
 
+    // Get only load more selectors
+    $general_hide_selectors = array_column( $general_loadmore, 'load_selector' );
+    // Trim spaces from selectors
+    $general_hide_selectors = array_map( 'trim', $general_hide_selectors );
+    // Remove empty selectors
+    $general_hide_selectors = array_filter( $general_hide_selectors );
+
+    // Handle ajax hidden selectors
+    $ajax_hide_selectors = [];
+    if( !empty( $ajax_loadmore ) ){
+    	foreach ( $ajax_loadmore as $key => $alvalue ) {
+    		if( $alvalue['event_type'] != "selectors_click" && $alvalue['hide_selector_wrapper'] == "yes" && !empty( $alvalue['wrapper_to_hide'] ) ) {
+    			$ajax_hide_selectors[] = trim( $alvalue['wrapper_to_hide'] ); 
+    		}
+    	}
+    }
+
+    // Remove empty selectors
+    $ajax_hide_selectors = array_filter( $ajax_hide_selectors );
+		
+
+
     ob_start();
 	?>
 	<style type="text/css">
-		<?php if( $general_loadmore ) : $glcount = 1; ?>
-			<?php foreach ( $general_loadmore as $key => $value ) : ?>
+		
+		/* General Selector Hidden Handle */
+		<?php echo implode(',', $general_hide_selectors); ?>{ display: none; } 
 
-				<?php if( $value['load_selector'] != "" ) : ?>
-
-					<?php _e( $value['load_selector'] ); ?>
-
-					<?php if ( $glcount < count( $general_loadmore )  ) { _e( "," ); } ?>
-					<?php $glcount++; ?>
-
-				<?php endif; ?>
-
-			<?php endforeach; ?> { display: none; }
-		<?php endif;?>
-
-		/* Ajax Selector Handle */
-		<?php if( $ajax_loadmore ) : $alcount = 1; ?>
-			<?php foreach ( $ajax_loadmore as $key => $alvalue ) : ?>
-
-				<?php if( $alvalue['event_type'] != "selectors_click" && $alvalue['hide_selector_wrapper'] == "yes" && $alvalue['wrapper_to_hide'] != "" ) : ?>
-
-					<?php _e( $alvalue['wrapper_to_hide'] ); ?>
-
-					<?php if ( $alcount < count( $ajax_loadmore ) ) { _e( "," ); } ?>
-
-					<?php $alcount++; ?>
-
-				<?php endif; ?>
-
-			<?php endforeach; ?> { visibility: hidden; }
-		<?php endif;?>
+		/* Ajax Selector Hidden Handle */
+		<?php echo implode(',', $ajax_hide_selectors); ?>{ visibility: hidden; } 
 
 		/* Custom CSS */
-		<?php _e( $custom_css );?>
+		<?php echo $custom_css;?>
 
 	</style><?php
 	$output = ob_get_clean();
@@ -196,6 +193,7 @@ function ald_custom_javascript_code(){
 						<?php $ald_load_label = isset( $value['button_label'] ) && !empty( $value['button_label'] ) ? sanitize_text_field( $value['button_label'] ) : __( 'Load More', 'aldtd' );?>
 						<?php $display_type = isset( $value['display_type'] ) && !empty( $value['display_type'] ) ? sanitize_text_field( $value['display_type'] ) : '';?>
 
+						// Skip is selectors are empty
 						<?php if( empty( $ald_wrapper_class ) || empty( $ald_load_class ) ) :?>
 							<?php continue; ?>
 						<?php endif; ?>
@@ -364,6 +362,9 @@ function ald_custom_javascript_code(){
 							// Custom Trigger: Loaded
 							jQuery(document).trigger('ald_ajax_content_loaded', data);
 
+							// Ajax success
+							jQuery(document).trigger('ald_ajax_content_success', [data, args]);
+
 		                }
 		            });
 		        };
@@ -472,11 +473,10 @@ function ald_custom_javascript_code(){
 				<?php endif; ?> // End Ajax Selector
 
 
-
 			});
 
 		});
-};
+		};
 	</script>
 	<?php
 	$output = ob_get_clean();
