@@ -673,8 +673,7 @@ function ald_plugin_pro_modal(){
                 <div class="am_go-pro-modal-content">
                     <div class="very-top">
                         <h2>It's time to go pro</h2>
-                        <p>21% OFF only for you. Coupon Code: <input type="text" value="WPUSER" readonly style=" width: 90px; "></p>
-                        <p><a class="button button-primary" target="_blank" href="https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser">(<del>$25</del> <strong>$19.75</strong>) <?php esc_html_e( 'Upgrade to Pro', 'aldtd' ); ?></a><br><small>100% secure transaction</small></p>
+                        <p><a class="button button-primary" target="_blank" href="https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser">(<del>$39</del> <strong>$29</strong>) <?php esc_html_e( 'Upgrade to Pro', 'aldtd' ); ?></a><br><small>100% secure transaction</small></p>
                     </div>
                     <div class="in-middle">
                         <p>Checkout more features on <strong>Load More Anything Pro</strong></p>
