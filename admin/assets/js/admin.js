@@ -1,13 +1,12 @@
+/**
+ * Show Some Respect to my hard work and don't try to use the pro plugin illegally
+ * It's only about $29.
+ * Purchase Link: https://addonmaster.com/load-more-anything/?utm_source=code&utm_medium=js&utm_campaign=wpuser
+ */
+var ald_pro = alda_params.ald_pro;
 (function($) {
 	"use strict";
 	$(document).ready(function(){
-
-        /**
-         * Show Some Respect to my hard work and don't try to use the pro plugin illegally
-         * It's only about $20. Here is coupon for you: WPUSER
-         * Purchase Link: https://addonmaster.com/load-more-anything/?utm_source=code&utm_medium=js&utm_campaign=wpuser
-         */
-        var ald_pro = alda_params.ald_pro;
 
         // Modal Show Function
         function am_modal_show( id ){
@@ -26,7 +25,7 @@
         });
 
 		// Tab controlling
-	    $('.tf-tab-nav a').on('click',function(e){
+	    $(document).on('click', '.tf-tab-nav a', function(e){
 	    	e.preventDefault();
 	    	var targetDiv = $(this).attr('href');
 
@@ -273,6 +272,12 @@
                 }
             }
         });
+
+        // Field toggle
+        $(document).on('click', '.ald-trigger-pro', function(e){
+            e.preventDefault();
+            jQuery(document).trigger('am_modal_show', '#ald_go-pro');
+        });
         
 
 	});
@@ -284,6 +289,9 @@
         });
 
         // Trigger on load
-        $('.ajax_loadmore-event_type, .ajax_loadmore-hide_selector_wrapper').trigger('change');
+        $('.ajax_loadmore-hide_selector_wrapper').trigger('change');
+        if ( ald_pro != "0" ) {
+            $('.ajax_loadmore-event_type').trigger('change');
+        }
     });
 })(jQuery);

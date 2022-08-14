@@ -1,6 +1,21 @@
 /**
  * Admin CSS
  */
+.ml-1 {
+    margin-left: 1em;
+}
+.ml-half {
+    margin-left: 7px;
+}
+.d-flex {
+    display: flex !important;
+}
+.d-inline-flex {
+    display: inline-flex !important;
+}
+.items-center {
+    align-items: center;
+}
 .ald-wrap .postbox a.header {
     text-transform: uppercase;
     text-decoration: none;

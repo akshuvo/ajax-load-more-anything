@@ -180,102 +180,6 @@ class ALD_Menu {
                                                                     <li>Custom CSS & Custom JS</li>
                                                                     <li>Nice UI Panel</li>
                                                                 </ul>
-                                                                <?php if ( !defined('ALD_PRO_PLUGIN_VERSION') ) : ?>
-                                                                <hr>
-                                                                <h3>Checkout more features on <strong>Load More Anything Pro</strong></h3>
-                                                                <table class="table ald-table">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Load More Anything</th>
-                                                                            <th>Free</th>
-                                                                            <th>Pro</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>General Wrapper</td>
-                                                                            <td><span class="dashicons dashicons-yes"></span></td>
-                                                                            <td><span class="dashicons dashicons-yes"></span></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Ajax Based Wrapper</td>
-                                                                            <td><span class="dashicons dashicons-yes"></span></td>
-                                                                            <td><span class="dashicons dashicons-yes"></span></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>General Wrapper Limit</td>
-                                                                            <td>5</td>
-                                                                            <td>Unlimited</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Ajax Based Wrapper Limit</td>
-                                                                            <td>1</td>
-                                                                            <td>Unlimited</td>
-                                                                        </tr>                                                                 
-                                                                        <tr>
-                                                                            <td>Selector Type</td>
-                                                                            <td>Any</td>
-                                                                            <td>Any</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Custom CSS</td>
-                                                                            <td><span class="dashicons dashicons-yes"></span></td>
-                                                                            <td><span class="dashicons dashicons-yes"></span></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Custom JavaScript</td>
-                                                                            <td><span class="dashicons dashicons-no-alt"></span></td>
-                                                                            <td><span class="dashicons dashicons-yes"></span></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Support Limit</td>
-                                                                            <td>Limited</td>
-                                                                            <td>Unlimited</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Priority Support</td>
-                                                                            <td><span class="dashicons dashicons-no-alt"></span></td>
-                                                                            <td><span class="dashicons dashicons-yes"></span></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Unlimited Usage:</td>
-                                                                            <td>
-                                                                                <span class="dashicons dashicons-no-alt"></span> Comments <br>
-                                                                                <span class="dashicons dashicons-no-alt"></span> Custom Post Type <br>
-                                                                                <span class="dashicons dashicons-no-alt"></span> WooCommerce<br>
-                                                                                <span class="dashicons dashicons-no-alt"></span> Products<br>
-                                                                                <span class="dashicons dashicons-no-alt"></span> Easy Digital Downloads<br>
-                                                                                <span class="dashicons dashicons-no-alt"></span> Posts<br>
-                                                                                <span class="dashicons dashicons-no-alt"></span> Pages<br>
-                                                                                <span class="dashicons dashicons-no-alt"></span> Archives<br>
-                                                                                <span class="dashicons dashicons-no-alt"></span> Search Results<br>
-                                                                                <span class="dashicons dashicons-no-alt"></span> Mostly Anywhere<br>              
-                                                                            </td>
-                                                                            <td>
-                                                                                <span class="dashicons dashicons-yes"></span> Comments <br>
-                                                                                <span class="dashicons dashicons-yes"></span> Custom Post Type <br>
-                                                                                <span class="dashicons dashicons-yes"></span> WooCommerce<br>
-                                                                                <span class="dashicons dashicons-yes"></span> Products<br>
-                                                                                <span class="dashicons dashicons-yes"></span> Easy Digital Downloads<br>
-                                                                                <span class="dashicons dashicons-yes"></span> Posts<br>
-                                                                                <span class="dashicons dashicons-yes"></span> Pages<br>
-                                                                                <span class="dashicons dashicons-yes"></span> Archives<br>
-                                                                                <span class="dashicons dashicons-yes"></span> Search Results<br>
-                                                                                <span class="dashicons dashicons-yes"></span> Mostly Anywhere<br>  
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                    <tfoot>
-                                                                        <tr>
-                                                                            <td></td>
-                                                                            <td colspan="2">
-                                                                                <p>21% OFF only for you. Coupon Code: <input type="text" value="WPUSER" readonly style=" width: 90px; "></p>
-                                                                                <p><a class="button button-primary" target="_blank" href="https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=table&utm_campaign=wpuser">(<del>$25</del> <strong>$19.75</strong>) <?php esc_html_e( 'Upgrade to Pro', 'aldtd' ); ?></a><br><small>100% secure transaction</small></p>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tfoot>
-                                                                </table>
-                                                            <?php endif; ?>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -388,31 +292,83 @@ class ALD_Menu {
                             </div>
 
                         </td>
+
                         <td class="right-col">
                             <table>
+                                <?php if ( !defined('ALD_PRO_PLUGIN_VERSION') ) : ?>
                                 <tr>
                                     <td>
-                                        <strong>
-                                            <h3 style=" margin: 0 0 2px 0; "><?php esc_html_e( 'Do you have any work need to be done ?', 'aldtd' ); ?></h3>
-                                            <?php esc_html_e( 'We do WordPress Theme & Plugin development or Customization  and Website Maintainance', 'aldtd' ); ?>
-                                            <a class="button" title="Get me in touch if you have any custom request" href="mailto:addonmasterwp@gmail.com" style="vertical-align: middle; margin-left: 4px;"><?php esc_html_e( 'Email Us', 'aldtd' ); ?></a>
-                                        </strong>
+                                        <h3 style=" margin: 0 0 2px 0; "><?php echo __( 'Introducing Load More Anyting <code>Pro</code>', 'aldtd' ); ?></h3>
+                                        <p>
+                                            <?php esc_html_e( 'Everything now you can make ajax based!', 'aldtd' ); ?>
+                                        </p>
                                         <hr>
+                                        <ul class="elementor-icon-list-items">
+                                            <li>
+                                                <span class="dashicons dashicons-yes-alt"></span> Unlimited General Wrapper 
+                                            </li>
+                                            <li>
+                                                <span class="dashicons dashicons-yes-alt"></span> Unlimited Ajax Based Wrapper
+                                            </li>
+                                            <li>
+                                                <span class="dashicons dashicons-yes-alt"></span> Dynamically Update Browser URL
+                                            </li>
+                                            <li>
+                                                <span class="dashicons dashicons-yes-alt"></span> Dynamically Update Page Title
+                                            </li>
+                                            <li>
+                                                <span class="dashicons dashicons-yes-alt"></span> Custom JavaScript 
+                                            </li>
+                                            <li>
+                                                <span class="dashicons dashicons-yes-alt"></span> Priority Support and More...
+                                            </li>
+                                        </ul>
+                                        <div class="action-btns">
+                                            <a class="button d-inline-flex items-center" target="_blank" href="<?php echo esc_url('https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=sidebar'); ?>">
+                                                <?php echo __( 'Learn More <span class="ml-half dashicons dashicons-external"></span>', 'aldtd' ); ?>
+                                            </a>
+                                            <a class="button ald-trigger-pro" style="vertical-align: middle; margin-left: 4px;"><?php esc_html_e( 'Free vs Pro Comparison', 'aldtd' ); ?></a>
+                                        </div>
                                     </td>
                                 </tr>
-
-                                <tr><td><strong><?php esc_html_e( 'If you like my plugin please leave a review for inspire me', 'aldtd' ); ?> <a class="button" target="_blank" href="https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/#new-post" style=" vertical-align: middle; margin-left: 4px; "><?php esc_html_e( 'Review Now', 'aldtd' ); ?></a></strong><hr></td></tr>
+                                <?php endif; ?>
 
                                 <tr>
                                     <td>
-                                        <div><strong><?php esc_html_e( 'Questions/Suggestions/Support:', 'aldtd' ); ?></strong></div>
-                                        <a class="button" target="_blank" href="https://www.youtube.com/watch?v=km6V2bcfc6o" style="margin-left: 4px; "><?php esc_html_e( 'Video Tutorial', 'aldtd' ); ?></a>
-
-                                        <a class="button" target="_blank" href="https://wordpress.org/support/plugin/ajax-load-more-anything" style="margin-left: 4px; "><?php esc_html_e( 'View Support Forum', 'aldtd' ); ?></a>
-
-                                        <a class="button" target="_blank" href="https://github.com/akshuvo/ajax-load-more-anything/issues" style="margin-left: 4px; "><?php esc_html_e( 'Create Issue on Github', 'aldtd' ); ?></a>
+                                        <br>
+                                        <h3 style=" margin: 0 0 2px 0; "><?php echo __( 'Stuck in somewhere?', 'aldtd' ); ?></h3>
+                                        <p>
+                                            <?php esc_html_e( 'Get support from our developers. Easy, Quick, and Professional!', 'aldtd' ); ?>
+                                        </p>
+                                        <hr>
+                                        
+                                        <ul class="action-btns">
+                                            <li>
+                                                <a class="button d-inline-flex items-center" target="_blank" href="https://wordpress.org/support/plugin/ajax-load-more-anything"><?php echo __( 'View Support Forum <span class="ml-half dashicons dashicons-external"></span>', 'aldtd' ); ?></a>
+                                                
+                                            </li>
+                                            <li>
+                                                <a class="button d-inline-flex items-center" target="_blank" href="<?php echo esc_url('https://addonmaster.com/submit-a-ticket/'); ?>"><?php echo __( 'Submit A Ticket <span class="ml-half dashicons dashicons-external"></span>', 'aldtd' ); ?></a> <code>Pro user only</code>
+                                            </li>
+                                            <li>
+                                                <a class="button d-inline-flex items-center" href="mailto:addonmasterwp@gmail.com" ><?php echo __( 'Email Us <span class="ml-half dashicons dashicons-email"></span>', 'aldtd' ); ?></a>
+                                            </li>
+                                        </ul>
                                     </td>
-                                </tr>
+                                </tr>   
+
+                                <tr>
+                                    <td>
+                                        <br>
+                                        <h3 style=" margin: 0 0 2px 0; "><?php echo __( 'Show Your Love', 'aldtd' ); ?></h3>
+                                        <p>
+                                            <?php esc_html_e( 'If you want to show some love, The review section is always open for you :). Your awesome review provide us energy to continue development for free.', 'aldtd' ); ?>
+                                        </p>
+                                        <hr>
+                                        
+                                        <a class="button d-inline-flex items-center" target="_blank" href="<?php echo esc_url('https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/#new-post'); ?>"><?php echo __( 'Write a Review', 'aldtd' ); ?></a>
+                                    </td>
+                                </tr>   
 
                             </table>
                         </td>

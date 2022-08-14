@@ -666,14 +666,14 @@ function ald_plugin_pro_modal(){
     }
     ?>
     <div id="ald_go-pro" class="am_go-pro-modal-outer" style="display: none;">
-        <div class="am_shadow"></div>
+        <div class="am_shadow am-modal-close"></div>
         <div class="am_go-pro-modal-inner">
             <div class="am_go-pro-modal">
                 <div class="am-modal-close">&times;</div>
                 <div class="am_go-pro-modal-content">
                     <div class="very-top">
-                        <h2>It's time to go pro</h2>
-                        <p><a class="button button-primary" target="_blank" href="https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser">(<del>$39</del> <strong>$29</strong>) <?php esc_html_e( 'Upgrade to Pro', 'aldtd' ); ?></a><br><small>100% secure transaction</small></p>
+                        <h2 style=" font-size: 2em; ">It's time to go pro</h2>
+                        <p><a class="button button-primary" target="_blank" href="https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser#pricing_table">(<del>$39</del> <strong>$29</strong>) <?php esc_html_e( 'Upgrade to Pro', 'aldtd' ); ?> <span class="dashicons dashicons-external"></span></a><br><small>Limited time offer!</small></p>
                     </div>
                     <div class="in-middle">
                         <p>Checkout more features on <strong>Load More Anything Pro</strong></p>
@@ -705,7 +705,39 @@ function ald_plugin_pro_modal(){
                                     <td>Ajax Based Wrapper Limit</td>
                                     <td>1</td>
                                     <td>Unlimited</td>
-                                </tr>                                                                 
+                                </tr>
+
+                                <tr>
+                                    <td>Dynamically Update Browser URL</td>
+                                    <td><span class="dashicons dashicons-no-alt"></span></td>
+                                    <td><span class="dashicons dashicons-yes"></span></i></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Dynamically Update Page Title</td>
+                                    <td><span class="dashicons dashicons-no-alt"></span></td>
+                                    <td><span class="dashicons dashicons-yes"></span></i></td>
+                                  </tr>
+                                  
+                                  <tr>
+                                    <td>Data Selector</td>
+                                    <td>Unlimited</td>
+                                    <td>Unlimited</td>
+                                  </tr>
+                                  
+                                  <tr>
+                                    <td>Data Implement Type</td>
+                                    <td>
+                                        <span class="dashicons dashicons-yes"></span></i> Replace Data<br>
+                                        <span class="dashicons dashicons-yes"></span></i> Insert After<br>
+                                        <span class="dashicons dashicons-yes"></span></i> Insert Before<br>
+                                    </td>
+                                    <td>
+                                        <span class="dashicons dashicons-yes"></span></i> Replace Data<br>
+                                        <span class="dashicons dashicons-yes"></span></i> Insert After<br>
+                                        <span class="dashicons dashicons-yes"></span></i> Insert Before<br>
+                                    </td>
+                                  </tr>
+
                                 <tr>
                                     <td>Selector Type</td>
                                     <td>Any</td>
@@ -720,6 +752,11 @@ function ald_plugin_pro_modal(){
                                     <td>Custom JavaScript</td>
                                     <td><span class="dashicons dashicons-no-alt"></span></td>
                                     <td><span class="dashicons dashicons-yes"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Ajax Preloader</td>
+                                    <td><span class="dashicons dashicons-yes"></span></i></td>
+                                    <td><span class="dashicons dashicons-yes"></span></i></td>
                                 </tr>
                                 <tr>
                                     <td>Support Limit</td>
@@ -762,9 +799,8 @@ function ald_plugin_pro_modal(){
                             <tfoot>
                                 <tr>
                                     <td></td>
-                                    <td colspan="2">
-                                        <p>21% OFF only for you. Coupon Code: <input type="text" value="WPUSER" readonly style=" width: 90px; "></p>
-                                        <p><a class="button button-primary" target="_blank" href="https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popup&utm_campaign=wpuser">(<del>$25</del> <strong>$19.75</strong>) <?php esc_html_e( 'Upgrade to Pro', 'aldtd' ); ?></a><br><small>100% secure transaction</small></p>
+                                    <td colspan="2" style=" text-align: center; ">
+                                        <p><a class="button button-primary" target="_blank" href="https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser#pricing_table">(<del>$39</del> <strong>$29</strong>) <?php esc_html_e( 'Upgrade to Pro', 'aldtd' ); ?> <span class="dashicons dashicons-external"></span></a><br><small>100% secure transaction</small></p>
                                     </td>
                                 </tr>
                             </tfoot>
@@ -772,12 +808,17 @@ function ald_plugin_pro_modal(){
                     </div>
                     <br>
                     <div class="very-top very-bottom">
-                        <b>100% No-Risk Money Back Guarantee!</b> If you don't like the plugin over the next 7 days, we will happily refund 100% of your money. No questions asked! Payments are processed by our merchant of records - <a href="https://paddle.com/" target="_blank">Paddle</a>.
+                        <b>100% Risk-Free Money Back Guarantee!</b> If the plugin not work for you or we're unable to solve your support issue within 7 days, we will happily refund 100% of your money. No questions asked!</a>.
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <style>
+    .am_shadow.am-modal-close{
+        cursor: auto;
+    }
+    </style>
     <?php
 }
 add_action( 'admin_footer', 'ald_plugin_pro_modal', 10 );
