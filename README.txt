@@ -1,11 +1,15 @@
 === Load More Anything ===
-Contributors: mdshuvo
+Contributors: mdshuvo, addonmaster
 Tags: div jquery load, anything jquery, blog post jquery load, Comments jquery load, page jquery load, Category jquery load, Recent Posts jquery load, Sidebar widget jquery load, Woocommerce Product jquery load, Images jquery load, Photos jquery load, Videos jquery load, custom Div jquery load,infinite scroll, infinite scrolling, scroll, lazy load, lazy loading, endless scroll, pagination, jquery load pagination, jquery load, jquery load posts, jquery load more, anything load more, devshuvo
-Tested up to: 5.6.1
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Requires at least: 4.0
+Tested up to: 6.0.1
+Requires PHP: 5.6
+Stable tag: trunk
+License: GPLv3
+License URI: https://opensource.org/licenses/GPL-3.0
 
-A simple plugin that help you to Load more any item with jquery. You can use Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce Product, Images, Photos, Videos, custom Div or whatever you want.
+
+A simple plugin that helps you to Load more any item. You can use Load More button for your blog post, Comments, page, Category, Recent Posts, Woocommerce Product, custom Div or whatever you want.
 
 == Description ==
 
