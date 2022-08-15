@@ -8,8 +8,8 @@
  * Description:  A simple plugin that help you to Load more any item with jQuery/Ajax. You can use Ajaxify Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce Product, Images, Photos, Videos, custom selector or whatever you want.
  * License:      GPL2
  * License URI:  https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:  aldtd
- * Domain Path:  /lang
+ * Text Domain:  ajax-load-more-anything
+ * Domain Path:  /languages
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,7 +27,7 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 define( 'ALD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 if ( !defined('ALD_PLUGIN_VERSION') ) {
-	define('ALD_PLUGIN_VERSION', '2.4.1' );
+	define('ALD_PLUGIN_VERSION', '3.0.0' );
 }
 
 /**
@@ -71,7 +71,7 @@ final class Ajax_Load_More_Anything {
 	 */
 	function plugin_loaded_action() {
 		// Loading Text Domain for Internationalization
-		load_plugin_textdomain( 'aldtd', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
+		load_plugin_textdomain( 'ajax-load-more-anything', false, dirname( plugin_basename(__FILE__) ) . '/languages/' );
 
 		require_once( dirname( __FILE__ ) . '/inc/ald-functions.php' );
 		require_once( dirname( __FILE__ ) . '/admin/functions.php' );
@@ -83,10 +83,9 @@ final class Ajax_Load_More_Anything {
 	 * Enqueue Frontend Scripts
 	 */
 	function enqueue_scripts() {
-		$ver = current_time( 'timestamp' );
 
-	    wp_enqueue_style( 'ald-styles', ALD_PLUGIN_URL . 'assets/css/styles.css', null, $ver );
-	    wp_enqueue_script( 'ald-scripts', ALD_PLUGIN_URL . 'assets/js/scripts.js', array('jquery'), $ver );
+	    wp_enqueue_style( 'ald-styles', ALD_PLUGIN_URL . 'assets/css/styles.css', null, ALD_PLUGIN_VERSION );
+	    wp_enqueue_script( 'ald-scripts', ALD_PLUGIN_URL . 'assets/js/scripts.js', array('jquery'), ALD_PLUGIN_VERSION );
 
 		wp_localize_script( 'ald-scripts', 'ald_params',
          	array(
@@ -127,7 +126,7 @@ final class Ajax_Load_More_Anything {
 	        return;
 	    }
 
-	    $ver = current_time( 'timestamp' );
+	    $ver = '3.0.0';
 
 	    wp_register_style( 'ald-admin-styles', ALD_PLUGIN_URL . 'admin/assets/css/admin.css', null, $ver );
 	    wp_register_script( 'ald-admin-scripts', ALD_PLUGIN_URL . 'admin/assets/js/admin.js', array('jquery'), $ver );
@@ -150,7 +149,7 @@ final class Ajax_Load_More_Anything {
 	 */
 	function plugin_action_links( $links ) {
 		$plugin_links = array(
-			'<a href="admin.php?page=ald_setting">' . esc_html__( 'Settings', 'ald' ) . '</a>',
+			'<a href="admin.php?page=ald_setting">' . esc_html__( 'Settings', 'ajax-load-more-anything' ) . '</a>',
 		);
 		return array_merge( $plugin_links, $links );
 	}

@@ -190,7 +190,7 @@ function ald_custom_javascript_code(){
 						<?php $ald_load_class =  isset( $value['load_selector'] ) && !empty( $value['load_selector'] ) ? sanitize_text_field( $value['load_selector'] ) : '';?>
 						<?php $ald_item_show = isset( $value['visible_items'] ) && !empty( $value['visible_items'] ) ? sanitize_text_field( $value['visible_items'] ) : '3'; ?>
 						<?php $ald_item_load = isset( $value['load_items'] ) && !empty( $value['load_items'] ) ? sanitize_text_field( $value['load_items'] ) : '3'; ?>
-						<?php $ald_load_label = isset( $value['button_label'] ) && !empty( $value['button_label'] ) ? sanitize_text_field( $value['button_label'] ) : __( 'Load More', 'aldtd' );?>
+						<?php $ald_load_label = isset( $value['button_label'] ) && !empty( $value['button_label'] ) ? sanitize_text_field( $value['button_label'] ) : __( 'Load More', 'ajax-load-more-anything' );?>
 						<?php $display_type = isset( $value['display_type'] ) && !empty( $value['display_type'] ) ? sanitize_text_field( $value['display_type'] ) : '';?>
 
 						// Skip is selectors are empty
