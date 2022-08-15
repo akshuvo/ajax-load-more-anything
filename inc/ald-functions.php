@@ -157,7 +157,37 @@ function ald_minify_js($input) {
 // button label
 function ald_button_label( $label = null ){
 
-	$label = str_replace("[count]", '<span class="ald-count"></span>', $label );
+	$wpml_string_id = 'General Wrapper: ' . sanitize_title( $label );
+
+	// WMPL register strings for translation
+	if (function_exists ( 'icl_register_string' )){
+		icl_register_string('Load More Anyting', $wpml_string_id, $label);
+	}
+
+	// WPML Display Translation
+	$label = apply_filters('wpml_translate_single_string', $label, 'Load More Anyting', $wpml_string_id );
+
+	// Replace Count
+	$label = str_replace("[count]", '<span class="ald-count"></span>', __($label, 'ajax-load-more-anything') );
+
+	return $label;
+}
+
+// button label: for ajax wrapper
+function ald_ajax_button_label( $label = '' ){
+
+	$wpml_string_id = 'Ajax Wrapper: ' . sanitize_title( $label );
+
+	// WMPL register strings for translation
+	if (function_exists ( 'icl_register_string' )){
+		icl_register_string('Load More Anyting', $wpml_string_id, $label);
+	}
+
+	// WPML Display Translation
+	$label = apply_filters('wpml_translate_single_string', $label, 'Load More Anyting', $wpml_string_id );
+
+	// Replace Count
+	// $label = str_replace("[count]", '<span class="ald-count"></span>', __($label, 'ajax-load-more-anything') );
 
 	return $label;
 }
@@ -380,7 +410,7 @@ function ald_custom_javascript_code(){
 						<?php $event_type = isset( $value['event_type'] ) ? $value['event_type'] : "selectors_click"; ?>
 
 						<?php $custom_button_append =  isset( $value['custom_button_append'] ) ? $value['custom_button_append'] : ""; ?>
-						<?php $button_label =  isset( $value['button_label'] ) ? $value['button_label'] : ""; ?>
+						<?php $button_label =  isset( $value['button_label'] ) ? ald_ajax_button_label($value['button_label']) : ""; ?>
 
 						<?php $button_trigger_selector = isset( $value['button_trigger_selector'] ) ? $value['button_trigger_selector'] : ""; ?>
 						<?php $click_selector = isset( $value['click_selector'] ) ? $value['click_selector'] : ""; ?>

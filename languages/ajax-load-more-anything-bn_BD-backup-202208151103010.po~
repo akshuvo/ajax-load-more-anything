@@ -1,14 +1,13 @@
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Load More Anything\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-15 11:02+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: \n"
-"Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"POT-Creation-Date: 2022-08-15 10:46+0000\n"
+"PO-Revision-Date: 2022-08-15 11:01+0000\n"
+"Last-Translator: \n"
+"Language-Team: বাংলা\n"
+"Language: bn_BD\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -222,7 +221,7 @@ msgstr ""
 
 #: inc/ald-functions.php:162
 msgid "Load Koro"
-msgstr ""
+msgstr "লোড কর"
 
 #: inc/ald-functions.php:195
 msgid "Load More"
@@ -364,7 +363,7 @@ msgstr ""
 
 #: admin/Menu.php:157
 msgid "Welcome to Load More Anything"
-msgstr ""
+msgstr " Load More Anything এ স্বাগতম"
 
 #: admin/functions.php:492
 msgid "Wrapper Selector to hide"
@@ -388,7 +387,4 @@ msgstr ""
 
 #: admin/functions.php:837
 msgid "You can trigger custom functions from here."
-msgstr ""
-
-msgid "Load Koroto"
 msgstr ""

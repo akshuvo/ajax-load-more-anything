@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Load More Anything\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-15 11:02+0000\n"
+"POT-Creation-Date: 2022-08-15 11:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -388,7 +388,4 @@ msgstr ""
 
 #: admin/functions.php:837
 msgid "You can trigger custom functions from here."
-msgstr ""
-
-msgid "Load Koroto"
 msgstr ""
