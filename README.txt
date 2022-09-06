@@ -100,21 +100,26 @@ How to install Load More Anything.
 
 
 == Frequently Asked Questions ==
-=  How can I show the count button? =
+
+= How can I show the count button? =
+
 Use +[count] More in button label so it will be show like this: +15 More
 
-=  How I use this =
-Just put the class or ID where you want to show the Button then put the CSS or ID of the content div
+= How I use this =
+
+Just find the correct selector of the suitable wrapper and insert them in the Plugin Option Panel. The rest will be done by our plugin.
 
 = I can't find the selector for my website. Can you help? =
-Contact for paid help: akhtarujjamanshuvo@gmail.com
 
-= Can i see video Tutorial ? =
-Checkout the tutorial on [Youtube](https://youtu.be/km6V2bcfc6o)
+Please contact to this email addonmasterwp@gmail.com (conditions apply)
+
+= Do you have documentation for this plugin? =
+
+Yes. You can find the Documentation [Here](https://addonmaster.com/docs-category/load-more-anything/)
 
 = Questions/Suggestions/Support?  =
-Create Topic in [Support forum](https://wordpress.org/support/plugin/ajax-load-more-anything/) or Create issue on [Github](https://github.com/akshuvo/load-more-anything/issues)
 
+Create Topic in [Support forum](https://wordpress.org/support/plugin/ajax-load-more-anything/)
 
 == Screenshots ==
 1. Features Overview
