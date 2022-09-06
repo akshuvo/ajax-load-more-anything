@@ -315,7 +315,7 @@ function ald_custom_javascript_code(){
 		                main_xhr.abort();
 		            }
 
-		            main_xhr = $.ajax({
+		            main_xhr = jQuery.ajax({
 		                url: url,
 		                asynch: true,
 		                beforeSend: function() {
@@ -516,7 +516,7 @@ function ald_custom_javascript_code(){
 	echo $output;
 }
 
-add_action('wp_footer','ald_custom_javascript_code', 999);
+add_action('wp_footer','ald_custom_javascript_code', 9999);
 
 /**
  * Ajax Loader on top
