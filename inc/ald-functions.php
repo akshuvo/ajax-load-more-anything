@@ -206,9 +206,8 @@ function ald_custom_javascript_code(){
 	?>
 	<script type="text/javascript">
 		window.onload = function(){
-		jQuery(function($){
-
-			jQuery(document).ready(function() {
+		
+			jQuery(document).ready(function($) {
 
 				var loader = '<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>';
 
@@ -229,32 +228,32 @@ function ald_custom_javascript_code(){
 						<?php endif; ?>
 
 						// Append the Load More Button
-						$("<?php _e( $ald_wrapper_class ); ?>").append('<a data-glm-button-selector="<?php esc_attr_e( $ald_wrapper_class ); ?>"  href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
+						jQuery("<?php _e( $ald_wrapper_class ); ?>").append('<a data-glm-button-selector="<?php esc_attr_e( $ald_wrapper_class ); ?>"  href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
 
 						<?php if ( $display_type == "flex" ) : ?>
 
-							$("<?php _e( $ald_load_class ); ?>").hide();
+							jQuery("<?php _e( $ald_load_class ); ?>").hide();
 
 							// Show the initial visible items
-							$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).css({ 'display': 'flex' });
+							jQuery("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).css({ 'display': 'flex' });
 
 							// Calculate the hidden items
-							$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
+							jQuery(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php _e( $ald_load_class ); ?>:hidden").length );
 
 							// Button Click Trigger
-							$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
+							jQuery("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
 								e.preventDefault();
 
 								// Show the hidden items
-								$("<?php _e( $ald_load_class ); ?>:hidden").slice(0, <?php _e( $ald_item_load ); ?>).css({ 'display': 'flex' });
+								jQuery("<?php _e( $ald_load_class ); ?>:hidden").slice(0, <?php _e( $ald_item_load ); ?>).css({ 'display': 'flex' });
 
 								// Hide if no more to load
-								if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-									$(this).fadeOut('slow');
+								if ( jQuery("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
+									jQuery(this).fadeOut('slow');
 								}
 
 								// ReCalculate the hidden items
-								$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
+								jQuery(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php _e( $ald_load_class ); ?>:hidden").length );
 
 							});
 
@@ -262,33 +261,33 @@ function ald_custom_javascript_code(){
 						<?php else: ?>
 
 							// Show the initial visible items
-							$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).show();
+							jQuery("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).show();
 
 							// Calculate the hidden items
-							$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
+							jQuery(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php _e( $ald_load_class ); ?>:hidden").length );
 
 							// Button Click Trigger
-							$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
+							jQuery("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
 								e.preventDefault();
 
 								// Show the hidden items
-								$("<?php _e( $ald_load_class ); ?>:hidden").slice(0, <?php _e( $ald_item_load ); ?>).slideDown();
+								jQuery("<?php _e( $ald_load_class ); ?>:hidden").slice(0, <?php _e( $ald_item_load ); ?>).slideDown();
 
 								// Hide if no more to load
-								if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-									$(this).fadeOut('slow');
+								if ( jQuery("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
+									jQuery(this).fadeOut('slow');
 								}
 
 								// ReCalculate the hidden items
-								$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
+								jQuery(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php _e( $ald_load_class ); ?>:hidden").length );
 
 							});
 
 						<?php endif; ?>
 
 						// Hide on initial if no div to show
-						if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-							$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").fadeOut('slow');
+						if ( jQuery("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
+							jQuery("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").fadeOut('slow');
 							//console.log( 'Load more button hidden because no more item to load' );
 						}
 
@@ -302,7 +301,7 @@ function ald_custom_javascript_code(){
 
 		        var LoadMorePushAjax = function( url, args ){
 
-		        	$('.ald_loader_progress').css({
+		        	jQuery('.ald_loader_progress').css({
 					    "-webkit-transform":"translate3d(-100%, 0px, 0px)",
 					    "-ms-transform":"translate3d(-100%, 0px, 0px)",
 					    "transform":"translate3d(-100%, 0px, 0px)",
@@ -320,8 +319,8 @@ function ald_custom_javascript_code(){
 		                url: url,
 		                asynch: true,
 		                beforeSend: function() {
-		                	$('.ald_laser_loader').addClass('show');
-		                    $('.ald_loader_progress').css({
+		                	jQuery('.ald_laser_loader').addClass('show');
+		                    jQuery('.ald_loader_progress').css({
 		                    	"transition-duration": "2000ms",
 							    "-webkit-transform":"translate3d(-20%, 0px, 0px)",
 							    "-ms-transform":"translate3d(-20%, 0px, 0px)",
@@ -342,16 +341,16 @@ function ald_custom_javascript_code(){
 								    var type = dis[key].implement_type;
 
 								    if ( selector ) {
-								    	var newData = $(selector, data).html();
+								    	var newData = jQuery(selector, data).html();
 
 								    	// console.log( newData );
 
 								    	if ( type == "insert_before" ) {
-								    		$( selector ).prepend( newData );
+								    		jQuery( selector ).prepend( newData );
 								    	} else if ( type == "insert_after" ) {
-								    		$( selector ).append( newData );
+								    		jQuery( selector ).append( newData );
 								    	} else {
-								    		$( selector ).html( newData );
+								    		jQuery( selector ).html( newData );
 								    	}
 
 								    }
@@ -361,17 +360,17 @@ function ald_custom_javascript_code(){
 
 		                    flag = false;
 
-		                    $( document ).find( '.tf_posts_navigation' ).removeClass( 'loading' );
+		                    jQuery( document ).find( '.tf_posts_navigation' ).removeClass( 'loading' );
 
 		                    // Remove loading class
-							$('.ald-ajax-btn[data-alm-click-selector]').each(function(){
-								if ( $(this).data('alm-click-selector') == args['click_selector'] ) {
-									$(this).removeClass('loading');
+							jQuery('.ald-ajax-btn[data-alm-click-selector]').each(function(){
+								if ( jQuery(this).data('alm-click-selector') == args['click_selector'] ) {
+									jQuery(this).removeClass('loading');
 								}
 							});
 
 							// Finish the loading
-							$('.ald_loader_progress').css({
+							jQuery('.ald_loader_progress').css({
 								"transition-duration": "500ms",
 							    "-webkit-transform":"translate3d(0%, 0px, 0px)",
 							    "-ms-transform":"translate3d(0%, 0px, 0px)",
@@ -380,8 +379,8 @@ function ald_custom_javascript_code(){
 
 							// Reset the loader
 							setTimeout(function(){
-								$('.ald_laser_loader').removeClass('show');
-								$('.ald_loader_progress').css({
+								jQuery('.ald_laser_loader').removeClass('show');
+								jQuery('.ald_loader_progress').css({
 									"transition-duration": "0ms",
 								    "-webkit-transform":"translate3d(-100%, 0px, 0px)",
 								    "-ms-transform":"translate3d(-100%, 0px, 0px)",
@@ -424,13 +423,13 @@ function ald_custom_javascript_code(){
 						<?php if( $event_type == "custom_button" ) : ?>
 							<?php $click_selector = $button_trigger_selector; ?>
 
-							$("<?php _e($custom_button_append); ?>").after('<button data-alm-click-selector="<?php esc_attr_e( $click_selector ); ?>" type="button" class="ald-ajax-btn button">'+loader+'<span class="ald-btn-label"><?php esc_attr_e( $button_label ); ?></span></button>');
+							jQuery("<?php _e($custom_button_append); ?>").after('<button data-alm-click-selector="<?php esc_attr_e( $click_selector ); ?>" type="button" class="ald-ajax-btn button">'+loader+'<span class="ald-btn-label"><?php esc_attr_e( $button_label ); ?></span></button>');
 
 						<?php endif; ?>
 
 						<?php if( $click_selector ) : ?>
 
-					        $( document ).on('click', '<?php _e( $click_selector ); ?>', function(e){
+					        jQuery( document ).on('click', '<?php _e( $click_selector ); ?>', function(e){
 					        	e.preventDefault();
 
 					        	// Javascript Array Args
@@ -446,7 +445,7 @@ function ald_custom_javascript_code(){
 								args['update_page_title'] = "<?php _e( $update_page_title ); ?>";
 								args['data_implement_selectors'] = '<?php echo json_encode( $data_implement_selectors ); ?>';
 
-					            var targetUrl = ( e.target.href ) ? e.target.href : $(this).context.href;
+					            var targetUrl = ( e.target.href ) ? e.target.href : jQuery(this).context.href;
 					            LoadMorePushAjax( targetUrl, args );
 
 					            <?php do_action( 'after_load_more_push_ajax', $value ); ?>
@@ -459,12 +458,12 @@ function ald_custom_javascript_code(){
 
 						<?php if( $event_type == "scroll_to_load"  ) : ?>
 
-					        $( window ).on('scroll', function(e){
-					            $('<?php _e( $click_selector ); ?>').each(function(i,el){
+					        jQuery( window ).on('scroll', function(e){
+					            jQuery('<?php _e( $click_selector ); ?>').each(function(i,el){
 
-					                var $this = $(this);
+					                var $this = jQuery(this);
 
-					                var H = $(window).height(),
+					                var H = jQuery(window).height(),
 					                    r = el.getBoundingClientRect(),
 					                    t=r.top,
 					                    b=r.bottom;
@@ -485,16 +484,16 @@ function ald_custom_javascript_code(){
 					<?php endforeach; ?>
 
 					// Ajax Custom Button Trigger
-					$( document ).on('click', 'button.ald-ajax-btn', function(e){
-						if ( $(this).data('alm-click-selector') ) {
+					jQuery( document ).on('click', 'button.ald-ajax-btn', function(e){
+						if ( jQuery(this).data('alm-click-selector') ) {
 
-							var selector = $( document ).find($(this).data('alm-click-selector'));
+							var selector = jQuery( document ).find(jQuery(this).data('alm-click-selector'));
 
 							if ( selector.length ) {
-								$(this).addClass('loading');
+								jQuery(this).addClass('loading');
 								selector.trigger('click');
 							} else {
-								$(this).find('.ald-btn-label').text('No New Data Found');
+								jQuery(this).find('.ald-btn-label').text('No New Data Found');
 							}
 
 						}
@@ -505,7 +504,6 @@ function ald_custom_javascript_code(){
 
 			});
 
-		});
 		};
 	</script>
 	<?php
