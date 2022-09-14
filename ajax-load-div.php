@@ -149,6 +149,7 @@ final class Ajax_Load_More_Anything {
 	 */
 	function plugin_action_links( $links ) {
 		$plugin_links = array(
+			'<a target="_blank" href="'.esc_url('https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser#pricing_table').'"><b style=" color: #7e3434; ">&#9733;' . esc_html__( 'GO PRO', 'ajax-load-more-anything' ) . '</b></a>',
 			'<a href="admin.php?page=ald_setting">' . esc_html__( 'Settings', 'ajax-load-more-anything' ) . '</a>',
 		);
 		return array_merge( $plugin_links, $links );
