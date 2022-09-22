@@ -16,26 +16,41 @@ A simple plugin that helps you to Load more any item. You can use Load More butt
 No need to add any code to your theme core file. Just plug and play. A simple plugin that helps you to Load more than any item. You can use the Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce products, Images, Photos, Videos, custom Div, or whatever you want.
 
 ### Infinite Scroll
+
+<iframe width="1552" height="873" src="https://www.youtube.com/embed/Sfo6QF3GL-s?list=TLGGW2dxJFqbF38yMjA5MjAyMg" title="Ajax Pagination Infinite Scroll WordPress Post - Ajax Load More Anything WordPress Plugin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 You can use this plugin to Load your blog posts without reloading the whole page! You can use default pagination, Infinite Scroll, and Custom button to load the blog posts. when you scroll the page posts will be loaded automatically.
 [View Demo](https://plugins.addonmaster.com/ajax-load-more-anything/blog/)
 
 ### Load WordPress Comments
+
+<iframe width="1552" height="873" src="https://www.youtube.com/embed/wYsj-JJn3WY?list=TLGGWr4XDjRhJIwyMjA5MjAyMg" title="Ajax Load WordPress Blog Comments - Ajax Load More Anything WordPress Plugin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 Does your site have too many comments or reviews? No problem, You can load post comments or Product reviews without reloading the page.
 [View Demo](https://plugins.addonmaster.com/ajax-load-more/long-comments/)
 
 ### WooCommerce Products Ajax Pagination
+
+<iframe width="1280" height="731" src="https://www.youtube.com/embed/ppSO1OmSRXI" title="Ajax Pagination Infinite Scroll WooCommerce Products - Ajax Load More Anything WordPress Plugin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 You can use this plugin to Load your WooCommerce Products without reloading the whole page! You can use the default pagination, Infinite Scroll, and Custom button.
 [View Demo](https://plugins.addonmaster.com/ajax-load-more/store/) 
 
-### WooCommerce Products Ajax Pagination
+### Load More Button
 A load more button will help you to load more respited content, you can define how many items will be loaded for each click. Button Counter will display total items and each click it will show how many items are left.
 [View Demo](https://plugins.addonmaster.com/ajax-load-more/load-blog-posts/) 
 
-### WooCommerce Products Ajax Pagination
+### Load more List items
+
+<iframe width="1552" height="873" src="https://www.youtube.com/embed/vdkC-6ovzK8?list=TLGG_5g2T1AcY4kyMjA5MjAyMg" title="Load More List items - Ajax Load More Anything WordPress Plugin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 From a long list of data, you can short the data list by limiting how many items will be loaded initially. The load more button will load data step by step.
 [View Demo](https://plugins.addonmaster.com/ajax-load-more/load-more-list/)
 
 ### Load More Table Rows
+
+<iframe width="1552" height="873" src="https://www.youtube.com/embed/TbfzhThUe48?list=TLGG1GP85vctc-AyMjA5MjAyMg" title="Load More Table Table Content - Ajax Load More Anything WordPress Plugin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 Do you have lots of data in a table? load more anything plugin can make the table short and you can load the table data by clicking on the load more button.
 [View More](https://plugins.addonmaster.com/ajax-load-more/load-more-table-data/)
 
@@ -44,15 +59,20 @@ If you have any suitable wrapper then you can apply load more functionaly there.
 
 
 ### Features:
+* Infinite Scroll on Posts, Blogs, Archives, Categories, Pages, Products, and Custom Post Types 
 * Javascript based General Wrapper	
 * Ajax Based Wrapper
+* Ajax Pagination on Posts, Blogs, Archives, Categories, Pages, Products, and Custom Post Types 
 * Load more anything you want
 * Customizable Load More button
-* Custom CSS
-* Up to 6 General wrapper
-* 1 Ajax based wrapper
+* Up to 6 General wrapper (*Unlimited in Pro*)
+* 1 Ajax based wrapper (*Unlimited in Pro*)
 * Display Flexbox Supported
 * Countable Button Load More like: +15 More
+* Feels like a Headless Website 
+* Update Browser URL on Ajax Load (*Available in Pro*)
+* Update Page Title on Ajax Load (*Available in Pro*)
+* Custom CSS and JS
 
 
 ### Where you can apply Load More? (Ajax Based)
@@ -80,13 +100,19 @@ If you have any suitable wrapper then you can apply load more functionaly there.
 * Any looped div
 
 
-
 ### If you like the plugin, Don't forget to rate it. Your review is my inspiration. [Rate Now](https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/?filter=5#new-post)
 
 
-### Video Tutorial
+### Documentation and Support
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/km6V2bcfc6o" frameborder="0" gesture="media" allowfullscreen></iframe>
+- For documentation and tutorials go to our [Documentation](https://addonmaster.com/docs-category/load-more-anything/). 
+- If you have any more questions, visit our support on the [Plugin's Forum](https://wordpress.org/support/plugin/ajax-load-more-anything).
+- For more information about features, FAQs and documentation, check out our website at [Essential Addons for Elementor](https://essential-addons.com/elementor/).
+
+### Happy User of Load More Anything?
+
+- Join our [Facebook Group](https://www.facebook.com/groups/addonmaster/).
+- Or rate us on [WordPress](https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/?filter=5#new-post) :)
 
 
 == Installation ==
@@ -111,7 +137,7 @@ Just find the correct selector of the suitable wrapper and insert them in the Pl
 
 = I can't find the selector for my website. Can you help? =
 
-Please contact to this email addonmasterwp@gmail.com (conditions apply)
+Please Submit A Support Ticket from [Here](https://addonmaster.com/submit-a-ticket/)(conditions apply)
 
 = Do you have documentation for this plugin? =
 

@@ -348,7 +348,7 @@ class ALD_Menu {
                                                 
                                             </li>
                                             <li>
-                                                <a class="button d-inline-flex items-center" target="_blank" href="<?php echo esc_url('https://addonmaster.com/submit-a-ticket/'); ?>"><?php echo __( 'Submit A Ticket <span class="ml-half dashicons dashicons-external"></span>', 'ajax-load-more-anything' ); ?></a> <code>Pro user only</code>
+                                                <a class="button d-inline-flex items-center" target="_blank" href="<?php echo esc_url('https://addonmaster.com/submit-a-ticket/'); ?>"><?php echo __( 'Submit A Ticket <span class="ml-half dashicons dashicons-external"></span>', 'ajax-load-more-anything' ); ?></a>
                                             </li>
                                             <li>
                                                 <a class="button d-inline-flex items-center" href="mailto:addonmasterwp@gmail.com" ><?php echo __( 'Email Us <span class="ml-half dashicons dashicons-email"></span>', 'ajax-load-more-anything' ); ?></a>
