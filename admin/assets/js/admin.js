@@ -1,7 +1,6 @@
 /**
  * Show Some Respect to my hard work and don't try to use the pro plugin illegally
  * It's only about $29.
- * Purchase Link: https://addonmaster.com/load-more-anything/?utm_source=code&utm_medium=js&utm_campaign=wpuser
  */
 var ald_pro = alda_params.ald_pro;
 (function($) {

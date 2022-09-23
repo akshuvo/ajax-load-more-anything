@@ -35,6 +35,7 @@ class AddonMasterAdminNotice{
 			  max-width: 100%;
 			  -o-object-fit: cover;
 			     object-fit: cover;
+				 min-width: 50px;
 			}
 			.am--message-content {
 			  padding: 0 20px;

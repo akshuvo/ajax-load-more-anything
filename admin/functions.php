@@ -807,9 +807,7 @@ function ald_plugin_pro_modal(){
                         </table>
                     </div>
                     <br>
-                    <div class="very-top very-bottom">
-                        <b>100% Risk-Free Money Back Guarantee!</b> If the plugin not work for you or we're unable to solve your support issue within 7 days, we will happily refund 100% of your money. No questions asked!</a>.
-                    </div>
+                    
                 </div>
             </div>
         </div>
