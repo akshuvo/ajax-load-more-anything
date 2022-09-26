@@ -1,6 +1,6 @@
 === Load More Anything ===
 Contributors: mdshuvo, addonmaster
-Tags: div jquery load, anything jquery, blog post jquery load, Comments jquery load, page jquery load, Category jquery load, Recent Posts jquery load, Sidebar widget jquery load, Woocommerce Product jquery load, Images jquery load, Photos jquery load, Videos jquery load, custom Div jquery load,infinite scroll, infinite scrolling, scroll, lazy load, lazy loading, endless scroll, pagination, jquery load pagination, jquery load, jquery load posts, jquery load more, anything load more, devshuvo
+Tags: infinite scroll, div jquery load, anything jquery, blog post jquery load, Comments jquery load, page jquery load, Category jquery load, Recent Posts jquery load, Sidebar widget jquery load, Woocommerce Product jquery load, Images jquery load, Photos jquery load, Videos jquery load, custom Div jquery load,infinite scroll, infinite scrolling, scroll, lazy load, lazy loading, endless scroll, pagination, ajax load pagination, ajax load, ajax load posts, ajax load more, anything load more
 Requires at least: 4.6
 Tested up to: 6.0.1
 Requires PHP: 5.6
@@ -13,7 +13,7 @@ A simple plugin that helps you to Load more any item. You can use Load More butt
 
 == Description ==
 
-No need to add any code to your theme core file. Just plug and play. A simple plugin that helps you to Load more than any item. You can use the Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce products, Images, Photos, Videos, custom Div, or whatever you want.
+A awesome plugin that helps you to Load More Anything on your WordPress Website. You can use the Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce products, Images, Photos, Videos, custom Div, or whatever you want.
 
 ### Infinite Scroll
 
@@ -107,7 +107,6 @@ If you have any suitable wrapper then you can apply load more functionaly there.
 
 - For documentation and tutorials go to our [Documentation](https://addonmaster.com/docs-category/load-more-anything/). 
 - If you have any more questions, visit our support on the [Plugin's Forum](https://wordpress.org/support/plugin/ajax-load-more-anything).
-- For more information about features, FAQs and documentation, check out our website at [Essential Addons for Elementor](https://essential-addons.com/elementor/).
 
 ### Happy User of Load More Anything?
 
