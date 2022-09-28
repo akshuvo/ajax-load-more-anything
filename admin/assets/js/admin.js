@@ -52,11 +52,6 @@ var ald_pro = alda_params.ald_pro;
 
             var keyLen = jQuery('.tf_gen_sel_field').length;
 
-            /**
-             * Show Some Respect to my hard work and don't try to use the pro plugin illegally
-             * It's only about $20. Here is coupon for you: WPUSER
-             * Purchase Link: https://addonmaster.com/load-more-anything/?utm_source=code&utm_medium=js&utm_campaign=wpuser
-             */
             if ( keyLen >= 6 && ald_pro == "0" ) {
                 jQuery(document).trigger('am_modal_show', '#ald_go-pro');
                 return;
@@ -94,11 +89,6 @@ var ald_pro = alda_params.ald_pro;
 
             var keyLen = jQuery('.tf_ajax_sel_field').length;
 
-            /**
-             * Show Some Respect to my hard work and don't try to use the pro plugin illegally
-             * It's only about $20. Here is coupon for you: WPUSER
-             * Purchase Link: https://addonmaster.com/load-more-anything/?utm_source=code&utm_medium=js&utm_campaign=wpuser
-             */
             if ( keyLen >= 1 && ald_pro == "0" ) {
                 jQuery(document).trigger('am_modal_show', '#ald_go-pro');
                 return;

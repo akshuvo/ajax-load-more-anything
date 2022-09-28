@@ -324,7 +324,7 @@ class ALD_Menu {
                                             </li>
                                         </ul>
                                         <div class="action-btns">
-                                            <a class="button d-inline-flex items-center" target="_blank" href="<?php echo esc_url('https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=sidebar'); ?>">
+                                            <a class="button d-inline-flex items-center" target="_blank" href="<?php echo esc_url( ALD_GOPRO_URL ); ?>">
                                                 <?php echo __( 'Learn More <span class="ml-half dashicons dashicons-external"></span>', 'ajax-load-more-anything' ); ?>
                                             </a>
                                             <a class="button ald-trigger-pro" style="vertical-align: middle; margin-left: 4px;"><?php esc_html_e( 'Free vs Pro Comparison', 'ajax-load-more-anything' ); ?></a>
@@ -387,7 +387,6 @@ class ALD_Menu {
         /**
          * Show Some Respect to my hard work and don't try to use the pro plugin illegally
          * It's only about $20. Here is coupon for you: WPUSER
-         * Purchase Link: https://addonmaster.com/load-more-anything/?utm_source=code&utm_medium=php&utm_campaign=wpuser
          */
         if ( isset( $args['thiskey'] ) && $args['thiskey'] > 5 && !defined('ALD_PRO_PLUGIN_VERSION') ) {
             echo "<script>triggerGoPro();</script>";
@@ -402,7 +401,6 @@ class ALD_Menu {
         /**
          * Show Some Respect to my hard work and don't try to use the pro plugin illegally
          * It's only about $20. Here is coupon for you: WPUSER
-         * Purchase Link: https://addonmaster.com/load-more-anything/?utm_source=code&utm_medium=php&utm_campaign=wpuser
          */
         if ( isset( $args['thiskey'] ) && $args['thiskey'] > 0 && !defined('ALD_PRO_PLUGIN_VERSION') ) {
             echo "<script>triggerGoPro();</script>";

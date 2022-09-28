@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:  Load More Anything
- * Plugin URI:   https://github.com/akshuvo/ajax-load-more-anything/
+ * Plugin URI:   https://wordpress.org/plugins/ajax-load-more-anything/
  * Author:       Addon Master
  * Author URI:   https://addonmaster.com/contact
  * Version: 	  3.0.0
@@ -29,6 +29,9 @@ define( 'ALD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 if ( !defined('ALD_PLUGIN_VERSION') ) {
 	define('ALD_PLUGIN_VERSION', '3.0.0' );
 }
+
+// GO PRO URL
+define( 'ALD_GOPRO_URL', 'https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser#pricing_table' );
 
 /**
  *	Plugin Main Class
@@ -148,10 +151,13 @@ final class Ajax_Load_More_Anything {
 	 * @version 4.0.0
 	 */
 	function plugin_action_links( $links ) {
-		$plugin_links = array(
-			'<a target="_blank" href="'.esc_url('https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser#pricing_table').'"><b style=" color: #7e3434; ">&#9733;' . esc_html__( 'GO PRO', 'ajax-load-more-anything' ) . '</b></a>',
-			'<a href="admin.php?page=ald_setting">' . esc_html__( 'Settings', 'ajax-load-more-anything' ) . '</a>',
-		);
+
+		if( !defined('ALD_PRO_PLUGIN_VERSION') ){
+			$plugin_links[] = '<a target="_blank" href="'. ALD_GOPRO_URL .'"><b style=" color: #7e3434; ">&#9733;' . esc_html__( 'GO PRO', 'ajax-load-more-anything' ) . '</b></a>';
+		}
+		
+		$plugin_links[] = '<a href="admin.php?page=ald_setting">' . esc_html__( 'Settings', 'ajax-load-more-anything' ) . '</a>';
+
 		return array_merge( $plugin_links, $links );
 	}
 

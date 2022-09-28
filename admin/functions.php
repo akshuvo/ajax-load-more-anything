@@ -673,7 +673,7 @@ function ald_plugin_pro_modal(){
                 <div class="am_go-pro-modal-content">
                     <div class="very-top">
                         <h2 style=" font-size: 2em; ">It's time to go pro</h2>
-                        <p><a class="button button-primary" target="_blank" href="https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser#pricing_table">(<del>$39</del> <strong>$29</strong>) <?php esc_html_e( 'Upgrade to Pro', 'ajax-load-more-anything' ); ?> <span class="dashicons dashicons-external"></span></a><br><small>Limited time offer!</small></p>
+                        <p><a class="button button-primary" target="_blank" href="<?php echo esc_url( ALD_GOPRO_URL ); ?>">(<del>$39</del> <strong>$29</strong>) <?php esc_html_e( 'Upgrade to Pro', 'ajax-load-more-anything' ); ?> <span class="dashicons dashicons-external"></span></a><br><small>Limited time offer!</small></p>
                     </div>
                     <div class="in-middle">
                         <p>Checkout more features on <strong>Load More Anything Pro</strong></p>
@@ -800,7 +800,7 @@ function ald_plugin_pro_modal(){
                                 <tr>
                                     <td></td>
                                     <td colspan="2" style=" text-align: center; ">
-                                        <p><a class="button button-primary" target="_blank" href="https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser#pricing_table">(<del>$39</del> <strong>$29</strong>) <?php esc_html_e( 'Upgrade to Pro', 'ajax-load-more-anything' ); ?> <span class="dashicons dashicons-external"></span></a><br><small>100% secure transaction</small></p>
+                                        <p><a class="button button-primary" target="_blank" href="<?php echo esc_url( ALD_GOPRO_URL ); ?>">(<del>$39</del> <strong>$29</strong>) <?php esc_html_e( 'Upgrade to Pro', 'ajax-load-more-anything' ); ?> <span class="dashicons dashicons-external"></span></a><br><small>100% secure transaction</small></p>
                                     </td>
                                 </tr>
                             </tfoot>
