@@ -31,7 +31,7 @@ if ( !defined('ALD_PLUGIN_VERSION') ) {
 }
 
 // GO PRO URL
-define( 'ALD_GOPRO_URL', 'https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser#pricing_table' );
+define( 'ALD_GOPRO_URL', 'https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser' );
 
 /**
  *	Plugin Main Class
@@ -101,38 +101,31 @@ final class Ajax_Load_More_Anything {
 	}
 
 	/**
-	*  Plugin Activation
-	*/
+	 *  Plugin Activation
+	 */
 	function plugin_activation() {
-
-        if ( ! get_option( 'ald_installed' ) ) {
-            update_option( 'ald_installed', time() );
-        }
-
+		// Set default options
+        update_option( 'ald_installed', time() );
         update_option( 'ald_plugin_version', ALD_PLUGIN_VERSION );
-
 	}
 
 	/**
-	*  Plugin Deactivation
-	*/
+	 *  Plugin Deactivation
+	 */
 	function plugin_deactivation() {
 
 	}
 
 	/**
 	 * Enqueue admin script
-	 *
 	 */
 	function admin_scripts( $hook ) {
 	    if ( 'toplevel_page_ald_setting' != $hook ) {
 	        return;
 	    }
 
-	    $ver = '3.0.0';
-
-	    wp_register_style( 'ald-admin-styles', ALD_PLUGIN_URL . 'admin/assets/css/admin.css', null, $ver );
-	    wp_register_script( 'ald-admin-scripts', ALD_PLUGIN_URL . 'admin/assets/js/admin.js', array('jquery'), $ver );
+	    wp_register_style( 'ald-admin-styles', ALD_PLUGIN_URL . 'admin/assets/css/admin.css', null, ALD_PLUGIN_VERSION );
+	    wp_register_script( 'ald-admin-scripts', ALD_PLUGIN_URL . 'admin/assets/js/admin.js', array('jquery'), ALD_PLUGIN_VERSION );
 
 	    // Ajax Params
 	    wp_localize_script( 'ald-admin-scripts', 'alda_params',
@@ -160,7 +153,6 @@ final class Ajax_Load_More_Anything {
 
 		return array_merge( $plugin_links, $links );
 	}
-
 
 }
 

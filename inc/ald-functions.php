@@ -1,37 +1,5 @@
 <?php
 
-/**
- *	Admin Notice Class Including
- */
-require_once( dirname( __FILE__ ) . '/class-admin-notice.php' );
-
-/**
- * Review Notice
- */
-function ald_review_admin_notices($args){
-
-	$args[] = array(
-		'id' => "load_more_review_notices",
-		'text' => "<b>We hope you're enjoying this plugin! Could you please give a 5-star rating on WordPress to inspire us?</b>",
-		'logo' => "https://ps.w.org/ajax-load-more-anything/assets/icon-256x256.png",
-		'border_color' => "#000",
-		'is_dismissable' => "true",
-		'dismiss_text' => "Dismiss",
-		'buttons' => array(
-			array(
-				'text' => "Ok, you deserve it!",
-				'link' => "https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/?filter=5",
-				'target' => "_blank",
-				'icon' => "dashicons dashicons-external",
-				'class' => "button-primary",
-			),
-		)
-	);
-
-	return $args;
-}
-add_filter( 'addonmaster_admin_notice', 'ald_review_admin_notices' );
-
 // CSS Minifier => http://ideone.com/Q5USEF + improvement(s)
 function ald_minify_css($input) {
     if(trim($input) === "") return $input;
