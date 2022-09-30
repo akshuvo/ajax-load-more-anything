@@ -336,7 +336,7 @@ class ALD_Menu {
                                 <tr>
                                     <td>
                                         <br>
-                                        <h3 style=" margin: 0 0 2px 0; "><?php echo __( 'Stuck in somewhere?', 'ajax-load-more-anything' ); ?></h3>
+                                        <h3 style=" margin: 0 0 2px 0; "><?php echo __( 'Are you stuck somewhere?', 'ajax-load-more-anything' ); ?></h3>
                                         <p>
                                             <?php esc_html_e( 'Get support from our developers. Easy, Quick, and Professional!', 'ajax-load-more-anything' ); ?>
                                         </p>
