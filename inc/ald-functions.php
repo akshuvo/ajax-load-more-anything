@@ -74,7 +74,6 @@ function ald_lite_custom_style(){
     $ajax_hide_selectors = array_filter( $ajax_hide_selectors );
 		
 
-
     ob_start();
 	?>
 	<style type="text/css">
