@@ -2,7 +2,7 @@
 Contributors: mdshuvo, addonmaster
 Tags: infinite scroll, div jquery load, anything jquery, blog post jquery load, Comments jquery load, page jquery load, Category jquery load, Recent Posts jquery load, Sidebar widget jquery load, Woocommerce Product jquery load, Images jquery load, Photos jquery load, Videos jquery load, custom Div jquery load,infinite scroll, infinite scrolling, scroll, lazy load, lazy loading, endless scroll, pagination, ajax load pagination, ajax load, ajax load posts, ajax load more, anything load more
 Requires at least: 4.6
-Tested up to: 6.0.1
+Tested up to: 6.0.2
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv3
