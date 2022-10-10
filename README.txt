@@ -4,7 +4,7 @@ Tags: infinite scroll, div jquery load, anything jquery, blog post jquery load, 
 Requires at least: 4.6
 Tested up to: 6.0.2
 Requires PHP: 5.6
-Stable tag: trunk
+Stable tag: 3.0.2
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
