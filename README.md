@@ -107,7 +107,7 @@ How to install Load More Anything.
 
 **How can I show the count button?**
 
-Use +[count] More in button label so it will be show like this: +15 More
+>Use +[count] More in button label so it will be show like this: +15 More
 
 **How I use this**
 
