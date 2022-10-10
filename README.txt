@@ -156,7 +156,7 @@ Create Topic in [Support forum](https://wordpress.org/support/plugin/ajax-load-m
 7. WooCommerce Products Ajax Pagination
 8. Load More Button
 9. Load more List items
-9. Load More Table Rows
+10. Load More Table Rows
 
 
 == Changelog ==

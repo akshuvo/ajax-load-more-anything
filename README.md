@@ -121,16 +121,17 @@ How to install Load More Anything.
 >Create Topic in [Support forum](https://wordpress.org/support/plugin/ajax-load-more-anything/)
 
 ## Screenshots
-1. Features Overview
-2. Dashboard Features List
-3. Dashboard General Wrapper Fields
-4. Dashboard Ajax Wrapper Fields
-5. Infinite Scroll
-6. Load WordPress Comments
-7. WooCommerce Products Ajax Pagination
-8. Load More Button
-9. Load more List items
-9. Load More Table Rows
+1. [Features Overview] (https://ps.w.org/ajax-load-more-anything/assets/screenshot-1.png)
+2. [Dashboard Features List] (https://ps.w.org/ajax-load-more-anything/assets/screenshot-2.png)
+3. [Dashboard General Wrapper Fields] (https://ps.w.org/ajax-load-more-anything/assets/screenshot-3.png)
+4. [Dashboard Ajax Wrapper Fields] (https://ps.w.org/ajax-load-more-anything/assets/screenshot-4.png)
+5. [Infinite Scroll] (https://ps.w.org/ajax-load-more-anything/assets/screenshot-5.gif)
+6. [Load WordPress Comments] (https://ps.w.org/ajax-load-more-anything/assets/screenshot-6.gif)
+7. [WooCommerce Products Ajax Pagination] (https://ps.w.org/ajax-load-more-anything/assets/screenshot-7.gif)
+8. [Load More Button] (https://ps.w.org/ajax-load-more-anything/assets/screenshot-8.png)
+9. [Load more List items] (https://ps.w.org/ajax-load-more-anything/assets/screenshot-9.gif)
+10. [Load More Table Rows] (https://ps.w.org/ajax-load-more-anything/assets/screenshot-10.gif)
+
 
 
 ## Changelog
