@@ -161,8 +161,8 @@ Create Topic in [Support forum](https://wordpress.org/support/plugin/ajax-load-m
 
 == Changelog ==
 
-= 3.0.0 - August 15, 2022 =
-- WordPress 6.0.1 Compatibility
+= 3.0.0 - Oct 10, 2022 =
+- WordPress 6.0.2 Compatibility
 - New Dashboard
 - Code Improvement
 - Ajax Based Wrapper	
