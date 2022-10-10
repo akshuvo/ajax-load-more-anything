@@ -17,21 +17,21 @@ A awesome plugin that helps you to Load More Anything on your WordPress Website.
 
 ### Infinite Scroll
 
-<iframe width="1552" height="873" src="https://www.youtube.com/embed/Sfo6QF3GL-s?list=TLGGW2dxJFqbF38yMjA5MjAyMg" title="Ajax Pagination Infinite Scroll WordPress Post - Ajax Load More Anything WordPress Plugin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Sfo6QF3GL-s" title="Ajax Pagination Infinite Scroll WordPress Post - Ajax Load More Anything WordPress Plugin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 You can use this plugin to Load your blog posts without reloading the whole page! You can use default pagination, Infinite Scroll, and Custom button to load the blog posts. when you scroll the page posts will be loaded automatically.
 [View Demo](https://plugins.addonmaster.com/ajax-load-more-anything/blog/)
 
 ### Load WordPress Comments
 
-<iframe width="1552" height="873" src="https://www.youtube.com/embed/wYsj-JJn3WY?list=TLGGWr4XDjRhJIwyMjA5MjAyMg" title="Ajax Load WordPress Blog Comments - Ajax Load More Anything WordPress Plugin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wYsj-JJn3WY" title="Ajax Load WordPress Blog Comments - Ajax Load More Anything WordPress Plugin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Does your site have too many comments or reviews? No problem, You can load post comments or Product reviews without reloading the page.
 [View Demo](https://plugins.addonmaster.com/ajax-load-more/long-comments/)
 
 ### WooCommerce Products Ajax Pagination
 
-<iframe width="1280" height="731" src="https://www.youtube.com/embed/ppSO1OmSRXI" title="Ajax Pagination Infinite Scroll WooCommerce Products - Ajax Load More Anything WordPress Plugin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ppSO1OmSRXI" title="Ajax Pagination Infinite Scroll WooCommerce Products - Ajax Load More Anything WordPress Plugin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 You can use this plugin to Load your WooCommerce Products without reloading the whole page! You can use the default pagination, Infinite Scroll, and Custom button.
 [View Demo](https://plugins.addonmaster.com/ajax-load-more/store/) 
@@ -42,14 +42,14 @@ A load more button will help you to load more respited content, you can define h
 
 ### Load more List items
 
-<iframe width="1552" height="873" src="https://www.youtube.com/embed/vdkC-6ovzK8?list=TLGG_5g2T1AcY4kyMjA5MjAyMg" title="Load More List items - Ajax Load More Anything WordPress Plugin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vdkC-6ovzK8" title="Load More List items - Ajax Load More Anything WordPress Plugin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 From a long list of data, you can short the data list by limiting how many items will be loaded initially. The load more button will load data step by step.
 [View Demo](https://plugins.addonmaster.com/ajax-load-more/load-more-list/)
 
 ### Load More Table Rows
 
-<iframe width="1552" height="873" src="https://www.youtube.com/embed/TbfzhThUe48?list=TLGG1GP85vctc-AyMjA5MjAyMg" title="Load More Table Table Content - Ajax Load More Anything WordPress Plugin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TbfzhThUe48" title="Load More Table Table Content - Ajax Load More Anything WordPress Plugin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Do you have lots of data in a table? load more anything plugin can make the table short and you can load the table data by clicking on the load more button.
 [View More](https://plugins.addonmaster.com/ajax-load-more/load-more-table-data/)
