@@ -1,15 +1,15 @@
 <?php
 /**
  * Plugin Name:  Load More Anything
- * Plugin URI:   https://github.com/akshuvo/load-more-anything/
+ * Plugin URI:   https://wordpress.org/plugins/ajax-load-more-anything/
  * Author:       Addon Master
  * Author URI:   https://addonmaster.com/contact
- * Version: 	  2.4.1
+ * Version: 	  3.0.2
  * Description:  A simple plugin that help you to Load more any item with jQuery/Ajax. You can use Ajaxify Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce Product, Images, Photos, Videos, custom selector or whatever you want.
  * License:      GPL2
  * License URI:  https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:  aldtd
- * Domain Path:  /lang
+ * Text Domain:  ajax-load-more-anything
+ * Domain Path:  /languages
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,8 +27,11 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 define( 'ALD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 if ( !defined('ALD_PLUGIN_VERSION') ) {
-	define('ALD_PLUGIN_VERSION', '2.4.1' );
+	define('ALD_PLUGIN_VERSION', '3.0.2' );
 }
+
+// GO PRO URL
+define( 'ALD_GOPRO_URL', 'https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser' );
 
 /**
  *	Plugin Main Class
@@ -71,7 +74,7 @@ final class Ajax_Load_More_Anything {
 	 */
 	function plugin_loaded_action() {
 		// Loading Text Domain for Internationalization
-		load_plugin_textdomain( 'aldtd', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
+		load_plugin_textdomain( 'ajax-load-more-anything', false, dirname( plugin_basename(__FILE__) ) . '/languages/' );
 
 		require_once( dirname( __FILE__ ) . '/inc/ald-functions.php' );
 		require_once( dirname( __FILE__ ) . '/admin/functions.php' );
@@ -83,10 +86,9 @@ final class Ajax_Load_More_Anything {
 	 * Enqueue Frontend Scripts
 	 */
 	function enqueue_scripts() {
-		$ver = current_time( 'timestamp' );
 
-	    wp_enqueue_style( 'ald-styles', ALD_PLUGIN_URL . 'assets/css/styles.css', null, $ver );
-	    wp_enqueue_script( 'ald-scripts', ALD_PLUGIN_URL . 'assets/js/scripts.js', array('jquery'), $ver );
+	    wp_enqueue_style( 'ald-styles', ALD_PLUGIN_URL . 'assets/css/styles.css', null, ALD_PLUGIN_VERSION );
+	    wp_enqueue_script( 'ald-scripts', ALD_PLUGIN_URL . 'assets/js/scripts.js', array('jquery'), ALD_PLUGIN_VERSION );
 
 		wp_localize_script( 'ald-scripts', 'ald_params',
          	array(
@@ -99,38 +101,31 @@ final class Ajax_Load_More_Anything {
 	}
 
 	/**
-	*  Plugin Activation
-	*/
+	 *  Plugin Activation
+	 */
 	function plugin_activation() {
-
-        if ( ! get_option( 'ald_installed' ) ) {
-            update_option( 'ald_installed', time() );
-        }
-
+		// Set default options
+        update_option( 'ald_installed', time() );
         update_option( 'ald_plugin_version', ALD_PLUGIN_VERSION );
-
 	}
 
 	/**
-	*  Plugin Deactivation
-	*/
+	 *  Plugin Deactivation
+	 */
 	function plugin_deactivation() {
 
 	}
 
 	/**
 	 * Enqueue admin script
-	 *
 	 */
 	function admin_scripts( $hook ) {
 	    if ( 'toplevel_page_ald_setting' != $hook ) {
 	        return;
 	    }
 
-	    $ver = current_time( 'timestamp' );
-
-	    wp_register_style( 'ald-admin-styles', ALD_PLUGIN_URL . 'admin/assets/css/admin.css', null, $ver );
-	    wp_register_script( 'ald-admin-scripts', ALD_PLUGIN_URL . 'admin/assets/js/admin.js', array('jquery'), $ver );
+	    wp_register_style( 'ald-admin-styles', ALD_PLUGIN_URL . 'admin/assets/css/admin.css', null, ALD_PLUGIN_VERSION );
+	    wp_register_script( 'ald-admin-scripts', ALD_PLUGIN_URL . 'admin/assets/js/admin.js', array('jquery'), ALD_PLUGIN_VERSION );
 
 	    // Ajax Params
 	    wp_localize_script( 'ald-admin-scripts', 'alda_params',
@@ -149,12 +144,15 @@ final class Ajax_Load_More_Anything {
 	 * @version 4.0.0
 	 */
 	function plugin_action_links( $links ) {
-		$plugin_links = array(
-			'<a href="admin.php?page=ald_setting">' . esc_html__( 'Settings', 'ald' ) . '</a>',
-		);
+
+		if( !defined('ALD_PRO_PLUGIN_VERSION') ){
+			$plugin_links[] = '<a target="_blank" href="'. ALD_GOPRO_URL .'"><b style=" color: #7e3434; ">&#9733;' . esc_html__( 'GO PRO', 'ajax-load-more-anything' ) . '</b></a>';
+		}
+		
+		$plugin_links[] = '<a href="admin.php?page=ald_setting">' . esc_html__( 'Settings', 'ajax-load-more-anything' ) . '</a>';
+
 		return array_merge( $plugin_links, $links );
 	}
-
 
 }
 

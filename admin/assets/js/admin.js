@@ -1,3 +1,8 @@
+/**
+ * Show Some Respect to my hard work and don't try to use the pro plugin illegally
+ * It's only about $29.
+ */
+var ald_pro = alda_params.ald_pro;
 (function($) {
 	"use strict";
 	$(document).ready(function(){
@@ -19,7 +24,7 @@
         });
 
 		// Tab controlling
-	    $('.tf-tab-nav a').on('click',function(e){
+	    $(document).on('click', '.tf-tab-nav a', function(e){
 	    	e.preventDefault();
 	    	var targetDiv = $(this).attr('href');
 
@@ -47,7 +52,7 @@
 
             var keyLen = jQuery('.tf_gen_sel_field').length;
 
-            if ( keyLen >= 6 ) {
+            if ( keyLen >= 6 && ald_pro == "0" ) {
                 jQuery(document).trigger('am_modal_show', '#ald_go-pro');
                 return;
             }
@@ -84,7 +89,7 @@
 
             var keyLen = jQuery('.tf_ajax_sel_field').length;
 
-            if ( keyLen >= 1 ) {
+            if ( keyLen >= 1 && ald_pro == "0" ) {
                 jQuery(document).trigger('am_modal_show', '#ald_go-pro');
                 return;
             }
@@ -241,6 +246,29 @@
             });
         });
 
+        // Trigger Pro modal on option selection
+        $(document).on('change', '.option-select-lmapro-modal-trigger', function(){
+
+            if ( ald_pro == "0" ) {
+                var $this = $(this);
+
+                var value = $this.val();
+                var checkVal = $this.attr('data-pro-val');
+
+                if ( value == checkVal ) {
+                    jQuery(document).trigger('am_modal_show', '#ald_go-pro');
+                    return;
+                }
+            }
+        });
+
+        // Field toggle
+        $(document).on('click', '.ald-trigger-pro', function(e){
+            e.preventDefault();
+            jQuery(document).trigger('am_modal_show', '#ald_go-pro');
+        });
+        
+
 	});
 
     $(window).load(function(){
@@ -250,6 +278,9 @@
         });
 
         // Trigger on load
-        $('.ajax_loadmore-event_type, .ajax_loadmore-hide_selector_wrapper').trigger('change');
+        $('.ajax_loadmore-hide_selector_wrapper').trigger('change');
+        if ( ald_pro != "0" ) {
+            $('.ajax_loadmore-event_type').trigger('change');
+        }
     });
 })(jQuery);

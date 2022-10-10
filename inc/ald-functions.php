@@ -1,37 +1,4 @@
 <?php
-
-/**
- *	Admin Notice Class Including
- */
-require_once( dirname( __FILE__ ) . '/class-admin-notice.php' );
-
-/**
- * Review Notice
- */
-function ald_review_admin_notices($args){
-
-	$args[] = array(
-		'id' => "load_more_review_notices",
-		'text' => "<b>We hope you're enjoying this plugin! Could you please give a 5-star rating on WordPress to inspire us?</b>",
-		'logo' => "https://ps.w.org/ajax-load-more-anything/assets/icon-256x256.png",
-		'border_color' => "#000",
-		'is_dismissable' => "true",
-		'dismiss_text' => "Dismiss",
-		'buttons' => array(
-			array(
-				'text' => "Ok, you deserve it!",
-				'link' => "https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/?filter=5",
-				'target' => "_blank",
-				'icon' => "dashicons dashicons-external",
-				'class' => "button-primary",
-			),
-		)
-	);
-
-	return $args;
-}
-add_filter( 'addonmaster_admin_notice', 'ald_review_admin_notices' );
-
 // CSS Minifier => http://ideone.com/Q5USEF + improvement(s)
 function ald_minify_css($input) {
     if(trim($input) === "") return $input;
@@ -85,45 +52,39 @@ function ald_lite_custom_style(){
     $ajax_loadmore = isset( $ald_options['ajax_loadmore'] ) ? $ald_options['ajax_loadmore'] : array();
     $custom_css  = isset( $ald_options['custom_css'] ) ? $ald_options['custom_css'] : "";
 
+    // Get only load more selectors
+    $general_hide_selectors = array_column( $general_loadmore, 'load_selector' );
+    // Trim spaces from selectors
+    $general_hide_selectors = array_map( 'trim', $general_hide_selectors );
+    // Remove empty selectors
+    $general_hide_selectors = array_filter( $general_hide_selectors );
+
+    // Handle ajax hidden selectors
+    $ajax_hide_selectors = [];
+    if( !empty( $ajax_loadmore ) ){
+    	foreach ( $ajax_loadmore as $key => $alvalue ) {
+    		if( $alvalue['event_type'] != "selectors_click" && $alvalue['hide_selector_wrapper'] == "yes" && !empty( $alvalue['wrapper_to_hide'] ) ) {
+    			$ajax_hide_selectors[] = trim( $alvalue['wrapper_to_hide'] ); 
+    		}
+    	}
+    }
+
+    // Remove empty selectors
+    $ajax_hide_selectors = array_filter( $ajax_hide_selectors );
+		
+
     ob_start();
 	?>
 	<style type="text/css">
-		<?php if( $general_loadmore ) : $glcount = 1; ?>
-			<?php foreach ( $general_loadmore as $key => $value ) : ?>
+		
+		/* General Selector Hidden Handle */
+		<?php echo implode(',', $general_hide_selectors); ?>{ display: none; } 
 
-				<?php if( $value['load_selector'] != "" ) : ?>
-
-					<?php _e( $value['load_selector'] ); ?>
-
-					<?php if ( $glcount < count( $general_loadmore )  ) { _e( "," ); } ?>
-					<?php $glcount++; ?>
-
-				<?php endif; ?>
-
-			<?php endforeach; ?> { display: none; }
-		<?php endif;?>
-
-		/* Ajax Selector Handle */
-		<?php if( $ajax_loadmore ) : $alcount = 1; ?>
-			<?php foreach ( $ajax_loadmore as $key => $alvalue ) : ?>
-
-				<?php if( $alvalue['event_type'] != "selectors_click" && $alvalue['hide_selector_wrapper'] == "yes" && $alvalue['wrapper_to_hide'] != "" ) : ?>
-
-					<?php _e( $alvalue['wrapper_to_hide'] ); ?>
-
-					<?php if ( $alcount < count( $ajax_loadmore ) ) { _e( "," ); } ?>
-
-					<?php $alcount++; ?>
-
-				<?php endif; ?>
-
-			<?php endforeach; ?> { visibility: hidden; }
-		<?php endif;?>
-
-
+		/* Ajax Selector Hidden Handle */
+		<?php echo implode(',', $ajax_hide_selectors); ?>{ visibility: hidden; } 
 
 		/* Custom CSS */
-		<?php _e( $custom_css );?>
+		<?php echo $custom_css;?>
 
 	</style><?php
 	$output = ob_get_clean();
@@ -162,11 +123,40 @@ function ald_minify_js($input) {
 // button label
 function ald_button_label( $label = null ){
 
-	$label = str_replace("[count]", '<span class="ald-count"></span>', $label );
+	$wpml_string_id = 'General Wrapper: ' . sanitize_title( $label );
+
+	// WMPL register strings for translation
+	if (function_exists ( 'icl_register_string' )){
+		icl_register_string('Load More Anyting', $wpml_string_id, $label);
+	}
+
+	// WPML Display Translation
+	$label = apply_filters('wpml_translate_single_string', $label, 'Load More Anyting', $wpml_string_id );
+
+	// Replace Count
+	$label = str_replace("[count]", '<span class="ald-count"></span>', __($label, 'ajax-load-more-anything') );
 
 	return $label;
 }
 
+// button label: for ajax wrapper
+function ald_ajax_button_label( $label = '' ){
+
+	$wpml_string_id = 'Ajax Wrapper: ' . sanitize_title( $label );
+
+	// WMPL register strings for translation
+	if (function_exists ( 'icl_register_string' )){
+		icl_register_string('Load More Anyting', $wpml_string_id, $label);
+	}
+
+	// WPML Display Translation
+	$label = apply_filters('wpml_translate_single_string', $label, 'Load More Anyting', $wpml_string_id );
+
+	// Replace Count
+	// $label = str_replace("[count]", '<span class="ald-count"></span>', __($label, 'ajax-load-more-anything') );
+
+	return $label;
+}
 
 /**
  * Custom JS
@@ -181,305 +171,316 @@ function ald_custom_javascript_code(){
 
 	?>
 	<script type="text/javascript">
-		(function($) {
-			'use strict';
+		
+		jQuery(document).ready(function($) {
 
-			jQuery(document).ready(function() {
+			var loader = '<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>';
 
-				var loader = '<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>';
+			<?php if( $general_loadmore ) : ?>
 
-				<?php if( $general_loadmore ) : ?>
+				<?php foreach ( $general_loadmore as $key => $value ) : ?>
 
-					<?php foreach ( $general_loadmore as $key => $value ) : ?>
+					<?php $ald_wrapper_class = isset( $value['btn_selector'] ) && !empty( $value['btn_selector'] ) ? sanitize_text_field( $value['btn_selector'] ) : ''; ?>
+					<?php $ald_load_class =  isset( $value['load_selector'] ) && !empty( $value['load_selector'] ) ? sanitize_text_field( $value['load_selector'] ) : '';?>
+					<?php $ald_item_show = isset( $value['visible_items'] ) && !empty( $value['visible_items'] ) ? sanitize_text_field( $value['visible_items'] ) : '3'; ?>
+					<?php $ald_item_load = isset( $value['load_items'] ) && !empty( $value['load_items'] ) ? sanitize_text_field( $value['load_items'] ) : '3'; ?>
+					<?php $ald_load_label = isset( $value['button_label'] ) && !empty( $value['button_label'] ) ? sanitize_text_field( $value['button_label'] ) : __( 'Load More', 'ajax-load-more-anything' );?>
+					<?php $display_type = isset( $value['display_type'] ) && !empty( $value['display_type'] ) ? sanitize_text_field( $value['display_type'] ) : '';?>
 
-						<?php $ald_wrapper_class = $value['btn_selector']; ?>
-						<?php $ald_load_class =  $value['load_selector'];?>
-						<?php $ald_item_show = $value['visible_items']; ?>
-						<?php $ald_item_load = $value['load_items']; ?>
-						<?php $ald_load_label = $value['button_label'];?>
-						<?php $display_type = $value['display_type'];?>
+					// Skip is selectors are empty
+					<?php if( empty( $ald_wrapper_class ) || empty( $ald_load_class ) ) :?>
+						<?php continue; ?>
+					<?php endif; ?>
 
-						// Append the Load More Button
-						$("<?php _e( $ald_wrapper_class ); ?>").append('<a data-glm-button-selector="<?php esc_attr_e( $ald_wrapper_class ); ?>"  href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
+					// Append the Load More Button
+					jQuery("<?php _e( $ald_wrapper_class ); ?>").append('<a data-glm-button-selector="<?php esc_attr_e( $ald_wrapper_class ); ?>"  href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); ?></span></a>');
 
-						<?php if ( $display_type == "flex" ) : ?>
+					<?php if ( $display_type == "flex" ) : ?>
 
-							$("<?php _e( $ald_load_class ); ?>").hide();
+						jQuery("<?php _e( $ald_load_class ); ?>").hide();
 
-							// Show the initial visible items
-							$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).css({ 'display': 'flex' });
+						// Show the initial visible items
+						jQuery("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).css({ 'display': 'flex' });
 
-							// Calculate the hidden items
-							$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
+						// Calculate the hidden items
+						jQuery(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php _e( $ald_load_class ); ?>:hidden").length );
 
-							// Button Click Trigger
-							$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
-								e.preventDefault();
+						// Button Click Trigger
+						jQuery("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
+							e.preventDefault();
 
-								// Show the hidden items
-								$("<?php _e( $ald_load_class ); ?>:hidden").slice(0, <?php _e( $ald_item_load ); ?>).css({ 'display': 'flex' });
+							// Show the hidden items
+							jQuery("<?php _e( $ald_load_class ); ?>:hidden").slice(0, <?php _e( $ald_item_load ); ?>).css({ 'display': 'flex' });
 
-								// Hide if no more to load
-								if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-									$(this).fadeOut('slow');
-								}
-
-								// ReCalculate the hidden items
-								$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
-
-							});
-
-
-						<?php else: ?>
-
-							// Show the initial visible items
-							$("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).show();
-
-							// Calculate the hidden items
-							$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
-
-							// Button Click Trigger
-							$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
-								e.preventDefault();
-
-								// Show the hidden items
-								$("<?php _e( $ald_load_class ); ?>:hidden").slice(0, <?php _e( $ald_item_load ); ?>).slideDown();
-
-								// Hide if no more to load
-								if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-									$(this).fadeOut('slow');
-								}
-
-								// ReCalculate the hidden items
-								$(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( $("<?php _e( $ald_load_class ); ?>:hidden").length );
-
-							});
-
-						<?php endif; ?>
-
-						// Hide on initial if no div to show
-						if ( $("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
-							$("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").fadeOut('slow');
-							console.log( 'Load more button hidden because no more item to load' );
-						}
-
-					<?php endforeach; ?>
-
-				<?php endif;?> // End General Selector
-
-				// Ajax Handle Function
-		        var flag = false;
-		        var main_xhr;
-
-		        var LoadMorePushAjax = function( url, args ){
-
-		        	$('.ald_loader_progress').css({
-					    "-webkit-transform":"translate3d(-100%, 0px, 0px)",
-					    "-ms-transform":"translate3d(-100%, 0px, 0px)",
-					    "transform":"translate3d(-100%, 0px, 0px)",
-					});
-
-		        	if ( args['data_implement_selectors'] ) {
-		        		var dis = JSON.parse( args['data_implement_selectors'] );
-		        	}
-
-		            if(main_xhr && main_xhr.readyState != 4){
-		                main_xhr.abort();
-		            }
-
-		            main_xhr = $.ajax({
-		                url: url,
-		                asynch: true,
-		                beforeSend: function() {
-		                	$('.ald_laser_loader').addClass('show');
-		                    $('.ald_loader_progress').css({
-		                    	"transition-duration": "2000ms",
-							    "-webkit-transform":"translate3d(-20%, 0px, 0px)",
-							    "-ms-transform":"translate3d(-20%, 0px, 0px)",
-							    "transform":"translate3d(-20%, 0px, 0px)",
-							});
-
-		                    flag = true;
-		                },
-		                success: function(data) {
-
-		                    // Data Implement
-		                    if ( dis ) {
-								for( var key in dis ) {
-								    var selector = dis[key].data_selector;
-								    var type = dis[key].implement_type;
-
-								    if ( selector ) {
-								    	var newData = $(selector, data).html();
-
-								    	console.log( newData );
-
-								    	if ( type == "insert_before" ) {
-								    		$( selector ).prepend( newData );
-								    	} else if ( type == "insert_after" ) {
-								    		$( selector ).append( newData );
-								    	} else {
-								    		$( selector ).html( newData );
-								    	}
-
-								    }
-								}
-				        	}
-
-				        	if ( args['update_page_title'] && args['update_page_title'] == "yes" ) {
-				        		document.title = $(data).filter('title').text();
-				        	}
-
-		                    flag = false;
-
-		                    $( document ).find( '.tf_posts_navigation' ).removeClass( 'loading' );
-
-		                    // Remove loading class
-							$('.ald-ajax-btn[data-alm-click-selector]').each(function(){
-								if ( $(this).data('alm-click-selector') == args['click_selector'] ) {
-									$(this).removeClass('loading');
-								}
-							});
-
-							// Finish the loading
-							$('.ald_loader_progress').css({
-								"transition-duration": "500ms",
-							    "-webkit-transform":"translate3d(0%, 0px, 0px)",
-							    "-ms-transform":"translate3d(0%, 0px, 0px)",
-							    "transform":"translate3d(0%, 0px, 0px)",
-							});
-
-							// Reset the loader
-							setTimeout(function(){
-								$('.ald_laser_loader').removeClass('show');
-								$('.ald_loader_progress').css({
-									"transition-duration": "0ms",
-								    "-webkit-transform":"translate3d(-100%, 0px, 0px)",
-								    "-ms-transform":"translate3d(-100%, 0px, 0px)",
-								    "transform":"translate3d(-100%, 0px, 0px)",
-								});
-							}, 300);
-
-		                }
-		            });
-		        };
-		        // End Ajax Handle Function
-
-
-				// Start Ajax based
-				<?php if( $ajax_loadmore ) : ?>
-
-					<?php foreach ( $ajax_loadmore as $key => $value ) : ?>
-
-						<?php $event_type = isset( $value['event_type'] ) ? $value['event_type'] : "selectors_click"; ?>
-
-						<?php $custom_button_append =  isset( $value['custom_button_append'] ) ? $value['custom_button_append'] : ""; ?>
-						<?php $button_label =  isset( $value['button_label'] ) ? $value['button_label'] : ""; ?>
-
-						<?php $button_trigger_selector = isset( $value['button_trigger_selector'] ) ? $value['button_trigger_selector'] : ""; ?>
-						<?php $click_selector = isset( $value['click_selector'] ) ? $value['click_selector'] : ""; ?>
-
-						<?php $hide_selector_wrapper = isset( $value['hide_selector_wrapper'] ) ? $value['hide_selector_wrapper'] : ""; ?>
-						<?php $wrapper_to_hide = isset( $value['wrapper_to_hide'] ) ? $value['wrapper_to_hide'] : ""; ?>
-						<?php $update_browser_url = isset( $value['update_browser_url'] ) ? $value['update_browser_url'] : ""; ?>
-						<?php $update_page_title = isset( $value['update_page_title'] ) ? $value['update_page_title'] : ""; ?>
-						<?php $data_implement_selectors = isset( $value['data_implement_selectors'] ) ? $value['data_implement_selectors'] : array(); ?>
-
-						<?php if( $event_type == "custom_button" ) : ?>
-							<?php $click_selector = $button_trigger_selector; ?>
-
-							$("<?php _e($custom_button_append); ?>").after('<button data-alm-click-selector="<?php esc_attr_e( $click_selector ); ?>" type="button" class="ald-ajax-btn button">'+loader+'<span class="ald-btn-label"><?php esc_attr_e( $button_label ); ?></span></button>');
-
-						<?php endif; ?>
-
-						<?php if( $click_selector ) : ?>
-
-					        $( document ).on('click', '<?php _e( $click_selector ); ?>', function(e){
-					        	e.preventDefault();
-
-					        	// Javascript Array Args
-								var args = [];
-								args['event_type'] = "<?php _e( $event_type ); ?>";
-								args['custom_button_append'] = "<?php _e( $custom_button_append ); ?>";
-								args['button_trigger_selector'] = "<?php _e( $button_trigger_selector ); ?>";
-								args['button_label'] = "<?php _e( $button_label ); ?>";
-								args['click_selector'] = "<?php _e( $click_selector ); ?>";
-								args['hide_selector_wrapper'] = "<?php _e( $hide_selector_wrapper ); ?>";
-								args['wrapper_to_hide'] = "<?php _e( $wrapper_to_hide ); ?>";
-								args['update_browser_url'] = "<?php _e( $update_browser_url ); ?>";
-								args['update_page_title'] = "<?php _e( $update_page_title ); ?>";
-								args['data_implement_selectors'] = '<?php echo json_encode( $data_implement_selectors ); ?>';
-
-					            var targetUrl = ( e.target.href ) ? e.target.href : $(this).context.href;
-					            LoadMorePushAjax( targetUrl, args );
-
-					            <?php if ( $update_browser_url == "yes" ) : ?>
-					            	window.history.pushState({url: "" + targetUrl + ""}, "", targetUrl);
-					            <?php endif; ?>
-
-					        });
-
-						<?php endif; ?>
-
-
-						<?php if( $event_type == "scroll_to_load"  ) : ?>
-
-					        $( window ).on('scroll', function(e){
-					            $('<?php _e( $click_selector ); ?>').each(function(i,el){
-
-					                var $this = $(this);
-
-					                var H = $(window).height(),
-					                    r = el.getBoundingClientRect(),
-					                    t=r.top,
-					                    b=r.bottom;
-
-					                var tAdj = parseInt(t-(H/2));
-
-					                if ( flag === false && (H >= tAdj) ) {
-					                    //console.log( 'inview' );
-					                    $this.trigger('click');
-					                } else {
-					                    //console.log( 'outview' );
-					                }
-					            });
-					        });
-
-						<?php endif; ?>
-
-					<?php endforeach; ?>
-
-					// Ajax Custom Button Trigger
-					$( document ).on('click', 'button.ald-ajax-btn', function(e){
-						if ( $(this).data('alm-click-selector') ) {
-
-							var selector = $( document ).find($(this).data('alm-click-selector'));
-
-							if ( selector.length ) {
-								$(this).addClass('loading');
-								selector.trigger('click');
-							} else {
-								$(this).find('.ald-btn-label').text('No New Data Found');
+							// Hide if no more to load
+							if ( jQuery("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
+								jQuery(this).fadeOut('slow');
 							}
 
+							// ReCalculate the hidden items
+							jQuery(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php _e( $ald_load_class ); ?>:hidden").length );
+
+						});
+
+
+					<?php else: ?>
+
+						// Show the initial visible items
+						jQuery("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).show();
+
+						// Calculate the hidden items
+						jQuery(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php _e( $ald_load_class ); ?>:hidden").length );
+
+						// Button Click Trigger
+						jQuery("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
+							e.preventDefault();
+
+							// Show the hidden items
+							jQuery("<?php _e( $ald_load_class ); ?>:hidden").slice(0, <?php _e( $ald_item_load ); ?>).slideDown();
+
+							// Hide if no more to load
+							if ( jQuery("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
+								jQuery(this).fadeOut('slow');
+							}
+
+							// ReCalculate the hidden items
+							jQuery(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php _e( $ald_load_class ); ?>:hidden").length );
+
+						});
+
+					<?php endif; ?>
+
+					// Hide on initial if no div to show
+					if ( jQuery("<?php _e( $ald_load_class ); ?>:hidden").length == 0 ) {
+						jQuery("<?php _e( $ald_wrapper_class ); ?>").find("#loadMore").fadeOut('slow');
+						//console.log( 'Load more button hidden because no more item to load' );
+					}
+
+				<?php endforeach; ?>
+
+			<?php endif;?> // End General Selector
+
+			// Ajax Handle Function
+			var flag = false;
+			var main_xhr;
+
+			var LoadMorePushAjax = function( url, args ){
+
+				jQuery('.ald_loader_progress').css({
+					"-webkit-transform":"translate3d(-100%, 0px, 0px)",
+					"-ms-transform":"translate3d(-100%, 0px, 0px)",
+					"transform":"translate3d(-100%, 0px, 0px)",
+				});
+
+				if ( args['data_implement_selectors'] ) {
+					var dis = JSON.parse( args['data_implement_selectors'] );
+				}
+
+				if(main_xhr && main_xhr.readyState != 4){
+					main_xhr.abort();
+				}
+
+				main_xhr = jQuery.ajax({
+					url: url,
+					asynch: true,
+					beforeSend: function() {
+						jQuery('.ald_laser_loader').addClass('show');
+						jQuery('.ald_loader_progress').css({
+							"transition-duration": "2000ms",
+							"-webkit-transform":"translate3d(-20%, 0px, 0px)",
+							"-ms-transform":"translate3d(-20%, 0px, 0px)",
+							"transform":"translate3d(-20%, 0px, 0px)",
+						});
+
+						flag = true;
+					},
+					success: function(data) {
+
+						// Custom Trigger: Before Load
+						jQuery(document).trigger('ald_ajax_content_ready', [data, args]);
+
+						// Data Implement
+						if ( dis ) {
+							for( var key in dis ) {
+								var selector = dis[key].data_selector;
+								var type = dis[key].implement_type;
+
+								if ( selector ) {
+									var newData = jQuery(selector, data).html();
+
+									// console.log( newData );
+
+									if ( type == "insert_before" ) {
+										jQuery( selector ).prepend( newData );
+									} else if ( type == "insert_after" ) {
+										jQuery( selector ).append( newData );
+									} else {
+										jQuery( selector ).html( newData );
+									}
+
+								}
+							}
 						}
-					});
-
-				<?php endif; ?> // End Ajax Selector
 
 
+						flag = false;
 
-			});
+						jQuery( document ).find( '.tf_posts_navigation' ).removeClass( 'loading' );
 
-		})(jQuery);
+						// Remove loading class
+						jQuery('.ald-ajax-btn[data-alm-click-selector]').each(function(){
+							if ( jQuery(this).data('alm-click-selector') == args['click_selector'] ) {
+								jQuery(this).removeClass('loading');
+							}
+						});
+
+						// Finish the loading
+						jQuery('.ald_loader_progress').css({
+							"transition-duration": "500ms",
+							"-webkit-transform":"translate3d(0%, 0px, 0px)",
+							"-ms-transform":"translate3d(0%, 0px, 0px)",
+							"transform":"translate3d(0%, 0px, 0px)",
+						});
+
+						// Reset the loader
+						setTimeout(function(){
+							jQuery('.ald_laser_loader').removeClass('show');
+							jQuery('.ald_loader_progress').css({
+								"transition-duration": "0ms",
+								"-webkit-transform":"translate3d(-100%, 0px, 0px)",
+								"-ms-transform":"translate3d(-100%, 0px, 0px)",
+								"transform":"translate3d(-100%, 0px, 0px)",
+							});
+						}, 300);
+
+						// Custom Trigger: Loaded
+						jQuery(document).trigger('ald_ajax_content_loaded', data);
+
+						// Ajax success
+						jQuery(document).trigger('ald_ajax_content_success', [data, args]);
+
+					}
+				});
+			};
+			// End Ajax Handle Function
+
+
+			// Start Ajax based
+			<?php if( $ajax_loadmore ) : ?>
+			<?php do_action( 'load_more_anything_ajax_loadmore', $ajax_loadmore ); ?>
+
+				<?php foreach ( $ajax_loadmore as $key => $value ) : ?>
+
+					<?php $event_type = isset( $value['event_type'] ) ? $value['event_type'] : "selectors_click"; ?>
+
+					<?php $custom_button_append =  isset( $value['custom_button_append'] ) ? $value['custom_button_append'] : ""; ?>
+					<?php $button_label =  isset( $value['button_label'] ) ? ald_ajax_button_label($value['button_label']) : ""; ?>
+
+					<?php $button_trigger_selector = isset( $value['button_trigger_selector'] ) ? $value['button_trigger_selector'] : ""; ?>
+					<?php $click_selector = isset( $value['click_selector'] ) ? $value['click_selector'] : ""; ?>
+
+					<?php $hide_selector_wrapper = isset( $value['hide_selector_wrapper'] ) ? $value['hide_selector_wrapper'] : ""; ?>
+					<?php $wrapper_to_hide = isset( $value['wrapper_to_hide'] ) ? $value['wrapper_to_hide'] : ""; ?>
+					<?php $update_browser_url = isset( $value['update_browser_url'] ) ? $value['update_browser_url'] : ""; ?>
+					<?php $update_page_title = isset( $value['update_page_title'] ) ? $value['update_page_title'] : ""; ?>
+					<?php $data_implement_selectors = isset( $value['data_implement_selectors'] ) ? $value['data_implement_selectors'] : array(); ?>
+
+					<?php if( $event_type == "custom_button" ) : ?>
+						<?php $click_selector = $button_trigger_selector; ?>
+
+						jQuery("<?php _e($custom_button_append); ?>").after('<button data-alm-click-selector="<?php esc_attr_e( $click_selector ); ?>" type="button" class="ald-ajax-btn button">'+loader+'<span class="ald-btn-label"><?php esc_attr_e( $button_label ); ?></span></button>');
+
+					<?php endif; ?>
+
+					<?php if( $click_selector ) : ?>
+
+						jQuery( document ).on('click', '<?php _e( $click_selector ); ?>', function(e){
+							e.preventDefault();
+
+							// Javascript Array Args
+							var args = [];
+							args['event_type'] = "<?php _e( $event_type ); ?>";
+							args['custom_button_append'] = "<?php _e( $custom_button_append ); ?>";
+							args['button_trigger_selector'] = "<?php _e( $button_trigger_selector ); ?>";
+							args['button_label'] = "<?php _e( $button_label ); ?>";
+							args['click_selector'] = "<?php _e( $click_selector ); ?>";
+							args['hide_selector_wrapper'] = "<?php _e( $hide_selector_wrapper ); ?>";
+							args['wrapper_to_hide'] = "<?php _e( $wrapper_to_hide ); ?>";
+							args['update_browser_url'] = "<?php _e( $update_browser_url ); ?>";
+							args['update_page_title'] = "<?php _e( $update_page_title ); ?>";
+							args['data_implement_selectors'] = '<?php echo json_encode( $data_implement_selectors ); ?>';
+
+							var targetUrl = ( e.target.href ) ? e.target.href : jQuery(this).context.href;
+							LoadMorePushAjax( targetUrl, args );
+
+							<?php do_action( 'after_load_more_push_ajax', $value ); ?>
+							
+
+						});
+
+					<?php endif; ?>
+
+
+					<?php if( $event_type == "scroll_to_load"  ) : ?>
+
+						jQuery( window ).on('scroll', function(e){
+							jQuery('<?php _e( $click_selector ); ?>').each(function(i,el){
+
+								var $this = jQuery(this);
+
+								var H = jQuery(window).height(),
+									r = el.getBoundingClientRect(),
+									t=r.top,
+									b=r.bottom;
+
+								var tAdj = parseInt(t-(H/2));
+
+								if ( flag === false && (H >= tAdj) ) {
+									//console.log( 'inview' );
+									$this.trigger('click');
+								} else {
+									//console.log( 'outview' );
+								}
+							});
+						});
+
+					<?php endif; ?>
+
+				<?php endforeach; ?>
+
+				// Ajax Custom Button Trigger
+				jQuery( document ).on('click', 'button.ald-ajax-btn', function(e){
+					if ( jQuery(this).data('alm-click-selector') ) {
+
+						var selector = jQuery( document ).find(jQuery(this).data('alm-click-selector'));
+
+						if ( selector.length ) {
+							jQuery(this).addClass('loading');
+							selector.trigger('click');
+						} else {
+							jQuery(this).find('.ald-btn-label').text('No New Data Found');
+						}
+
+					}
+				});
+
+			<?php endif; ?> // End Ajax Selector
+
+		});
+
+
 	</script>
 	<?php
 	$output = ob_get_clean();
-	//echo ald_minify_js( $output );
+
+	// Minify
+	$output = ald_minify_js( $output );
+
+	// Output
 	echo $output;
 }
 
-add_action('wp_footer','ald_custom_javascript_code');
+add_action('wp_footer','ald_custom_javascript_code', 9999);
 
 /**
  * Ajax Loader on top
@@ -493,3 +494,6 @@ function ald_ajax_laser_loader(){
 	<?php
 }
 add_action('wp_footer', 'ald_ajax_laser_loader');
+
+// Admin Notice Class: class-admin-notice
+require_once( __DIR__ . '/class-admin-notice.php' );
