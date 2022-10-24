@@ -480,4 +480,10 @@ class ALD_Menu {
     }
 }
 
-new ALD_Menu();
+// Initialize the class
+function ALD_Menu() {
+    new ALD_Menu();
+}
+
+// Initialize the function
+ALD_Menu();

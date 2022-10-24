@@ -214,7 +214,7 @@ function ald_add_general_loadmore_wrap( $args ){
     $load_more_item_selector = __( 'Load More Items Selector', 'ajax-load-more-anything' );
     $load_more_item_selector_desc = __( 'Selector for load more items. Example: <code>.parent_selector .items</code>', 'ajax-load-more-anything' );
 
-    $visiable_items_text = __( 'Visiable Items', 'ajax-load-more-anything' );
+    $visiable_items_text = __( 'Visible Items', 'ajax-load-more-anything' );
     $visiable_items_desc = __( 'How many item will show initially', 'ajax-load-more-anything' );
 
     $load_items_text = __( 'Load Items', 'ajax-load-more-anything' );
@@ -378,7 +378,7 @@ function ald_add_ajax_loadmore_wrap( $args ){
     $load_more_item_selector = __( 'Load More Items Selector', 'ajax-load-more-anything' );
     $load_more_item_selector_desc = __( 'Selector for load more items. Example: <code>.parent_selector .items</code>', 'ajax-load-more-anything' );
 
-    $visiable_items_text = __( 'Visiable Items', 'ajax-load-more-anything' );
+    $visiable_items_text = __( 'Visible Items', 'ajax-load-more-anything' );
     $visiable_items_desc = __( 'How many item will show initially', 'ajax-load-more-anything' );
 
     $load_items_text = __( 'Load Items', 'ajax-load-more-anything' );
