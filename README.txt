@@ -1,10 +1,10 @@
 === Load More Anything ===
 Contributors: mdshuvo, addonmaster
-Tags: infinite scroll, div jquery load, anything jquery, blog post jquery load, Comments jquery load, page jquery load, Category jquery load, Recent Posts jquery load, Sidebar widget jquery load, Woocommerce Product jquery load, Images jquery load, Photos jquery load, Videos jquery load, custom Div jquery load,infinite scroll, infinite scrolling, scroll, lazy load, lazy loading, endless scroll, pagination, ajax load pagination, ajax load, ajax load posts, ajax load more, anything load more
+Tags: infinite scroll, ajax load more, load more, endless scroll, ajax pagination, ajax load, ajax comments, woocommerce ajax
 Requires at least: 4.6
-Tested up to: 6.0.2
+Tested up to: 6.0.3
 Requires PHP: 5.6
-Stable tag: 3.0.2
+Stable tag: 3.1.0
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -160,6 +160,12 @@ Create Topic in [Support forum](https://wordpress.org/support/plugin/ajax-load-m
 
 
 == Changelog ==
+
+= 3.1.0 - Oct 25, 2022 =
+- WordPress 6.0.3 Compatibility
+- Fix: Pro modal
+- Code Optimize
+
 
 = 3.0.0 - Oct 10, 2022 =
 - WordPress 6.0.2 Compatibility
