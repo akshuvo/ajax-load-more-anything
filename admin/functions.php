@@ -169,13 +169,14 @@ add_action( 'wp_ajax_ald_add_general_loadmore', 'ald_add_general_loadmore_action
 function ald_add_general_loadmore_action(){
 
     //$key = sanitize_text_field( $_POST['key'] );
-    $key = wp_generate_password( 3, false );
+    $key = isset( $_POST['key'] ) ? sanitize_text_field( $_POST['key'] ) : '';
+    $thiskey = isset( $_POST['thiskey'] ) ? intval( $_POST['thiskey'] ) : 0;
 
     ob_start();
 
     echo ald_add_general_loadmore_wrap( array(
         'key' => $key,
-        'thiskey' => $key,
+        'thiskey' => $thiskey,
     ) );
 
     $output = ob_get_clean();
@@ -189,24 +190,22 @@ function ald_add_general_loadmore_action(){
 function ald_add_general_loadmore_wrap( $args ){
     // Load Blank variable
     $btn_selector = $load_selector = $visible_items = $load_items = $button_label = $display_type = '';
-    $defaults = array (
-        'key' => '',
-        'selector' => array(),
-    );
 
     // Parse incoming $args into an array and merge it with $defaults
-    $args = wp_parse_args( $args, $defaults );
+    $args = wp_parse_args( $args, [
+        'thiskey' => '',
+        'key' => '',
+        'selector' => array(),
+    ] );
 
     // Let's extract the array
     extract( $args['selector'] );
 
     // Array key
-    $key =  isset( $args['key'] ) ? $args['key'] : "";
-
-    $wrapper_key = '<span class="gen_wrap_sl">'.($args['key']).'</span>';
+    $key =  isset( $args['key'] ) ? wp_generate_password(5, false) . sanitize_text_field( $args['key'] ) : wp_generate_password(5, false);
 
     if ( !isset( $args['selector']['wrapper_title'] ) ) {
-        $wrapper_title = __('Wrapper Title', 'ajax-load-more-anything');
+        $wrapper_title = __('Wrapper Title #' . intval($args['thiskey']+1) , 'ajax-load-more-anything');
     }
 
     $load_more_button_wrapper = __( 'Load More Button Selector', 'ajax-load-more-anything' );
@@ -329,8 +328,8 @@ function ald_add_general_loadmore_wrap( $args ){
 add_action( 'wp_ajax_ald_add_ajax_loadmore', 'ald_add_ajax_loadmore_action' );
 function ald_add_ajax_loadmore_action(){
 
-    //$key = sanitize_text_field( $_POST['key'] );
-    $key = wp_generate_password( 3, false );
+    $key = isset( $_POST['key'] ) ? sanitize_text_field( $_POST['key'] ) : '';
+    $thiskey = isset( $_POST['thiskey'] ) ? intval( $_POST['thiskey'] ) : 0;
 
     ob_start();
 
@@ -351,13 +350,12 @@ function ald_add_ajax_loadmore_wrap( $args ){
     // Load Blank variable
     $event_type = $custom_button_append = $button_trigger_selector = $button_label = $click_selector = $hide_selector_wrapper = $wrapper_to_hide = $update_browser_url = $update_page_title = '';
 
-    $defaults = array (
+    // Parse incoming $args into an array and merge it with $defaults
+    $args = wp_parse_args( $args, [
+        'thiskey' => '',
         'key' => '',
         'selector' => array(),
-    );
-
-    // Parse incoming $args into an array and merge it with $defaults
-    $args = wp_parse_args( $args, $defaults );
+    ] );
 
     // Let's extract the array
     extract( $args['selector'] );
@@ -365,10 +363,8 @@ function ald_add_ajax_loadmore_wrap( $args ){
     // Array key
     $key =  isset( $args['key'] ) ? $args['key'] : "";
 
-    $wrapper_key = '<span class="ajax_wrap_sl">'.($args['key']).'</span>';
-
     if ( !isset( $args['selector']['wrapper_title'] ) ) {
-        $wrapper_title = __('Wrapper Title', 'ajax-load-more-anything');
+        $wrapper_title = __('Wrapper Title #' . intval( $args['thiskey'] + 1 ) , 'ajax-load-more-anything');
     }
 
     // data_implement_selectors

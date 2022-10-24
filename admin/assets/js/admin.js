@@ -53,8 +53,7 @@ var ald_pro = alda_params.ald_pro;
             var keyLen = jQuery('.tf_gen_sel_field').length;
 
             if ( keyLen >= 6 && ald_pro == "0" ) {
-                jQuery(document).trigger('am_modal_show', '#ald_go-pro');
-                return;
+                // return;
             }
 
             var data = {
@@ -90,8 +89,8 @@ var ald_pro = alda_params.ald_pro;
             var keyLen = jQuery('.tf_ajax_sel_field').length;
 
             if ( keyLen >= 1 && ald_pro == "0" ) {
-                jQuery(document).trigger('am_modal_show', '#ald_go-pro');
-                return;
+                // jQuery(document).trigger('am_modal_show', '#ald_go-pro');
+                // return;
             }
 
             var data = {

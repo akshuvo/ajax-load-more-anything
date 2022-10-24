@@ -12,6 +12,8 @@ class ALD_Menu {
         add_action( 'admin_menu', [ $this, 'admin_menu' ] );
         add_action( 'ald_general_loadmore_after_wrap', [ $this, '_general_content' ], 10, 2 );
         add_action( 'ald_ajax_loadmore_after_wrap', [ $this, '_ajax_content' ], 10, 2 );
+
+        add_filter( 'ald_before_options_save', [ $this, 'options_save' ] );
     }
 
     /**
@@ -386,7 +388,6 @@ class ALD_Menu {
     function _general_content( $output, $args ){
         /**
          * Show Some Respect to my hard work and don't try to use the pro plugin illegally
-         * It's only about $20. Here is coupon for you: WPUSER
          */
         if ( isset( $args['thiskey'] ) && $args['thiskey'] > 5 && !defined('ALD_PRO_PLUGIN_VERSION') ) {
             echo "<script>triggerGoPro();</script>";
@@ -400,7 +401,6 @@ class ALD_Menu {
     function _ajax_content( $output, $args ){
         /**
          * Show Some Respect to my hard work and don't try to use the pro plugin illegally
-         * It's only about $20. Here is coupon for you: WPUSER
          */
         if ( isset( $args['thiskey'] ) && $args['thiskey'] > 0 && !defined('ALD_PRO_PLUGIN_VERSION') ) {
             echo "<script>triggerGoPro();</script>";
@@ -426,6 +426,57 @@ class ALD_Menu {
         wp_localize_script('ald-admin-scripts', 'cmjs_settings', $cmjs_settings);
         wp_enqueue_script('wp-theme-plugin-editor');
         wp_enqueue_style('wp-codemirror');
+    }
+
+    // Option Save
+    public function options_save( $options ) {
+
+        // Validate General Load More
+        if ( isset( $options['general_loadmore'] ) && !empty( $options['general_loadmore'] ) && is_array( $options['general_loadmore'] ) ) {
+            // Count General Load More
+            $general_count = 1;
+
+            // Loop through $options['general_loadmore']
+            foreach ( $options['general_loadmore'] as $key => $value ) {
+
+                // Validate $value
+                if ( !empty( $value ) ) {
+                    $options['general_loadmore'][$key] = array_map( 'sanitize_text_field', $value );
+                }
+
+                // Unset $key if $general_count more than 6
+                if ( $general_count > 6 && !defined('ALD_PRO_PLUGIN_VERSION') ) {
+                    unset( $options['general_loadmore'][$key] );
+                }
+
+                $general_count++;
+            }
+        }
+        
+
+        // Validate Ajax Load More
+        if ( isset( $options['ajax_loadmore'] ) && !empty( $options['ajax_loadmore'] ) && is_array( $options['ajax_loadmore'] ) ) {
+            // Count General Load More
+            $ajax_count = 1;
+
+            // Loop through $options['general_loadmore']
+            foreach ( $options['ajax_loadmore'] as $key => $value ) {
+
+                // Validate $value
+                if ( !empty( $value ) ) {
+                    $options['ajax_loadmore'][$key] = $value;
+                }
+
+                // Unset $key if $ajax_count more than 1
+                if ( $ajax_count > 1 && !defined('ALD_PRO_PLUGIN_VERSION') ) {
+                    unset( $options['ajax_loadmore'][$key] );
+                }
+
+                $ajax_count++;
+            }
+        }
+
+        return $options;
     }
 }
 
