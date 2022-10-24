@@ -138,6 +138,11 @@ How to install Load More Anything.
 
 == Changelog ==
 
+= 3.1.0 - Oct 25, 2022 =
+- WordPress 6.0.3 Compatibility
+- Fix: Pro modal
+- Code Optimize
+
 = 3.0.0 - Oct 10, 2022 =
 - WordPress 6.0.2 Compatibility
 - New Dashboard
