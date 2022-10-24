@@ -109,7 +109,7 @@ How to install Load More Anything.
 >Use +[count] More in button label so it will be show like this: +15 More
 
 **How I use this**
->Just find the correct selector of the suitable wrapper and insert them in the Plugin Option Panel. The rest will be done by our plugin.
+>Just find the correct selector of the suitable wrapper and insert them in the Plugin Option Panel. The rest will be done by our plugin. More info in the documentation [Here](https://addonmaster.com/docs-category/load-more-anything/)
 
 **I can't find the selector for my website. Can you help?**
 >Please Submit A Support Ticket from [Here](https://addonmaster.com/submit-a-ticket/)(conditions apply)
