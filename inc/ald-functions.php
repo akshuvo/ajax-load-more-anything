@@ -158,6 +158,23 @@ function ald_ajax_button_label( $label = '' ){
 	return $label;
 }
 
+// Sanitize Display Type
+function ald_sanitize_display_type( $display_type = '' ){
+	if ( defined('ALD_PRO_PLUGIN_VERSION') ) {
+        return $display_type;
+    }
+
+	switch ( $display_type ) {
+		case 'flex':
+			$display_type = 'flex';
+			break;
+		default:
+			$display_type = 'default';
+			break;
+	}
+
+	return $display_type;
+}
 /**
  * Custom JS
  */
@@ -185,7 +202,7 @@ function ald_custom_javascript_code(){
 					<?php $ald_item_show = isset( $value['visible_items'] ) && !empty( $value['visible_items'] ) ? sanitize_text_field( $value['visible_items'] ) : '3'; ?>
 					<?php $ald_item_load = isset( $value['load_items'] ) && !empty( $value['load_items'] ) ? sanitize_text_field( $value['load_items'] ) : '3'; ?>
 					<?php $ald_load_label = isset( $value['button_label'] ) && !empty( $value['button_label'] ) ? sanitize_text_field( $value['button_label'] ) : __( 'Load More', 'ajax-load-more-anything' );?>
-					<?php $display_type = isset( $value['display_type'] ) && !empty( $value['display_type'] ) ? sanitize_text_field( $value['display_type'] ) : '';?>
+					<?php $display_type = isset( $value['display_type'] ) && !empty( $value['display_type'] ) ? ald_sanitize_display_type( $value['display_type'] ) : '';?>
 
 					// Skip is selectors are empty
 					<?php if( empty( $ald_wrapper_class ) || empty( $ald_load_class ) ) :?>
@@ -223,7 +240,7 @@ function ald_custom_javascript_code(){
 						});
 
 
-					<?php else: ?>
+					<?php elseif ( $display_type == "default" ) : ?>
 
 						// Show the initial visible items
 						jQuery("<?php _e( $ald_load_class ); ?>").slice(0, <?php _e( $ald_item_show ); ?>).show();
@@ -247,7 +264,8 @@ function ald_custom_javascript_code(){
 							jQuery(document).find("<?php _e( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php _e( $ald_load_class ); ?>:hidden").length );
 
 						});
-
+					<?php else : ?>
+						<?php do_action( 'ald_general_loadmore_display_type_wrapper', $value ); ?>
 					<?php endif; ?>
 
 					// Hide on initial if no div to show
