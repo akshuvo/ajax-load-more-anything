@@ -196,7 +196,16 @@ function ald_custom_javascript_code(){
 			<?php if( $general_loadmore ) : ?>
 
 				<?php foreach ( $general_loadmore as $key => $value ) : ?>
-
+					<?php 
+					$value = wp_parse_args( $value, array(
+						'btn_selector' => '',
+						'load_selector' => '',
+						'visible_items' => '',
+						'load_items' => '',
+						'button_label' => __( 'Load More', 'ajax-load-more-anything' ),
+						'display_type' => '',
+					) );
+					?>
 					<?php $ald_wrapper_class = isset( $value['btn_selector'] ) && !empty( $value['btn_selector'] ) ? sanitize_text_field( $value['btn_selector'] ) : ''; ?>
 					<?php $ald_load_class =  isset( $value['load_selector'] ) && !empty( $value['load_selector'] ) ? sanitize_text_field( $value['load_selector'] ) : '';?>
 					<?php $ald_item_show = isset( $value['visible_items'] ) && !empty( $value['visible_items'] ) ? sanitize_text_field( $value['visible_items'] ) : '3'; ?>
@@ -265,7 +274,7 @@ function ald_custom_javascript_code(){
 
 						});
 					<?php else : ?>
-						<?php do_action( 'ald_general_loadmore_display_type_wrapper', $value ); ?>
+						<?php do_action( 'ald-general-loadmore-display-type-wrapper', $value ); ?>
 					<?php endif; ?>
 
 					// Hide on initial if no div to show
