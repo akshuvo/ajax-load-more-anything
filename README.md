@@ -138,6 +138,11 @@ How to install Load More Anything.
 
 == Changelog ==
 
+= 3.2.0 - Feb 09, 2023 =
+- WordPress 6.1.1 Compatibility
+- Code Optimize
+
+
 = 3.1.0 - Oct 25, 2022 =
 - WordPress 6.0.3 Compatibility
 - Fix: Pro modal
