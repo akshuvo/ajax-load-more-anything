@@ -1,8 +1,4 @@
-/**
- * Show Some Respect to my hard work and don't try to use the pro plugin illegally
- * It's only about $29.
- */
-var ald_pro = alda_params.ald_pro;
+let ald_pro = alda_params.ald_pro;
 (function($) {
 	"use strict";
 	$(document).ready(function(){
@@ -120,7 +116,7 @@ var ald_pro = alda_params.ald_pro;
         });
 
         // Delete field
-        $(document).on('click', 'span.delete_field', function(e){
+        $(document).on('click', 'span.delete_field ', function(e){
             e.preventDefault();
             $(this).closest('.tf_gen_sel_field, .tf_ajax_sel_field').remove();
             return false;
@@ -129,9 +125,16 @@ var ald_pro = alda_params.ald_pro;
         // Field toggle
         $(document).on('click', '.ald-toggle-head', function(e){
         	e.preventDefault();
+
+            // Return if click on input
+            if ( $(e.target).is('input') && $(this).parent().hasClass('opened') ) {
+                return;
+            }
+
             $(this).parent().toggleClass('opened').find('.ald-toggle-wrap').slideToggle('fast');
-            return false;
+
         });
+
 
         // Generate unique ID
 		function makeid(length) {

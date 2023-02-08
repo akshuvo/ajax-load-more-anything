@@ -322,9 +322,6 @@ function ald_custom_javascript_code(){
 							}
 						}
 
-
-						flag = false;
-
 						jQuery( document ).find( '.tf_posts_navigation' ).removeClass( 'loading' );
 
 						// Remove loading class
@@ -357,7 +354,9 @@ function ald_custom_javascript_code(){
 						jQuery(document).trigger('ald_ajax_content_loaded', data);
 
 						// Ajax success
-						jQuery(document).trigger('ald_ajax_content_success', [data, args]);
+						jQuery(document).trigger('ald_ajax_content_success', [args]);
+
+						flag = false;
 
 					}
 				});
