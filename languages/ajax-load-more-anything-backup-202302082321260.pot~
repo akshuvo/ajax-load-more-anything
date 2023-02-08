@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Load More Anything\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-08 23:21+0000\n"
+"POT-Creation-Date: 2022-08-15 12:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,6 +16,10 @@ msgstr ""
 "X-Loco-Version: 2.6.2; wp-6.0.1\n"
 "X-Domain: ajax-load-more-anything"
 
+#: admin/functions.php:315
+msgid "<strong>Normal</strong> means other than <code>display: flex;</code>"
+msgstr ""
+
 #. Description of the plugin
 msgid ""
 "A simple plugin that help you to Load more any item with jQuery/Ajax. You "
@@ -24,15 +28,15 @@ msgid ""
 "Photos, Videos, custom selector or whatever you want."
 msgstr ""
 
-#: admin/Menu.php:266
+#: admin/Menu.php:264
 msgid "Add Ajax Wrapper"
 msgstr ""
 
-#: admin/functions.php:552
+#: admin/functions.php:423
 msgid "Add Custom Button"
 msgstr ""
 
-#: admin/Menu.php:236
+#: admin/Menu.php:234
 msgid "Add Wrapper"
 msgstr ""
 
@@ -40,139 +44,135 @@ msgstr ""
 msgid "Addon Master"
 msgstr ""
 
-#: admin/Menu.php:144
+#: admin/Menu.php:142
 msgid "Ajax Based"
 msgstr ""
 
-#: admin/Menu.php:244
+#: admin/Menu.php:242
 msgid "Ajaxify Selector"
 msgstr ""
 
-#: admin/Menu.php:341
-msgid "Are you stuck somewhere?"
-msgstr ""
-
-#: admin/Menu.php:190
+#: admin/Menu.php:188
 msgid "Awesome Support"
 msgstr ""
 
-#: admin/functions.php:572
+#: admin/functions.php:443
 msgid "Button click trigger Selector"
 msgstr ""
 
-#: admin/functions.php:560
+#: admin/functions.php:431
 msgid "Button Insert Selector"
 msgstr ""
 
-#: admin/functions.php:584
+#: admin/functions.php:455
 msgid "Button Label"
 msgstr ""
 
-#: admin/functions.php:565
+#: admin/functions.php:436
 msgid "Button will be insert after this selector."
 msgstr ""
 
-#: admin/functions.php:356
+#: admin/functions.php:234
 msgid "Change title to anything you like. Ex: For Homepage"
 msgstr ""
 
-#: admin/functions.php:531
+#: admin/functions.php:402
 msgid "Change title to anything you like. Ex: Homepage Posts"
 msgstr ""
 
-#: admin/Menu.php:161
+#: admin/Menu.php:159
 msgid "Checkout our new features."
 msgstr ""
 
-#: admin/Menu.php:145
+#: admin/Menu.php:143
 msgid "Custom Code"
 msgstr ""
 
-#: admin/Menu.php:274
+#: admin/Menu.php:272
 msgid "Custom Code Panel"
 msgstr ""
 
-#: admin/Menu.php:279
+#: admin/Menu.php:277
 msgid "Custom CSS"
 msgstr ""
 
-#: admin/functions.php:963
+#: admin/functions.php:836
 msgid "Custom JavaScript"
 msgstr ""
 
-#: admin/functions.php:633
+#: admin/functions.php:504
 msgid "Data Implement Selectors"
 msgstr ""
 
-#: admin/functions.php:667
+#: admin/functions.php:538
 msgid "Data Selector"
 msgstr ""
 
-#: admin/Menu.php:356
+#: admin/Menu.php:354
 msgid "Email Us <span class=\"ml-half dashicons dashicons-email\"></span>"
 msgstr ""
 
-#: admin/functions.php:595
+#: admin/functions.php:466
 msgid "Enter Selector"
 msgstr ""
 
-#: admin/functions.php:347 admin/functions.php:521
+#: admin/functions.php:225 admin/functions.php:392
 msgid ""
 "Enter the name of Load More Button <br> Use <code>+[count]</code> for "
 "countable button like +15 more"
 msgstr ""
 
-#: admin/functions.php:626
+#: admin/functions.php:497
 msgid "Enter the selector of the wrapper which you want to hide from visitors"
 msgstr ""
 
-#: admin/functions.php:545
+#: admin/functions.php:416
 msgid "Event Type:"
 msgstr ""
 
-#: admin/Menu.php:305
+#: admin/Menu.php:303
 msgid "Everything now you can make ajax based!"
 msgstr ""
 
-#: admin/Menu.php:332
+#: admin/functions.php:313
+msgid "Flex"
+msgstr ""
+
+#: admin/Menu.php:330
 msgid "Free vs Pro Comparison"
 msgstr ""
 
-#: admin/Menu.php:143
+#: admin/Menu.php:141
 msgid "General Selectors"
 msgstr ""
 
-#: admin/Menu.php:214
+#: admin/Menu.php:212
 msgid "General Selectors Panel"
 msgstr ""
 
-#: admin/Menu.php:343
+#: admin/Menu.php:341
 msgid "Get support from our developers. Easy, Quick, and Professional!"
 msgstr ""
 
-#: ajax-load-div.php:149
-msgid "GO PRO"
-msgstr ""
-
-#: admin/Menu.php:275
+#: admin/Menu.php:273
 msgid "Here you can add/modify custom css"
 msgstr ""
 
-#: admin/Menu.php:215
+#: admin/Menu.php:213
 msgid ""
 "Here you can enable load more items which are already visible in your web "
 "page"
 msgstr ""
 
-#: admin/functions.php:607
+#: admin/functions.php:478
 msgid "Hide Selector(s) wrapper"
 msgstr ""
 
-#: admin/functions.php:344 admin/functions.php:518
+#: admin/functions.php:222 admin/functions.php:389
 msgid "How Many Item Will Load When Click Load More Button?"
 msgstr ""
 
-#: admin/functions.php:341 admin/functions.php:515
+#: admin/functions.php:219 admin/functions.php:386
 msgid "How many item will show initially"
 msgstr ""
 
@@ -181,112 +181,112 @@ msgid "https://addonmaster.com/contact"
 msgstr ""
 
 #. URI of the plugin
-msgid "https://wordpress.org/plugins/ajax-load-more-anything/"
+msgid "https://github.com/akshuvo/ajax-load-more-anything/"
 msgstr ""
 
-#: admin/Menu.php:202
+#: admin/Menu.php:200
 msgid ""
 "If you want to show me some love, The review section is always open for you :"
 "). Your awesome review provides me energy to continue development for free."
 msgstr ""
 
-#: admin/Menu.php:367
+#: admin/Menu.php:365
 msgid ""
 "If you want to show some love, The review section is always open for you :). "
 "Your awesome review provide us energy to continue development for free."
 msgstr ""
 
-#: admin/functions.php:668
+#: admin/functions.php:539
 msgid "Implement Type"
 msgstr ""
 
-#: admin/functions.php:688 admin/functions.php:709 admin/functions.php:730
+#: admin/functions.php:559 admin/functions.php:580 admin/functions.php:601
 msgid "Insert After"
 msgstr ""
 
-#: admin/functions.php:689 admin/functions.php:708 admin/functions.php:729
+#: admin/functions.php:560 admin/functions.php:579 admin/functions.php:600
 msgid "Insert Before"
 msgstr ""
 
-#: admin/Menu.php:303
+#: admin/Menu.php:301
 msgid "Introducing Load More Anyting <code>Pro</code>"
 msgstr ""
 
-#: admin/Menu.php:330
+#: admin/Menu.php:328
 msgid "Learn More <span class=\"ml-half dashicons dashicons-external\"></span>"
 msgstr ""
 
-#: admin/functions.php:343 admin/functions.php:517
+#: admin/functions.php:221 admin/functions.php:388
 msgid "Load Items"
 msgstr ""
 
-#: inc/ald-functions.php:205 inc/ald-functions.php:213
+#: inc/ald-functions.php:223
 msgid "Load More"
 msgstr ""
 
 #. Name of the plugin
-#: admin/Menu.php:30
+#: admin/Menu.php:28
 msgid "Load More Anything"
 msgstr ""
 
-#: admin/Menu.php:29
+#: admin/Menu.php:27
 msgid "Load More Anything Option Panel"
 msgstr ""
 
-#: admin/functions.php:780
+#: admin/functions.php:651
 msgid "Load More Anyting"
 msgstr ""
 
-#: admin/functions.php:346 admin/functions.php:520
+#: admin/functions.php:224 admin/functions.php:391
 msgid "Load More Button Label"
 msgstr ""
 
-#: admin/functions.php:334 admin/functions.php:508
+#: admin/functions.php:212 admin/functions.php:379
 msgid "Load More Button Selector"
 msgstr ""
 
-#: admin/functions.php:335 admin/functions.php:509
+#: admin/functions.php:213 admin/functions.php:380
 msgid "Load more button will be insert end of this selector"
 msgstr ""
 
-#: admin/functions.php:337 admin/functions.php:511
+#: admin/functions.php:215 admin/functions.php:382
 msgid "Load More Items Selector"
 msgstr ""
 
-#: admin/functions.php:612 admin/functions.php:653 admin/functions.php:659
+#: admin/functions.php:483 admin/functions.php:524 admin/functions.php:530
 msgid "No"
 msgstr ""
 
-#: admin/functions.php:687 admin/functions.php:707 admin/functions.php:728
+#: admin/functions.php:312
+msgid "Normal"
+msgstr ""
+
+#: admin/functions.php:558 admin/functions.php:578 admin/functions.php:599
 msgid "Replace Data"
 msgstr ""
 
-#: admin/functions.php:768
+#: admin/functions.php:639
 msgid "Save Changes"
 msgstr ""
 
-#: admin/functions.php:551
+#: admin/functions.php:422
 msgid "Scroll to Load (Infinite Scroll)"
 msgstr ""
 
-#: admin/functions.php:447
-msgid "Select display property for load more items."
-msgstr ""
-
-#: admin/functions.php:429
+#: admin/functions.php:307
 msgid "Select display type"
 msgstr ""
 
-#: admin/functions.php:338 admin/functions.php:512
+#: admin/functions.php:216 admin/functions.php:383
 msgid ""
 "Selector for load more items. Example: <code>.parent_selector .items</code>"
 msgstr ""
 
-#: admin/functions.php:600
+#: admin/functions.php:471
 msgid "Selector should be correct, otherwise ajax will fail to load contents"
 msgstr ""
 
-#: admin/functions.php:550
+#: admin/functions.php:421
 msgid "Selector(s) Click"
 msgstr ""
 
@@ -294,86 +294,94 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: admin/Menu.php:365
+#: admin/Menu.php:363
 msgid "Show Your Love"
 msgstr ""
 
-#: admin/Menu.php:200
+#: admin/Menu.php:198
 msgid "Show your Love"
 msgstr ""
 
-#: admin/Menu.php:353
+#: admin/Menu.php:339
+msgid "Stuck in somewhere?"
+msgstr ""
+
+#: admin/Menu.php:351
 msgid ""
 "Submit A Ticket <span class=\"ml-half dashicons dashicons-external\"></span>"
 msgstr ""
 
-#: admin/Menu.php:245
+#: admin/Menu.php:243
 msgid ""
 "This options is for ajax based load like: Posts, Products, Custom Post Type, "
 "etc"
 msgstr ""
 
-#: admin/functions.php:577
+#: admin/functions.php:448
 msgid "This selector will be trigger when the button clicked."
 msgstr ""
 
-#: admin/functions.php:644
+#: admin/functions.php:515
 msgid "Update Browser URL?"
 msgstr ""
 
-#: admin/functions.php:647
+#: admin/functions.php:518
 msgid "Update Page Title?"
 msgstr ""
 
-#: admin/functions.php:805 admin/functions.php:932
+#: admin/functions.php:676 admin/functions.php:803
 msgid "Upgrade to Pro"
 msgstr ""
 
-#: admin/Menu.php:194
+#: admin/Menu.php:192
 msgid "View Support Forum"
 msgstr ""
 
-#: admin/Menu.php:349
+#: admin/Menu.php:347
 msgid ""
 "View Support Forum <span class=\"ml-half dashicons dashicons-external\">"
 "</span>"
 msgstr ""
 
-#: admin/functions.php:340 admin/functions.php:514
-msgid "Visible Items"
+#: admin/functions.php:218 admin/functions.php:385
+msgid "Visiable Items"
 msgstr ""
 
-#: admin/Menu.php:192
+#: admin/Menu.php:190
 msgid ""
 "We are ready to give you the best support. If you facing any kind of "
 "technical or non-technical issues just create a support topic. We will "
 "response real fast."
 msgstr ""
 
-#: admin/Menu.php:142
+#: admin/Menu.php:140
 msgid "Welcome"
 msgstr ""
 
-#: admin/Menu.php:159
+#: admin/Menu.php:157
 msgid "Welcome to Load More Anything"
 msgstr ""
 
-#: admin/functions.php:621
+#: admin/functions.php:492
 msgid "Wrapper Selector to hide"
 msgstr ""
 
-#: admin/Menu.php:371
+#: admin/functions.php:209 admin/functions.php:371
+msgid "Wrapper Title"
+msgstr ""
+
+#: admin/Menu.php:369
 msgid "Write a Review"
 msgstr ""
 
-#: admin/Menu.php:204
+#: admin/Menu.php:202
 msgid "Write a Review Now"
 msgstr ""
 
-#: admin/functions.php:613 admin/functions.php:654 admin/functions.php:660
+#: admin/functions.php:484 admin/functions.php:525 admin/functions.php:531
 msgid "Yes"
 msgstr ""
 
-#: admin/functions.php:964
+#: admin/functions.php:837
 msgid "You can trigger custom functions from here."
 msgstr ""

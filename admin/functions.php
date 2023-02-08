@@ -444,6 +444,7 @@ function ald_add_general_loadmore_wrap( $args ){
                                     
                             </select>
                             
+                            <p><?php _e( 'Select display property for load more items.', 'ajax-load-more-anything' ); ?></p>
                         </td>
                     </tr>
                 </table>
