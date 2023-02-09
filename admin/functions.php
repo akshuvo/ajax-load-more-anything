@@ -186,6 +186,129 @@ function ald_add_general_loadmore_action(){
     die();
 }
 
+// List of Display Types
+function ald_display_types(){
+    $types = [
+        'default' => [
+            'label' => 'Default',
+            'value' => 'default',
+            'pro' => false,
+        ],
+        'flex' => [
+            'label' => 'Flex',
+            'value' => 'flex',
+            'pro' => false,
+        ],
+        'inline' => [
+            'label' => 'Inline',
+            'value' => 'inline',
+            'pro' => true,
+        ],
+        'block' => [
+            'label' => 'Block',
+            'value' => 'block',
+            'pro' => true,
+        ],
+        'contents' => [
+            'label' => 'Contents',
+            'value' => 'contents',
+            'pro' => true,
+        ],
+        'grid' => [
+            'label' => 'Grid',
+            'value' => 'grid',
+            'pro' => true,
+        ],
+        'inline-block' => [
+            'label' => 'Inline Block',
+            'value' => 'inline-block',
+            'pro' => true,
+        ],
+        'inline-flex' => [
+            'label' => 'Inline Flex',
+            'value' => 'inline-flex',
+            'pro' => true,
+        ],
+        'inline-grid' => [
+            'label' => 'Inline Grid',
+            'value' => 'inline-grid',
+            'pro' => true,
+        ],
+        'inline-table' => [
+            'label' => 'Inline Table',
+            'value' => 'inline-table',
+            'pro' => true,
+        ],
+        'list-item' => [
+            'label' => 'List Item',
+            'value' => 'list-item',
+            'pro' => true,
+        ],
+        'run-in' => [
+            'label' => 'Run In',
+            'value' => 'run-in',
+            'pro' => true,
+        ],
+        'table' => [
+            'label' => 'Table',
+            'value' => 'table',
+            'pro' => true,
+        ],
+        'table-caption' => [
+            'label' => 'Table Caption',
+            'value' => 'table-caption',
+            'pro' => true,
+        ],
+        'table-column-group' => [
+            'label' => 'Table Column Group',
+            'value' => 'table-column-group',
+            'pro' => true,
+        ],
+        'table-header-group' => [
+            'label' => 'Table Header Group',
+            'value' => 'table-header-group',
+            'pro' => true,
+        ],
+        'table-footer-group' => [
+            'label' => 'Table Footer Group',
+            'value' => 'table-footer-group',
+            'pro' => true,
+        ],
+        'table-row-group' => [
+            'label' => 'Table Row Group',
+            'value' => 'table-row-group',
+            'pro' => true,
+        ],
+        'table-cell' => [
+            'label' => 'Table Cell',
+            'value' => 'table-cell',
+            'pro' => true,
+        ],
+        'table-column' => [
+            'label' => 'Table Column',
+            'value' => 'table-column',
+            'pro' => true,
+        ],
+        'table-row' => [
+            'label' => 'Table Row',
+            'value' => 'table-row',
+            'pro' => true,
+        ],
+        'initial' => [
+            'label' => 'Initial',
+            'value' => 'initial',
+            'pro' => true,
+        ],
+        'inherit' => [
+            'label' => 'Inherit',
+            'value' => 'inherit',
+            'pro' => true,
+        ],
+    ];
+
+    return $types;
+}
+
 // Single general loadmore data
 function ald_add_general_loadmore_wrap( $args ){
     // Load Blank variable
@@ -308,10 +431,20 @@ function ald_add_general_loadmore_wrap( $args ){
                         </th>
                         <td>
                             <select id="general_loadmore-display_type-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][display_type]">
-                                <option value="normal" <?php selected( $display_type, 'normal' ); ?>><?php _e( 'Normal', 'ajax-load-more-anything' ); ?></option>
-                                <option value="flex" <?php selected( $display_type, 'flex' ); ?>><?php _e( 'Flex', 'ajax-load-more-anything' ); ?></option>
+                                
+                                <?php foreach( ald_display_types() as $option_value => $option ) : 
+                                    $selected = selected( $display_type, $option_value, false );
+                                    $option_label = esc_html( $option['label'] );
+                                    $is_pro = isset( $option['pro'] ) ? $option['pro'] : false;
+                                    ?>
+                                    <option value="<?php _e( $option_value ); ?>" <?php _e( $selected ); ?> <?php disabled( ($is_pro && !defined('ALD_PRO_PLUGIN_URL')), true ); ?>>
+                                        <?php _e( $option_label ); ?> <?php echo ($is_pro && !defined('ALD_PRO_PLUGIN_URL')) ? ' (Available in Pro) ' :''; ?>
+                                    </option>
+                                <?php endforeach; ?>
+                                    
                             </select>
-                            <p><?php _e( '<strong>Normal</strong> means other than <code>display: flex;</code>', 'ajax-load-more-anything' ); ?></p>
+                            
+                            <p><?php _e( 'Select display property for load more items.', 'ajax-load-more-anything' ); ?></p>
                         </td>
                     </tr>
                 </table>
