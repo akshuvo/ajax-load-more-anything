@@ -113,6 +113,15 @@ If you have any suitable wrapper then you can apply load more functionaly there.
 - Join our [Facebook Group](https://www.facebook.com/groups/addonmaster/).
 - Or rate us on [WordPress](https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/?filter=5#new-post) :)
 
+## Privacy Policy 
+Load More Anything uses [Appsero](https://appsero.com) SDK to collect some telemetry data upon user's confirmation. This helps us to troubleshoot problems faster & make product improvements.
+
+Appsero SDK **does not gather any data by default.** The SDK only starts gathering basic telemetry data **when a user allows it via the admin notice**. We collect the data to ensure a great user experience for all our users. 
+
+Integrating Appsero SDK **DOES NOT IMMEDIATELY** start gathering data, **without confirmation from users in any case.**
+
+Learn more about how [Appsero collects and uses this data](https://appsero.com/privacy-policy/).
+
 
 == Installation ==
 How to install Load More Anything.

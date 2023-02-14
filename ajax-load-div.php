@@ -166,3 +166,23 @@ function ajax_load_more_anything(){
 // Let's start it
 ajax_load_more_anything();
 
+
+/**
+ * Initialize the plugin tracker
+ *
+ * @return void
+ */
+function appsero_init_tracker_ajax_load_more_anything() {
+
+    if ( ! class_exists( 'Appsero\Client' ) ) {
+      require_once __DIR__ . '/appsero/src/Client.php';
+    }
+
+    $client = new Appsero\Client( '7e201c93-ae5f-4a3a-8ead-d1ccf4ad5e30', 'Load More Anything', __FILE__ );
+
+    // Active insights
+    $client->insights()->init();
+
+}
+
+appsero_init_tracker_ajax_load_more_anything();
