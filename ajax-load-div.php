@@ -36,7 +36,6 @@ define( 'ALD_GOPRO_URL', 'https://addonmaster.com/load-more-anything/?utm_source
 /**
  *	Plugin Main Class
  */
-
 final class Ajax_Load_More_Anything {
 
 	private function __construct() {
