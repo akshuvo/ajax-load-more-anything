@@ -4,7 +4,7 @@
  * Plugin URI:   https://wordpress.org/plugins/ajax-load-more-anything/
  * Author:       Addon Master
  * Author URI:   https://addonmaster.com/contact
- * Version: 	 3.2.1
+ * Version: 	 3.3.0
  * Description:  A simple plugin that help you to Load more any item with jQuery/Ajax. You can use Ajaxify Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce Product, Images, Photos, Videos, custom selector or whatever you want.
  * License:      GPL2
  * License URI:  https://www.gnu.org/licenses/gpl-2.0.html
@@ -27,7 +27,7 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 define( 'ALD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 if ( !defined('ALD_PLUGIN_VERSION') ) {
-	define('ALD_PLUGIN_VERSION', '3.2.1' );
+	define('ALD_PLUGIN_VERSION', '3.3.0' );
 }
 
 // GO PRO URL
@@ -36,7 +36,6 @@ define( 'ALD_GOPRO_URL', 'https://addonmaster.com/load-more-anything/?utm_source
 /**
  *	Plugin Main Class
  */
-
 final class Ajax_Load_More_Anything {
 
 	private function __construct() {
@@ -166,3 +165,23 @@ function ajax_load_more_anything(){
 // Let's start it
 ajax_load_more_anything();
 
+
+/**
+ * Initialize the plugin tracker
+ *
+ * @return void
+ */
+function appsero_init_tracker_ajax_load_more_anything() {
+
+    if ( ! class_exists( 'Appsero\Client' ) ) {
+      require_once __DIR__ . '/appsero/src/Client.php';
+    }
+
+    $client = new Appsero\Client( '7e201c93-ae5f-4a3a-8ead-d1ccf4ad5e30', 'Load More Anything', __FILE__ );
+
+    // Active insights
+    $client->insights()->init();
+
+}
+
+appsero_init_tracker_ajax_load_more_anything();
