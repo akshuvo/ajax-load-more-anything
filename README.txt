@@ -2,9 +2,9 @@
 Contributors: mdshuvo, addonmaster
 Tags: infinite scroll, ajax load more, load more, endless scroll, ajax pagination, ajax load, ajax comments, woocommerce ajax
 Requires at least: 4.6
-Tested up to: 6.1.1
+Tested up to: 6.2
 Requires PHP: 5.6
-Stable tag: 3.3.0
+Stable tag: 3.3.1
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -169,6 +169,9 @@ Create Topic in [Support forum](https://wordpress.org/support/plugin/ajax-load-m
 
 
 == Changelog ==
+
+= 3.2.1 - Apr 04, 2023 =
+- Tested up to: 6.2
 
 = 3.2.0 - Feb 09, 2023 =
 - WordPress 6.1.1 Compatibility
