@@ -4,7 +4,7 @@
  * Plugin URI:   https://wordpress.org/plugins/ajax-load-more-anything/
  * Author:       Addon Master
  * Author URI:   https://addonmaster.com/contact
- * Version: 	 3.3.1
+ * Version: 	 3.3.2
  * Description:  A simple plugin that help you to Load more any item with jQuery/Ajax. You can use Ajaxify Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce Product, Images, Photos, Videos, custom selector or whatever you want.
  * License:      GPL2
  * License URI:  https://www.gnu.org/licenses/gpl-2.0.html
@@ -27,7 +27,7 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 define( 'ALD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 if ( !defined('ALD_PLUGIN_VERSION') ) {
-	define('ALD_PLUGIN_VERSION', '3.3.1' );
+	define('ALD_PLUGIN_VERSION', '3.3.2' );
 }
 
 // GO PRO URL
@@ -48,7 +48,6 @@ final class Ajax_Load_More_Anything {
 
 		// trigger upon plugin activation/deactivation
 		register_activation_hook( __FILE__, array( $this, 'plugin_activation' ) );
-		//register_deactivation_hook( __FILE__, array( $this, 'plugin_deactivation' ) );
 
 		// Action link
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
@@ -78,7 +77,6 @@ final class Ajax_Load_More_Anything {
 		require_once( dirname( __FILE__ ) . '/inc/ald-functions.php' );
 		require_once( dirname( __FILE__ ) . '/admin/functions.php' );
 		require_once( dirname( __FILE__ ) . '/admin/Menu.php' );
-
 	}
 
 	/**
@@ -106,13 +104,6 @@ final class Ajax_Load_More_Anything {
 		// Set default options
         update_option( 'ald_installed', time() );
         update_option( 'ald_plugin_version', ALD_PLUGIN_VERSION );
-	}
-
-	/**
-	 *  Plugin Deactivation
-	 */
-	function plugin_deactivation() {
-
 	}
 
 	/**
@@ -165,7 +156,6 @@ function ajax_load_more_anything(){
 // Let's start it
 ajax_load_more_anything();
 
-
 /**
  * Initialize the plugin tracker
  *
@@ -183,5 +173,4 @@ function appsero_init_tracker_ajax_load_more_anything() {
     $client->insights()->init();
 
 }
-
 appsero_init_tracker_ajax_load_more_anything();
