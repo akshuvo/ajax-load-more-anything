@@ -2,9 +2,9 @@
 Contributors: mdshuvo, addonmaster
 Tags: infinite scroll, ajax load more, load more, endless scroll, ajax pagination, ajax load, ajax comments, woocommerce ajax
 Requires at least: 4.6
-Tested up to: 6.3
+Tested up to: 6.4.2
 Requires PHP: 5.6
-Stable tag: 3.3.2
+Stable tag: 3.3.3
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
