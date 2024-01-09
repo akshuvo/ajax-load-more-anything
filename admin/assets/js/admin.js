@@ -124,7 +124,6 @@ let ald_pro = alda_params.ald_pro;
 
         // Field toggle
         $(document).on('click', '.ald-toggle-head', function(e){
-        	e.preventDefault();
 
             // Return if click on input
             if ( $(e.target).is('input') && $(this).parent().hasClass('opened') ) {
@@ -134,7 +133,6 @@ let ald_pro = alda_params.ald_pro;
             $(this).parent().toggleClass('opened').find('.ald-toggle-wrap').slideToggle('fast');
 
         });
-
 
         // Generate unique ID
 		function makeid(length) {
