@@ -687,7 +687,7 @@ function ald_add_ajax_loadmore_wrap( $args ){
                                             ?>
                                             <tr class="data_implement_selectors_row">
                                                 <td>
-                                                    <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][<?php _e( $dis_key ); ?>][data_selector]" value="<?php echo esc_attr( $data_selector ); ?>" placeholder="<?php echo esc_attr( '.posts-wrapper' ); ?>"/>
+                                                    <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][<?php _e( $dis_key ); ?>][data_selector]" value="<?php echo esc_attr( $data_selector ); ?>" placeholder="<?php echo esc_attr( '.posts-wrapper' ); ?>" />
                                                 </td>
                                                 <td>
                                                     <select type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][<?php _e( $dis_key ); ?>][implement_type]">
@@ -707,7 +707,7 @@ function ald_add_ajax_loadmore_wrap( $args ){
                                     <?php else : ?>
                                         <tr class="data_implement_selectors_row">
                                             <td>
-                                                <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][0][data_selector]" />
+                                                <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][0][data_selector]" placeholder="<?php esc_attr_e( 'Enter data selector here', 'ajax-load-more-anything' ); ?>" />
                                             </td>
                                             <td>
                                                 <select type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][0][implement_type]">
@@ -728,7 +728,7 @@ function ald_add_ajax_loadmore_wrap( $args ){
                                     <!-- Blank Row  -->
                                     <tr class="data_implement_selectors_row disr_empty-row screen-reader-text">
                                         <td>
-                                            <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][${j}][data_selector]" />
+                                            <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][${j}][data_selector]" placeholder="<?php esc_attr_e( 'Enter data selector here', 'ajax-load-more-anything' ); ?>" />
                                         </td>
                                         <td>
                                             <select type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][${j}][implement_type]">

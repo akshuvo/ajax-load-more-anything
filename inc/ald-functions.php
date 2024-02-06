@@ -520,6 +520,3 @@ function ald_ajax_laser_loader(){
 	<?php
 }
 add_action('wp_footer', 'ald_ajax_laser_loader');
-
-// Admin Notice Class: class-admin-notice
-require_once( __DIR__ . '/class-admin-notice.php' );
