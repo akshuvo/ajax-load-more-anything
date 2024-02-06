@@ -170,6 +170,13 @@ Create Topic in [Support forum](https://wordpress.org/support/plugin/ajax-load-m
 
 == Changelog ==
 
+= 3.3.4 – Feb 07, 2024 =
+- WordPress 6.4.3 Compatibility
+- Security Improvement
+- Nonce validation added to admin settings
+- Only admin can modify settings
+- Code structure changes slightly
+
 = 3.3.3 - Dec 26, 2023 =
 - Tested up to: 6.4.2
 
