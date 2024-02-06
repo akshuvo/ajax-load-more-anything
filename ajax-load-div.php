@@ -94,8 +94,8 @@ final class Ajax_Load_More_Anything {
 	 */
 	function enqueue_scripts() {
 
-	    wp_enqueue_style( 'ald-styles', ALD_PLUGIN_URL . 'assets/styles.css', null, ALD_PLUGIN_VERSION );
-	    wp_enqueue_script( 'ald-scripts', ALD_PLUGIN_URL . 'assets/scripts.js', array('jquery'), ALD_PLUGIN_VERSION );
+	    wp_enqueue_style( 'ald-styles', ALD_PLUGIN_ASSETS . '/styles.css', null, ALD_PLUGIN_VERSION );
+	    wp_enqueue_script( 'ald-scripts', ALD_PLUGIN_ASSETS . '/scripts.js', array('jquery'), ALD_PLUGIN_VERSION );
 
 		wp_localize_script( 'ald-scripts', 'ald_params',
          	array(
@@ -115,8 +115,8 @@ final class Ajax_Load_More_Anything {
 	        return;
 	    }
 
-	    wp_register_style( 'ald-admin-styles', ALD_PLUGIN_URL . 'assets/admin.css', null, ALD_PLUGIN_VERSION );
-	    wp_register_script( 'ald-admin-scripts', ALD_PLUGIN_URL . 'assets/admin.js', array('jquery'), ALD_PLUGIN_VERSION );
+	    wp_register_style( 'ald-admin-styles', ALD_PLUGIN_ASSETS . '/admin.css', null, ALD_PLUGIN_VERSION );
+	    wp_register_script( 'ald-admin-scripts', ALD_PLUGIN_ASSETS . '/admin.js', array('jquery'), ALD_PLUGIN_VERSION );
 
 	    // Ajax Params
 	    wp_localize_script( 'ald-admin-scripts', 'alda_params',

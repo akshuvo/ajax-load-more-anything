@@ -152,14 +152,13 @@ function ald_save_option_ajax_function(){
         wp_die('Permission Denied');
     }
 
-
-
-    $options = isset( $_POST['ald_options'] ) ? $_POST['ald_options'] : array();
-
-    if ( !is_admin() ) {
-        return;
+    // Check admin
+    if ( !current_user_can( 'manage_options' ) ) {
+        wp_die('Permission Denied');
     }
 
+    // Get options
+    $options = isset( $_POST['ald_options'] ) ? $_POST['ald_options'] : array();
     $options = apply_filters( 'ald_before_options_save', $options );
 
     // Update entire array
