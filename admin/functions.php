@@ -146,6 +146,14 @@ add_action( "update_option_ald_options", "update_option_ald_options_hook", 10, 3
 // Save option ajax
 add_action( 'wp_ajax_ald_save_settings', 'ald_save_option_ajax_function' );
 function ald_save_option_ajax_function(){
+
+    // Check nonce
+    if ( !isset( $_POST['ald_nonce'] ) || !wp_verify_nonce( $_POST['ald_nonce'], 'alma_settings_nonce' ) ) {
+        wp_die('Permission Denied');
+    }
+
+
+
     $options = isset( $_POST['ald_options'] ) ? $_POST['ald_options'] : array();
 
     if ( !is_admin() ) {
@@ -157,9 +165,8 @@ function ald_save_option_ajax_function(){
     // Update entire array
     update_option('ald_options', $options);
 
-    $my_multi_options = get_option('ald_options');
-
-    echo wp_json_encode($my_multi_options);
+    // Send success message
+    wp_send_json_success();
 
     die();
 }

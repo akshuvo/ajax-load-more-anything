@@ -138,6 +138,9 @@ How to install Load More Anything.
 
 == Changelog ==
 
+= 3.3.3 - Dec 26, 2023 =
+- Tested up to: 6.4.2
+
 = 3.2.0 - Feb 09, 2023 =
 - WordPress 6.1.1 Compatibility
 - Code Optimize
