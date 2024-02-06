@@ -224,7 +224,7 @@ let ald_pro = alda_params.ald_pro;
             var $this = $(this);
 
             var form_data = new FormData(this);
-            form_data.append('action', 'ald_save_settings');
+       
 
             $.ajax({
                 url: ajaxurl,

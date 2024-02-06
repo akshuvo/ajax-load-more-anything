@@ -376,7 +376,8 @@ class ALD_Menu {
                         </td>
                     </tr>
                 </table>
-
+                <input type="hidden" name="action" value="ald_save_settings">
+                <?php wp_nonce_field( 'alma_settings_nonce', 'ald_nonce' ); ?>
             </form>
 
             <?php do_action( 'ald_form_end' ); ?>

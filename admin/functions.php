@@ -146,20 +146,26 @@ add_action( "update_option_ald_options", "update_option_ald_options_hook", 10, 3
 // Save option ajax
 add_action( 'wp_ajax_ald_save_settings', 'ald_save_option_ajax_function' );
 function ald_save_option_ajax_function(){
-    $options = isset( $_POST['ald_options'] ) ? $_POST['ald_options'] : array();
 
-    if ( !is_admin() ) {
-        return;
+    // Check nonce
+    if ( !isset( $_POST['ald_nonce'] ) || !wp_verify_nonce( $_POST['ald_nonce'], 'alma_settings_nonce' ) ) {
+        wp_die('Permission Denied');
     }
 
+    // Check admin
+    if ( !current_user_can( 'manage_options' ) ) {
+        wp_die('Permission Denied');
+    }
+
+    // Get options
+    $options = isset( $_POST['ald_options'] ) ? $_POST['ald_options'] : array();
     $options = apply_filters( 'ald_before_options_save', $options );
 
     // Update entire array
     update_option('ald_options', $options);
 
-    $my_multi_options = get_option('ald_options');
-
-    echo wp_json_encode($my_multi_options);
+    // Send success message
+    wp_send_json_success();
 
     die();
 }
@@ -680,7 +686,7 @@ function ald_add_ajax_loadmore_wrap( $args ){
                                             ?>
                                             <tr class="data_implement_selectors_row">
                                                 <td>
-                                                    <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][<?php _e( $dis_key ); ?>][data_selector]" value="<?php echo esc_attr( $data_selector ); ?>" placeholder="<?php echo esc_attr( '.posts-wrapper' ); ?>"/>
+                                                    <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][<?php _e( $dis_key ); ?>][data_selector]" value="<?php echo esc_attr( $data_selector ); ?>" placeholder="<?php echo esc_attr( '.posts-wrapper' ); ?>" />
                                                 </td>
                                                 <td>
                                                     <select type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][<?php _e( $dis_key ); ?>][implement_type]">
@@ -700,7 +706,7 @@ function ald_add_ajax_loadmore_wrap( $args ){
                                     <?php else : ?>
                                         <tr class="data_implement_selectors_row">
                                             <td>
-                                                <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][0][data_selector]" />
+                                                <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][0][data_selector]" placeholder="<?php esc_attr_e( 'Enter data selector here', 'ajax-load-more-anything' ); ?>" />
                                             </td>
                                             <td>
                                                 <select type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][0][implement_type]">
@@ -721,7 +727,7 @@ function ald_add_ajax_loadmore_wrap( $args ){
                                     <!-- Blank Row  -->
                                     <tr class="data_implement_selectors_row disr_empty-row screen-reader-text">
                                         <td>
-                                            <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][${j}][data_selector]" />
+                                            <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][${j}][data_selector]" placeholder="<?php esc_attr_e( 'Enter data selector here', 'ajax-load-more-anything' ); ?>" />
                                         </td>
                                         <td>
                                             <select type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][${j}][implement_type]">
