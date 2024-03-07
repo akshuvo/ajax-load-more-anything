@@ -4,7 +4,7 @@ Tags: infinite scroll, ajax load more, load more, endless scroll, ajax paginatio
 Requires at least: 4.6
 Tested up to: 6.4.3
 Requires PHP: 5.6
-Stable tag: 3.3.4
+Stable tag: 3.3.5
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
