@@ -134,7 +134,7 @@ function ald_button_label( $label = null ){
 	$label = apply_filters('wpml_translate_single_string', $label, 'Load More Anyting', $wpml_string_id );
 
 	// Replace Count
-	$label = str_replace("[count]", '<span class="ald-count"></span>', __($label, 'ajax-load-more-anything') );
+	$label = str_replace("[count]", '<span class="ald-count"></span>', $label );
 
 	return $label;
 }
