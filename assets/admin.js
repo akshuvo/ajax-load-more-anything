@@ -56,6 +56,7 @@ let ald_pro = alda_params.ald_pro;
                 action: 'ald_add_general_loadmore',
                 key: keyLen,
                 thiskey: keyLen,
+                nonce: $this.attr('data-nonce')
             }
 
             $.ajax({
@@ -93,6 +94,7 @@ let ald_pro = alda_params.ald_pro;
                 action: 'ald_add_ajax_loadmore',
                 key: keyLen,
                 thiskey: keyLen,
+                nonce: $this.attr('data-nonce')
             }
 
             $.ajax({

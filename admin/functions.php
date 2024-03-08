@@ -173,7 +173,11 @@ function ald_save_option_ajax_function(){
 add_action( 'wp_ajax_ald_add_general_loadmore', 'ald_add_general_loadmore_action' );
 function ald_add_general_loadmore_action(){
 
-    //$key = sanitize_text_field( $_POST['key'] );
+    // Nonce check
+    if ( !isset( $_POST['nonce'] ) || !wp_verify_nonce( $_POST['nonce'], 'lma-general-nonce' ) ) {
+        wp_die('Permission Denied');
+    }
+    
     $key = isset( $_POST['key'] ) ? sanitize_text_field( $_POST['key'] ) : '';
     $thiskey = isset( $_POST['thiskey'] ) ? intval( $_POST['thiskey'] ) : 0;
 
@@ -460,6 +464,11 @@ function ald_add_general_loadmore_wrap( $args ){
 // Add ajax wrapper action
 add_action( 'wp_ajax_ald_add_ajax_loadmore', 'ald_add_ajax_loadmore_action' );
 function ald_add_ajax_loadmore_action(){
+    
+    // Nonce check
+    if ( !isset( $_POST['nonce'] ) || !wp_verify_nonce( $_POST['nonce'], 'lma-ajax-nonce' ) ) {
+        wp_die('Permission Denied');
+    }
 
     $key = isset( $_POST['key'] ) ? sanitize_text_field( $_POST['key'] ) : '';
     $thiskey = isset( $_POST['thiskey'] ) ? intval( $_POST['thiskey'] ) : 0;

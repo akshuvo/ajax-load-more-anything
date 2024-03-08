@@ -433,7 +433,7 @@ function ald_custom_javascript_code(){
 							args['wrapper_to_hide'] = "<?php echo esc_attr( $wrapper_to_hide ); ?>";
 							args['update_browser_url'] = "<?php echo esc_attr( $update_browser_url ); ?>";
 							args['update_page_title'] = "<?php echo esc_attr( $update_page_title ); ?>";
-							args['data_implement_selectors'] = '<?php echo json_encode( $data_implement_selectors ); ?>';
+							args['data_implement_selectors'] = '<?php echo wp_json_encode( $data_implement_selectors ); ?>';
 
 							var targetUrl = ( e.target.href ) ? e.target.href : jQuery(this).context.href;
 							LoadMorePushAjax( targetUrl, args );

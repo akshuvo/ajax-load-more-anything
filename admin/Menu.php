@@ -233,7 +233,7 @@ class ALD_Menu {
                                                         } ?>
                                                     </div>
                                                     <div class="tf_add-wrapper-buttons">
-                                                        <button type="button" class="tf_add-general-wrapper button"><?php esc_html_e( 'Add Wrapper', 'ajax-load-more-anything' ); ?></button>
+                                                        <button type="button" class="tf_add-general-wrapper button" data-nonce="<?php echo esc_attr( wp_create_nonce( 'lma-general-nonce' ) ); ?>"><?php esc_html_e( 'Add Wrapper', 'ajax-load-more-anything' ); ?></button>
                                                     </div>
                                                 </div>
 
@@ -263,7 +263,7 @@ class ALD_Menu {
                                                         } ?>
                                                     </div>
                                                     <div class="tf_add-wrapper-buttons">
-                                                        <button type="button" class="tf_add-ajax-wrapper button"><?php esc_html_e( 'Add Ajax Wrapper', 'ajax-load-more-anything' ); ?></button>
+                                                        <button type="button" class="tf_add-ajax-wrapper button" data-nonce="<?php echo esc_attr( wp_create_nonce( 'lma-ajax-nonce' ) ); ?>"><?php esc_html_e( 'Add Ajax Wrapper', 'ajax-load-more-anything' ); ?></button>
                                                     </div>
                                                 </div>
 
