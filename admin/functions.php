@@ -328,7 +328,8 @@ function ald_add_general_loadmore_wrap( $args ){
     $key =  isset( $args['key'] ) ? wp_generate_password(5, false) . sanitize_text_field( $args['key'] ) : wp_generate_password(5, false);
 
     if ( !isset( $args['selector']['wrapper_title'] ) ) {
-        $wrapper_title = __('Wrapper Title #' . intval($args['thiskey']+1) , 'ajax-load-more-anything');
+        /* translators: %s: Number of the wrapper */
+        $wrapper_title = sprintf( __('Wrapper Title #%s', 'ajax-load-more-anything'), intval($args['thiskey']+1) );
     }
 
     $load_more_button_wrapper = __( 'Load More Button Selector', 'ajax-load-more-anything' );
@@ -353,7 +354,7 @@ function ald_add_general_loadmore_wrap( $args ){
         <a class="header ald-toggle-head" data-toggle="collapse">
             <span id="poststuff">
                 <h2 class="hndle">
-                    <input type="text" class="ald_ajax_wrap_title" name="ald_options[general_loadmore][<?php esc_attr_e( $key ); ?>][wrapper_title]" value="<?php esc_attr_e( $wrapper_title ); ?>" title="<?php esc_attr_e( 'Change title to anything you like. Ex: For Homepage', 'ajax-load-more-anything' ); ?>">
+                    <input type="text" class="ald_ajax_wrap_title" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][wrapper_title]" value="<?php echo esc_attr( $wrapper_title ); ?>" title="<?php esc_attr_e( 'Change title to anything you like. Ex: For Homepage', 'ajax-load-more-anything' ); ?>">
                     <span class="dashicons indicator_field"></span>
                     <span class="delete_field">&times;</span>
                 </h2>
@@ -367,77 +368,77 @@ function ald_add_general_loadmore_wrap( $args ){
                     <tr valign="top">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="general_loadmore-btn_selector-<?php esc_attr_e( $key ); ?>"><?php esc_html_e( $load_more_button_wrapper ); ?></label>
+                                <label for="general_loadmore-btn_selector-<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $load_more_button_wrapper ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-btn_selector-<?php esc_attr_e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php esc_attr_e( $key ); ?>][btn_selector]" value="<?php echo esc_attr( $btn_selector ); ?>" placeholder="<?php echo esc_attr( '#selector' ); ?>" />
-                            <p><?php esc_html_e( $load_more_button_wrapper_desc ); ?></p>
+                            <input id="general_loadmore-btn_selector-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][btn_selector]" value="<?php echo esc_attr( $btn_selector ); ?>" placeholder="<?php echo esc_attr( '#selector' ); ?>" />
+                            <p><?php echo esc_html( $load_more_button_wrapper_desc ); ?></p>
                         </td>
                     </tr>
 
                     <tr valign="top">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="general_loadmore-load_selector-<?php esc_attr_e( $key ); ?>"><?php esc_html_e( $load_more_item_selector ); ?></label>
+                                <label for="general_loadmore-load_selector-<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $load_more_item_selector ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-load_selector-<?php esc_attr_e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php esc_attr_e( $key ); ?>][load_selector]" value="<?php echo esc_attr( $load_selector ); ?>" placeholder="<?php echo esc_attr( '#selector .repeated_selector' ); ?>" />
-                            <p><?php esc_html_e( $load_more_item_selector_desc ); ?></p>
+                            <input id="general_loadmore-load_selector-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][load_selector]" value="<?php echo esc_attr( $load_selector ); ?>" placeholder="<?php echo esc_attr( '#selector .repeated_selector' ); ?>" />
+                            <p><?php echo esc_html( $load_more_item_selector_desc ); ?></p>
                         </td>
                     </tr>
 
                     <tr valign="top">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="general_loadmore-visible_items-<?php esc_attr_e( $key ); ?>"><?php esc_html_e( $visiable_items_text ); ?></label>
+                                <label for="general_loadmore-visible_items-<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $visiable_items_text ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-visible_items-<?php esc_attr_e( $key ); ?>" class="regular-text" type="number" name="ald_options[general_loadmore][<?php esc_attr_e( $key ); ?>][visible_items]" value="<?php echo esc_attr( $visible_items ); ?>" placeholder="<?php echo esc_attr( '6' ); ?>"/>
-                            <p><?php esc_html_e( $visiable_items_desc ); ?></p>
+                            <input id="general_loadmore-visible_items-<?php echo esc_attr( $key ); ?>" class="regular-text" type="number" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][visible_items]" value="<?php echo esc_attr( $visible_items ); ?>" placeholder="<?php echo esc_attr( '6' ); ?>"/>
+                            <p><?php echo esc_html( $visiable_items_desc ); ?></p>
                         </td>
                     </tr>
 
                     <tr valign="top">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="general_loadmore-load_items-<?php esc_attr_e( $key ); ?>"><?php esc_html_e( $load_items_text ); ?></label>
+                                <label for="general_loadmore-load_items-<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $load_items_text ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-load_items-<?php esc_attr_e( $key ); ?>" class="regular-text" type="number" name="ald_options[general_loadmore][<?php esc_attr_e( $key ); ?>][load_items]" value="<?php echo esc_attr( $load_items ); ?>" placeholder="<?php echo esc_attr( '3' ); ?>" />
-                            <p><?php esc_html_e( $load_items_desc ); ?></p>
+                            <input id="general_loadmore-load_items-<?php echo esc_attr( $key ); ?>" class="regular-text" type="number" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][load_items]" value="<?php echo esc_attr( $load_items ); ?>" placeholder="<?php echo esc_attr( '3' ); ?>" />
+                            <p><?php echo esc_html( $load_items_desc ); ?></p>
                         </td>
                     </tr>
 
                     <tr valign="top">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="general_loadmore-button_label-<?php esc_attr_e( $key ); ?>"><?php esc_html_e( $button_label_text ); ?></label>
+                                <label for="general_loadmore-button_label-<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $button_label_text ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-button_label-<?php esc_attr_e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php esc_attr_e( $key ); ?>][button_label]" value="<?php echo esc_attr( $button_label ); ?>" placeholder="<?php echo esc_attr( 'Load +[count] more' ); ?>" />
-                            <p><?php esc_html_e( $button_label_desc ) ?></p>
+                            <input id="general_loadmore-button_label-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][button_label]" value="<?php echo esc_attr( $button_label ); ?>" placeholder="<?php echo esc_attr( 'Load +[count] more' ); ?>" />
+                            <p><?php echo esc_html( $button_label_desc ) ?></p>
                         </td>
                     </tr>
                     <tr valign="top">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="general_loadmore-display_type-<?php esc_attr_e( $key ); ?>"><?php esc_html_e( 'Select display type', 'ajax-load-more-anything' ); ?></label>
+                                <label for="general_loadmore-display_type-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Select display type', 'ajax-load-more-anything' ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <select id="general_loadmore-display_type-<?php esc_attr_e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php esc_attr_e( $key ); ?>][display_type]">
+                            <select id="general_loadmore-display_type-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][display_type]">
                                 
                                 <?php foreach( ald_display_types() as $option_value => $option ) : 
                                     $is_pro = isset( $option['pro'] ) ? $option['pro'] : false;
                                     $pro_text = ($is_pro && !defined('ALD_PRO_PLUGIN_URL')) ? ' (Available in Pro) ' : '';
                                     ?>
-                                    <option value="<?php esc_attr_e( $option_value ); ?>" <?php selected( $display_type, $option_value ); ?> <?php disabled( ($is_pro && !defined('ALD_PRO_PLUGIN_URL')), true ); ?>>
-                                        <?php esc_html_e( $option['label'] . $pro_text ); ?>
+                                    <option value="<?php echo esc_attr( $option_value ); ?>" <?php selected( $display_type, $option_value ); ?> <?php disabled( ($is_pro && !defined('ALD_PRO_PLUGIN_URL')), true ); ?>>
+                                        <?php echo esc_html( $option['label'] . $pro_text ); ?>
                                     </option>
                                 <?php endforeach; ?>
                                     
