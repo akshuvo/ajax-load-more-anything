@@ -69,7 +69,7 @@ final class Ajax_Load_More_Anything {
         define( 'ALD_PLUGIN_FILE', __FILE__ );
         define( 'ALD_PLUGIN_PATH', __DIR__ );
         define( 'ALD_PLUGIN_URL', plugin_dir_url( ALD_PLUGIN_FILE ) );
-        define( 'ALD_PLUGIN_ASSETS', ALD_PLUGIN_URL . '/assets' );
+        define( 'ALD_PLUGIN_ASSETS', ALD_PLUGIN_URL . 'assets' );
 
 		// GO PRO URL
 		define( 'ALD_GOPRO_URL', 'https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser' );
@@ -94,7 +94,7 @@ final class Ajax_Load_More_Anything {
 	 */
 	function enqueue_scripts() {
 
-	    wp_enqueue_style( 'ald-styles', ALD_PLUGIN_ASSETS . '/styles.css', null, ALD_PLUGIN_VERSION );
+	    wp_enqueue_style( 'ald-styles', ALD_PLUGIN_ASSETS . '/styles.css', [], ALD_PLUGIN_VERSION );
 	    wp_enqueue_script( 'ald-scripts', ALD_PLUGIN_ASSETS . '/scripts.js', array('jquery'), ALD_PLUGIN_VERSION, true );
 
 		wp_localize_script( 'ald-scripts', 'ald_params',

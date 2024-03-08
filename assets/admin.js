@@ -268,8 +268,7 @@ let ald_pro = alda_params.ald_pro;
         $(document).on('click', '.ald-trigger-pro', function(e){
             e.preventDefault();
             jQuery(document).trigger('am_modal_show', '#ald_go-pro');
-        });
-        
+        });  
 
 	});
 
