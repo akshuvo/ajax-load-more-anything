@@ -4,7 +4,7 @@
  * Plugin URI:   https://wordpress.org/plugins/ajax-load-more-anything/
  * Author:       AddonMaster
  * Author URI:   https://addonmaster.com/contact
- * Version: 	 3.3.4
+ * Version: 	 3.3.5
  * Description:  A simple plugin that help you to Load more any item with jQuery/Ajax. You can use Ajaxify Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce Product, Images, Photos, Videos, custom selector or whatever you want.
  * License:      GPL2
  * License URI:  https://www.gnu.org/licenses/gpl-2.0.html
@@ -26,7 +26,7 @@ final class Ajax_Load_More_Anything {
      *
      * @var string
      */
-    const version = '3.3.4';
+    const version = '3.3.5';
 
 	private function __construct() {
 		$this->define_constants();
@@ -69,7 +69,7 @@ final class Ajax_Load_More_Anything {
         define( 'ALD_PLUGIN_FILE', __FILE__ );
         define( 'ALD_PLUGIN_PATH', __DIR__ );
         define( 'ALD_PLUGIN_URL', plugin_dir_url( ALD_PLUGIN_FILE ) );
-        define( 'ALD_PLUGIN_ASSETS', ALD_PLUGIN_URL . '/assets' );
+        define( 'ALD_PLUGIN_ASSETS', ALD_PLUGIN_URL . 'assets' );
 
 		// GO PRO URL
 		define( 'ALD_GOPRO_URL', 'https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser' );
@@ -94,8 +94,8 @@ final class Ajax_Load_More_Anything {
 	 */
 	function enqueue_scripts() {
 
-	    wp_enqueue_style( 'ald-styles', ALD_PLUGIN_ASSETS . '/styles.css', null, ALD_PLUGIN_VERSION );
-	    wp_enqueue_script( 'ald-scripts', ALD_PLUGIN_ASSETS . '/scripts.js', array('jquery'), ALD_PLUGIN_VERSION );
+	    wp_enqueue_style( 'ald-styles', ALD_PLUGIN_ASSETS . '/styles.css', [], ALD_PLUGIN_VERSION );
+	    wp_enqueue_script( 'ald-scripts', ALD_PLUGIN_ASSETS . '/scripts.js', array('jquery'), ALD_PLUGIN_VERSION, true );
 
 		wp_localize_script( 'ald-scripts', 'ald_params',
          	array(
@@ -116,7 +116,7 @@ final class Ajax_Load_More_Anything {
 	    }
 
 	    wp_register_style( 'ald-admin-styles', ALD_PLUGIN_ASSETS . '/admin.css', null, ALD_PLUGIN_VERSION );
-	    wp_register_script( 'ald-admin-scripts', ALD_PLUGIN_ASSETS . '/admin.js', array('jquery'), ALD_PLUGIN_VERSION );
+	    wp_register_script( 'ald-admin-scripts', ALD_PLUGIN_ASSETS . '/admin.js', array('jquery'), ALD_PLUGIN_VERSION, true );
 
 	    // Ajax Params
 	    wp_localize_script( 'ald-admin-scripts', 'alda_params',
@@ -164,22 +164,3 @@ function ajax_load_more_anything(){
 
 // Let's start it
 ajax_load_more_anything();
-
-/**
- * Initialize the plugin tracker
- *
- * @return void
- */
-function appsero_init_tracker_ajax_load_more_anything() {
-
-    if ( ! class_exists( 'Appsero\Client' ) ) {
-      require_once __DIR__ . '/appsero/src/Client.php';
-    }
-
-    $client = new Appsero\Client( '7e201c93-ae5f-4a3a-8ead-d1ccf4ad5e30', 'Load More Anything', __FILE__ );
-
-    // Active insights
-    $client->insights()->init();
-
-}
-appsero_init_tracker_ajax_load_more_anything();

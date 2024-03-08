@@ -139,7 +139,6 @@ function update_option_ald_options_hook( $old_value, $value, $option ){
         }
     }
     // All done, Have fun!
-
 }
 add_action( "update_option_ald_options", "update_option_ald_options_hook", 10, 3 );
 
@@ -174,21 +173,20 @@ function ald_save_option_ajax_function(){
 add_action( 'wp_ajax_ald_add_general_loadmore', 'ald_add_general_loadmore_action' );
 function ald_add_general_loadmore_action(){
 
-    //$key = sanitize_text_field( $_POST['key'] );
+    // Nonce check
+    if ( !isset( $_POST['nonce'] ) || !wp_verify_nonce( $_POST['nonce'], 'lma-general-nonce' ) ) {
+        wp_die('Permission Denied');
+    }
+    
     $key = isset( $_POST['key'] ) ? sanitize_text_field( $_POST['key'] ) : '';
     $thiskey = isset( $_POST['thiskey'] ) ? intval( $_POST['thiskey'] ) : 0;
 
-    ob_start();
-
-    echo ald_add_general_loadmore_wrap( array(
+    $output = ald_add_general_loadmore_wrap( array(
         'key' => $key,
         'thiskey' => $thiskey,
     ) );
 
-    $output = ob_get_clean();
-
-    echo $output;
-
+    echo $output; // phpcs:ignore 
     die();
 }
 
@@ -334,7 +332,8 @@ function ald_add_general_loadmore_wrap( $args ){
     $key =  isset( $args['key'] ) ? wp_generate_password(5, false) . sanitize_text_field( $args['key'] ) : wp_generate_password(5, false);
 
     if ( !isset( $args['selector']['wrapper_title'] ) ) {
-        $wrapper_title = __('Wrapper Title #' . intval($args['thiskey']+1) , 'ajax-load-more-anything');
+        /* translators: %s: Number of the wrapper */
+        $wrapper_title = sprintf( __('Wrapper Title #%s', 'ajax-load-more-anything'), intval($args['thiskey']+1) );
     }
 
     $load_more_button_wrapper = __( 'Load More Button Selector', 'ajax-load-more-anything' );
@@ -359,7 +358,7 @@ function ald_add_general_loadmore_wrap( $args ){
         <a class="header ald-toggle-head" data-toggle="collapse">
             <span id="poststuff">
                 <h2 class="hndle">
-                    <input type="text" class="ald_ajax_wrap_title" name="ald_options[general_loadmore][<?php _e( $key ); ?>][wrapper_title]" value="<?php esc_attr_e( $wrapper_title ); ?>" title="<?php esc_attr_e( 'Change title to anything you like. Ex: For Homepage', 'ajax-load-more-anything' ); ?>">
+                    <input type="text" class="ald_ajax_wrap_title" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][wrapper_title]" value="<?php echo esc_attr( $wrapper_title ); ?>" title="<?php esc_attr_e( 'Change title to anything you like. Ex: For Homepage', 'ajax-load-more-anything' ); ?>">
                     <span class="dashicons indicator_field"></span>
                     <span class="delete_field">&times;</span>
                 </h2>
@@ -373,84 +372,83 @@ function ald_add_general_loadmore_wrap( $args ){
                     <tr valign="top">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="general_loadmore-btn_selector-<?php _e( $key ); ?>"><?php _e( $load_more_button_wrapper ); ?></label>
+                                <label for="general_loadmore-btn_selector-<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $load_more_button_wrapper ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-btn_selector-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][btn_selector]" value="<?php echo esc_attr( $btn_selector ); ?>" placeholder="<?php echo esc_attr( '#selector' ); ?>" />
-                            <p><?php _e( $load_more_button_wrapper_desc ); ?></p>
+                            <input id="general_loadmore-btn_selector-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][btn_selector]" value="<?php echo esc_attr( $btn_selector ); ?>" placeholder="<?php echo esc_attr( '#selector' ); ?>" />
+                            <p><?php echo esc_html( $load_more_button_wrapper_desc ); ?></p>
                         </td>
                     </tr>
 
                     <tr valign="top">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="general_loadmore-load_selector-<?php _e( $key ); ?>"><?php _e( $load_more_item_selector ); ?></label>
+                                <label for="general_loadmore-load_selector-<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $load_more_item_selector ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-load_selector-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][load_selector]" value="<?php echo esc_attr( $load_selector ); ?>" placeholder="<?php echo esc_attr( '#selector .repeated_selector' ); ?>" />
-                            <p><?php _e( $load_more_item_selector_desc ); ?></p>
+                            <input id="general_loadmore-load_selector-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][load_selector]" value="<?php echo esc_attr( $load_selector ); ?>" placeholder="<?php echo esc_attr( '#selector .repeated_selector' ); ?>" />
+                            <p><?php echo esc_html( $load_more_item_selector_desc ); ?></p>
                         </td>
                     </tr>
 
                     <tr valign="top">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="general_loadmore-visible_items-<?php _e( $key ); ?>"><?php _e( $visiable_items_text ); ?></label>
+                                <label for="general_loadmore-visible_items-<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $visiable_items_text ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-visible_items-<?php _e( $key ); ?>" class="regular-text" type="number" name="ald_options[general_loadmore][<?php _e( $key ); ?>][visible_items]" value="<?php echo esc_attr( $visible_items ); ?>" placeholder="<?php echo esc_attr( '6' ); ?>"/>
-                            <p><?php _e( $visiable_items_desc ); ?></p>
+                            <input id="general_loadmore-visible_items-<?php echo esc_attr( $key ); ?>" class="regular-text" type="number" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][visible_items]" value="<?php echo esc_attr( $visible_items ); ?>" placeholder="<?php echo esc_attr( '6' ); ?>"/>
+                            <p><?php echo esc_html( $visiable_items_desc ); ?></p>
                         </td>
                     </tr>
 
                     <tr valign="top">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="general_loadmore-load_items-<?php _e( $key ); ?>"><?php _e( $load_items_text ); ?></label>
+                                <label for="general_loadmore-load_items-<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $load_items_text ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-load_items-<?php _e( $key ); ?>" class="regular-text" type="number" name="ald_options[general_loadmore][<?php _e( $key ); ?>][load_items]" value="<?php echo esc_attr( $load_items ); ?>" placeholder="<?php echo esc_attr( '3' ); ?>" />
-                            <p><?php _e( $load_items_desc ); ?></p>
+                            <input id="general_loadmore-load_items-<?php echo esc_attr( $key ); ?>" class="regular-text" type="number" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][load_items]" value="<?php echo esc_attr( $load_items ); ?>" placeholder="<?php echo esc_attr( '3' ); ?>" />
+                            <p><?php echo esc_html( $load_items_desc ); ?></p>
                         </td>
                     </tr>
 
                     <tr valign="top">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="general_loadmore-button_label-<?php _e( $key ); ?>"><?php _e( $button_label_text ); ?></label>
+                                <label for="general_loadmore-button_label-<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $button_label_text ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <input id="general_loadmore-button_label-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][button_label]" value="<?php echo esc_attr( $button_label ); ?>" placeholder="<?php echo esc_attr( 'Load +[count] more' ); ?>" />
-                            <p><?php _e( $button_label_desc ) ?></p>
+                            <input id="general_loadmore-button_label-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][button_label]" value="<?php echo esc_attr( $button_label ); ?>" placeholder="<?php echo esc_attr( 'Load +[count] more' ); ?>" />
+                            <p><?php echo esc_html( $button_label_desc ) ?></p>
                         </td>
                     </tr>
                     <tr valign="top">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="general_loadmore-display_type-<?php _e( $key ); ?>"><?php _e( 'Select display type', 'ajax-load-more-anything' ); ?></label>
+                                <label for="general_loadmore-display_type-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Select display type', 'ajax-load-more-anything' ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <select id="general_loadmore-display_type-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php _e( $key ); ?>][display_type]">
+                            <select id="general_loadmore-display_type-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][display_type]">
                                 
                                 <?php foreach( ald_display_types() as $option_value => $option ) : 
-                                    $selected = selected( $display_type, $option_value, false );
-                                    $option_label = esc_html( $option['label'] );
                                     $is_pro = isset( $option['pro'] ) ? $option['pro'] : false;
+                                    $pro_text = ($is_pro && !defined('ALD_PRO_PLUGIN_URL')) ? ' (Available in Pro) ' : '';
                                     ?>
-                                    <option value="<?php _e( $option_value ); ?>" <?php _e( $selected ); ?> <?php disabled( ($is_pro && !defined('ALD_PRO_PLUGIN_URL')), true ); ?>>
-                                        <?php _e( $option_label ); ?> <?php echo ($is_pro && !defined('ALD_PRO_PLUGIN_URL')) ? ' (Available in Pro) ' :''; ?>
+                                    <option value="<?php echo esc_attr( $option_value ); ?>" <?php selected( $display_type, $option_value ); ?> <?php disabled( ($is_pro && !defined('ALD_PRO_PLUGIN_URL')), true ); ?>>
+                                        <?php echo esc_html( $option['label'] . $pro_text ); ?>
                                     </option>
                                 <?php endforeach; ?>
                                     
                             </select>
                             
-                            <p><?php _e( 'Select display property for load more items.', 'ajax-load-more-anything' ); ?></p>
+                            <p><?php esc_html_e( 'Select display property for load more items.', 'ajax-load-more-anything' ); ?></p>
                         </td>
                     </tr>
                 </table>
@@ -466,20 +464,21 @@ function ald_add_general_loadmore_wrap( $args ){
 // Add ajax wrapper action
 add_action( 'wp_ajax_ald_add_ajax_loadmore', 'ald_add_ajax_loadmore_action' );
 function ald_add_ajax_loadmore_action(){
+    
+    // Nonce check
+    if ( !isset( $_POST['nonce'] ) || !wp_verify_nonce( $_POST['nonce'], 'lma-ajax-nonce' ) ) {
+        wp_die('Permission Denied');
+    }
 
     $key = isset( $_POST['key'] ) ? sanitize_text_field( $_POST['key'] ) : '';
     $thiskey = isset( $_POST['thiskey'] ) ? intval( $_POST['thiskey'] ) : 0;
 
-    ob_start();
-
-    echo ald_add_ajax_loadmore_wrap( array(
+    $output = ald_add_ajax_loadmore_wrap( array(
         'key' => $key,
         'thiskey' => $key,
     ) );
 
-    $output = ob_get_clean();
-
-    echo $output;
+    echo $output; // phpcs:ignore
 
     die();
 }
@@ -503,7 +502,8 @@ function ald_add_ajax_loadmore_wrap( $args ){
     $key =  isset( $args['key'] ) ? $args['key'] : "";
 
     if ( !isset( $args['selector']['wrapper_title'] ) ) {
-        $wrapper_title = __('Wrapper Title #' . intval( $args['thiskey'] + 1 ) , 'ajax-load-more-anything');
+        /* translators: %s: Number of the wrapper */
+        $wrapper_title = sprintf( __('Wrapper Title #%s', 'ajax-load-more-anything'), intval( $args['thiskey'] + 1 ) );
     }
 
     // data_implement_selectors
@@ -534,7 +534,7 @@ function ald_add_ajax_loadmore_wrap( $args ){
         <a class="header ald-toggle-head" data-toggle="collapse">
             <span id="poststuff">
                 <h2 class="hndle">
-                    <input type="text" class="ald_ajax_wrap_title" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][wrapper_title]" value="<?php esc_attr_e( $wrapper_title ); ?>" title="<?php esc_attr_e( 'Change title to anything you like. Ex: Homepage Posts', 'ajax-load-more-anything' ); ?>">
+                    <input type="text" class="ald_ajax_wrap_title" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][wrapper_title]" value="<?php echo esc_attr( $wrapper_title ); ?>" title="<?php esc_attr_e( 'Change title to anything you like. Ex: Homepage Posts', 'ajax-load-more-anything' ); ?>">
                     <span class="dashicons indicator_field"></span>
                     <span class="delete_field">&times;</span>
                 </h2>
@@ -548,14 +548,14 @@ function ald_add_ajax_loadmore_wrap( $args ){
                     <tr valign="top">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="ajax_loadmore-event_type-<?php _e( $key ); ?>"><?php _e( 'Event Type:', 'ajax-load-more-anything' ); ?></label>
+                                <label for="ajax_loadmore-event_type-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Event Type:', 'ajax-load-more-anything' ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <select id="ajax_loadmore-event_type-<?php _e( $key ); ?>" data-pro-val="custom_button" class="option-select-lmapro-modal-trigger regular-text ajax_loadmore-event_type" type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][event_type]">
-                                <option value="selectors_click" <?php selected( $event_type, 'selectors_click' ); ?>><?php _e( 'Selector(s) Click', 'ajax-load-more-anything' ); ?></option>
-                                <option value="scroll_to_load" <?php selected( $event_type, 'scroll_to_load' ); ?>><?php _e( 'Scroll to Load (Infinite Scroll)', 'ajax-load-more-anything' ); ?></option>
-                                <option value="custom_button" <?php selected( $event_type, 'custom_button' ); ?>><?php _e( 'Add Custom Button', 'ajax-load-more-anything' ); ?><?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' (Available in Pro) '; ?></option>
+                            <select id="ajax_loadmore-event_type-<?php echo esc_attr( $key ); ?>" data-pro-val="custom_button" class="option-select-lmapro-modal-trigger regular-text ajax_loadmore-event_type" type="text" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][event_type]">
+                                <option value="selectors_click" <?php selected( $event_type, 'selectors_click' ); ?>><?php esc_html_e( 'Selector(s) Click', 'ajax-load-more-anything' ); ?></option>
+                                <option value="scroll_to_load" <?php selected( $event_type, 'scroll_to_load' ); ?>><?php esc_html_e( 'Scroll to Load (Infinite Scroll)', 'ajax-load-more-anything' ); ?></option>
+                                <option value="custom_button" <?php selected( $event_type, 'custom_button' ); ?>><?php esc_html_e( 'Add Custom Button', 'ajax-load-more-anything' ); ?><?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' (Available in Pro) '; ?></option>
                             </select>
                         </td>
                     </tr>
@@ -563,11 +563,11 @@ function ald_add_ajax_loadmore_wrap( $args ){
                     <tr valign="top" data-id="custom_button_append">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="ajax_loadmore-custom_button_append-<?php _e( $key ); ?>"><?php esc_html_e( 'Button Insert Selector', 'ajax-load-more-anything' ); ?></label>
+                                <label for="ajax_loadmore-custom_button_append-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Button Insert Selector', 'ajax-load-more-anything' ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <input id="ajax_loadmore-custom_button_append-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][custom_button_append]" value="<?php echo esc_attr( $custom_button_append ); ?>" placeholder="<?php echo esc_attr( '.selector, #selector' ); ?>" />
+                            <input id="ajax_loadmore-custom_button_append-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][custom_button_append]" value="<?php echo esc_attr( $custom_button_append ); ?>" placeholder="<?php echo esc_attr( '.selector, #selector' ); ?>" />
                             <p><?php esc_html_e( 'Button will be insert after this selector.', 'ajax-load-more-anything' ); ?></p>
                         </td>
                     </tr>
@@ -575,11 +575,11 @@ function ald_add_ajax_loadmore_wrap( $args ){
                     <tr valign="top" data-id="button_trigger_selector">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="ajax_loadmore-button_trigger_selector-<?php _e( $key ); ?>"><?php esc_html_e( 'Button click trigger Selector', 'ajax-load-more-anything' ); ?></label>
+                                <label for="ajax_loadmore-button_trigger_selector-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Button click trigger Selector', 'ajax-load-more-anything' ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <input id="ajax_loadmore-button_trigger_selector-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][button_trigger_selector]" value="<?php echo esc_attr( $button_trigger_selector ); ?>" placeholder="<?php echo esc_attr( '.nav-links a.next-link' ); ?>" />
+                            <input id="ajax_loadmore-button_trigger_selector-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][button_trigger_selector]" value="<?php echo esc_attr( $button_trigger_selector ); ?>" placeholder="<?php echo esc_attr( '.nav-links a.next-link' ); ?>" />
                             <p><?php esc_html_e( 'This selector will be trigger when the button clicked.', 'ajax-load-more-anything' ); ?></p>
                         </td>
                     </tr>
@@ -587,22 +587,22 @@ function ald_add_ajax_loadmore_wrap( $args ){
                     <tr valign="top" data-id="button_trigger_selector">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="ajax_loadmore-button_label-<?php _e( $key ); ?>"><?php esc_html_e( 'Button Label', 'ajax-load-more-anything' ); ?></label>
+                                <label for="ajax_loadmore-button_label-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Button Label', 'ajax-load-more-anything' ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <input id="ajax_loadmore-button_label-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][button_label]" value="<?php echo ( $button_label ) ? esc_attr( $button_label ) : esc_attr( 'Load More', 'ajax-load-more-anything' ); ?>" placeholder="<?php echo esc_attr( 'Load More' ); ?>" />
+                            <input id="ajax_loadmore-button_label-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][button_label]" value="<?php echo ( $button_label ) ? esc_attr( $button_label ) : esc_attr( 'Load More', 'ajax-load-more-anything' ); ?>" placeholder="<?php echo esc_attr( 'Load More' ); ?>" />
                         </td>
                     </tr>
 
                     <tr valign="top" data-id="click_selector">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="ajax_loadmore-click_selector-<?php _e( $key ); ?>"><?php esc_html_e( 'Enter Selector', 'ajax-load-more-anything' ); ?></label>
+                                <label for="ajax_loadmore-click_selector-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Enter Selector', 'ajax-load-more-anything' ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <input id="ajax_loadmore-click_selector-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][click_selector]" value="<?php echo esc_attr( $click_selector ); ?>" placeholder="<?php echo esc_attr( '.nav-links a.link' ); ?>"/>
+                            <input id="ajax_loadmore-click_selector-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][click_selector]" value="<?php echo esc_attr( $click_selector ); ?>" placeholder="<?php echo esc_attr( '.nav-links a.link' ); ?>"/>
                             <p><?php esc_html_e( 'Selector should be correct, otherwise ajax will fail to load contents', 'ajax-load-more-anything' ); ?></p>
                         </td>
                     </tr>
@@ -610,13 +610,13 @@ function ald_add_ajax_loadmore_wrap( $args ){
                     <tr valign="top" data-id="hide_selector_wrapper">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="ajax_loadmore-hide_selector_wrapper-<?php _e( $key ); ?>"><?php _e( 'Hide Selector(s) wrapper', 'ajax-load-more-anything' ); ?></label>
+                                <label for="ajax_loadmore-hide_selector_wrapper-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Hide Selector(s) wrapper', 'ajax-load-more-anything' ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <select id="ajax_loadmore-hide_selector_wrapper-<?php _e( $key ); ?>" class="regular-text ajax_loadmore-hide_selector_wrapper" type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][hide_selector_wrapper]">
-                                <option value="no" <?php selected( $hide_selector_wrapper, 'no' ); ?>><?php _e( 'No', 'ajax-load-more-anything' ); ?></option>
-                                <option value="yes" <?php selected( $hide_selector_wrapper, 'yes' ); ?>><?php _e( 'Yes', 'ajax-load-more-anything' ); ?></option>
+                            <select id="ajax_loadmore-hide_selector_wrapper-<?php echo esc_attr( $key ); ?>" class="regular-text ajax_loadmore-hide_selector_wrapper" type="text" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][hide_selector_wrapper]">
+                                <option value="no" <?php selected( $hide_selector_wrapper, 'no' ); ?>><?php esc_html_e( 'No', 'ajax-load-more-anything' ); ?></option>
+                                <option value="yes" <?php selected( $hide_selector_wrapper, 'yes' ); ?>><?php esc_html_e( 'Yes', 'ajax-load-more-anything' ); ?></option>
                             </select>
                         </td>
                     </tr>
@@ -624,11 +624,11 @@ function ald_add_ajax_loadmore_wrap( $args ){
                     <tr valign="top" data-id="wrapper_to_hide">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="ajax_loadmore-wrapper_to_hide-<?php _e( $key ); ?>"><?php esc_html_e( 'Wrapper Selector to hide', 'ajax-load-more-anything' ); ?></label>
+                                <label for="ajax_loadmore-wrapper_to_hide-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Wrapper Selector to hide', 'ajax-load-more-anything' ); ?></label>
                             </div>
                         </th>
                         <td>
-                            <input id="ajax_loadmore-wrapper_to_hide-<?php _e( $key ); ?>" class="regular-text" type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][wrapper_to_hide]" value="<?php echo esc_attr( $wrapper_to_hide ); ?>" placeholder="<?php echo esc_attr( '.navigation-area' ); ?>" />
+                            <input id="ajax_loadmore-wrapper_to_hide-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][wrapper_to_hide]" value="<?php echo esc_attr( $wrapper_to_hide ); ?>" placeholder="<?php echo esc_attr( '.navigation-area' ); ?>" />
                             <p><?php esc_html_e( 'Enter the selector of the wrapper which you want to hide from visitors', 'ajax-load-more-anything' ); ?></p>
                         </td>
                     </tr>
@@ -636,7 +636,7 @@ function ald_add_ajax_loadmore_wrap( $args ){
                     <tr valign="top">
                         <th scope="row">
                             <div class="tf-label">
-                                <label for="ajax_loadmore-data_implement_selectors-<?php _e( $key ); ?>"><?php esc_html_e( 'Data Implement Selectors', 'ajax-load-more-anything' ); ?></label>
+                                <label for="ajax_loadmore-data_implement_selectors-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Data Implement Selectors', 'ajax-load-more-anything' ); ?></label>
                             </div>
                         </th>
                         <td>
@@ -647,23 +647,23 @@ function ald_add_ajax_loadmore_wrap( $args ){
                                 <table class="uptade-browser-title-url-field">
                                     <tr>
                                         <th>
-                                            <label for="ajax_loadmore-update_browser_url-<?php _e( $key ); ?>"><?php esc_html_e( 'Update Browser URL?', 'ajax-load-more-anything' ); ?></label>
+                                            <label for="ajax_loadmore-update_browser_url-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Update Browser URL?', 'ajax-load-more-anything' ); ?></label>
                                         </th>
                                         <th>
-                                            <label for="ajax_loadmore-update_page_title-<?php _e( $key ); ?>"><?php esc_html_e( 'Update Page Title?', 'ajax-load-more-anything' ); ?></label>
+                                            <label for="ajax_loadmore-update_page_title-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Update Page Title?', 'ajax-load-more-anything' ); ?></label>
                                         </th>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <select id="ajax_loadmore-update_browser_url-<?php _e( $key ); ?>" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][update_browser_url]">
-                                                <option value="no" <?php selected( $update_browser_url, 'no' ); ?>><?php _e( 'No', 'ajax-load-more-anything' ); ?></option>
-                                                <option value="yes" <?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' disabled '; selected( $update_browser_url, 'yes' ); ?>><?php _e( 'Yes', 'ajax-load-more-anything' ); ?><?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' (Available in Pro) '; ?></option>
+                                            <select id="ajax_loadmore-update_browser_url-<?php echo esc_attr( $key ); ?>" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][update_browser_url]">
+                                                <option value="no" <?php selected( $update_browser_url, 'no' ); ?>><?php esc_html_e( 'No', 'ajax-load-more-anything' ); ?></option>
+                                                <option value="yes" <?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' disabled '; selected( $update_browser_url, 'yes' ); ?>><?php esc_html_e( 'Yes', 'ajax-load-more-anything' ); ?><?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' (Available in Pro) '; ?></option>
                                             </select>
                                         </td>
                                         <td>
-                                            <select id="ajax_loadmore-update_page_title-<?php _e( $key ); ?>" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][update_page_title]">
-                                                <option value="no" <?php selected( $update_page_title, 'no' ); ?>><?php _e( 'No', 'ajax-load-more-anything' ); ?></option>
-                                                <option value="yes" <?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' disabled '; selected( $update_page_title, 'yes' ); ?>><?php _e( 'Yes', 'ajax-load-more-anything' ); ?><?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' (Available in Pro) '; ?></option>
+                                            <select id="ajax_loadmore-update_page_title-<?php echo esc_attr( $key ); ?>" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][update_page_title]">
+                                                <option value="no" <?php selected( $update_page_title, 'no' ); ?>><?php esc_html_e( 'No', 'ajax-load-more-anything' ); ?></option>
+                                                <option value="yes" <?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' disabled '; selected( $update_page_title, 'yes' ); ?>><?php esc_html_e( 'Yes', 'ajax-load-more-anything' ); ?><?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' (Available in Pro) '; ?></option>
                                             </select>
                                         </td>
                                     </tr>
@@ -686,13 +686,13 @@ function ald_add_ajax_loadmore_wrap( $args ){
                                             ?>
                                             <tr class="data_implement_selectors_row">
                                                 <td>
-                                                    <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][<?php _e( $dis_key ); ?>][data_selector]" value="<?php echo esc_attr( $data_selector ); ?>" placeholder="<?php echo esc_attr( '.posts-wrapper' ); ?>" />
+                                                    <input type="text" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][data_implement_selectors][<?php echo esc_attr( $dis_key ); ?>][data_selector]" value="<?php echo esc_attr( $data_selector ); ?>" placeholder="<?php echo esc_attr( '.posts-wrapper' ); ?>" />
                                                 </td>
                                                 <td>
-                                                    <select type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][<?php _e( $dis_key ); ?>][implement_type]">
-                                                        <option value="replace_data" <?php selected( $implement_type, 'replace_data' ); ?>><?php _e( 'Replace Data', 'ajax-load-more-anything' ); ?></option>
-                                                        <option value="insert_after" <?php selected( $implement_type, 'insert_after' ); ?>><?php _e( 'Insert After', 'ajax-load-more-anything' ); ?></option>
-                                                        <option value="insert_before" <?php selected( $implement_type, 'insert_before' ); ?>><?php _e( 'Insert Before', 'ajax-load-more-anything' ); ?></option>
+                                                    <select type="text" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][data_implement_selectors][<?php echo esc_attr( $dis_key ); ?>][implement_type]">
+                                                        <option value="replace_data" <?php selected( $implement_type, 'replace_data' ); ?>><?php esc_html_e( 'Replace Data', 'ajax-load-more-anything' ); ?></option>
+                                                        <option value="insert_after" <?php selected( $implement_type, 'insert_after' ); ?>><?php esc_html_e( 'Insert After', 'ajax-load-more-anything' ); ?></option>
+                                                        <option value="insert_before" <?php selected( $implement_type, 'insert_before' ); ?>><?php esc_html_e( 'Insert Before', 'ajax-load-more-anything' ); ?></option>
                                                     </select>
                                                 </td>
                                                 <td>
@@ -706,13 +706,13 @@ function ald_add_ajax_loadmore_wrap( $args ){
                                     <?php else : ?>
                                         <tr class="data_implement_selectors_row">
                                             <td>
-                                                <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][0][data_selector]" placeholder="<?php esc_attr_e( 'Enter data selector here', 'ajax-load-more-anything' ); ?>" />
+                                                <input type="text" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][data_implement_selectors][0][data_selector]" placeholder="<?php echo esc_attr( 'Enter data selector here', 'ajax-load-more-anything' ); ?>" />
                                             </td>
                                             <td>
-                                                <select type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][0][implement_type]">
-                                                    <option value="replace_data"><?php _e( 'Replace Data', 'ajax-load-more-anything' ); ?></option>
-                                                    <option value="insert_before"><?php _e( 'Insert Before', 'ajax-load-more-anything' ); ?></option>
-                                                    <option value="insert_after"><?php _e( 'Insert After', 'ajax-load-more-anything' ); ?></option>
+                                                <select type="text" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][data_implement_selectors][0][implement_type]">
+                                                    <option value="replace_data"><?php esc_html_e( 'Replace Data', 'ajax-load-more-anything' ); ?></option>
+                                                    <option value="insert_before"><?php esc_html_e( 'Insert Before', 'ajax-load-more-anything' ); ?></option>
+                                                    <option value="insert_after"><?php esc_html_e( 'Insert After', 'ajax-load-more-anything' ); ?></option>
                                                 </select>
                                             </td>
                                             <td>
@@ -727,13 +727,13 @@ function ald_add_ajax_loadmore_wrap( $args ){
                                     <!-- Blank Row  -->
                                     <tr class="data_implement_selectors_row disr_empty-row screen-reader-text">
                                         <td>
-                                            <input type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][${j}][data_selector]" placeholder="<?php esc_attr_e( 'Enter data selector here', 'ajax-load-more-anything' ); ?>" />
+                                            <input type="text" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][data_implement_selectors][${j}][data_selector]" placeholder="<?php esc_attr_e( 'Enter data selector here', 'ajax-load-more-anything' ); ?>" />
                                         </td>
                                         <td>
-                                            <select type="text" name="ald_options[ajax_loadmore][<?php _e( $key ); ?>][data_implement_selectors][${j}][implement_type]">
-                                                <option value="replace_data"><?php _e( 'Replace Data', 'ajax-load-more-anything' ); ?></option>
-                                                <option value="insert_before"><?php _e( 'Insert Before', 'ajax-load-more-anything' ); ?></option>
-                                                <option value="insert_after"><?php _e( 'Insert After', 'ajax-load-more-anything' ); ?></option>
+                                            <select type="text" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][data_implement_selectors][${j}][implement_type]">
+                                                <option value="replace_data"><?php esc_html_e( 'Replace Data', 'ajax-load-more-anything' ); ?></option>
+                                                <option value="insert_before"><?php esc_html_e( 'Insert Before', 'ajax-load-more-anything' ); ?></option>
+                                                <option value="insert_after"><?php esc_html_e( 'Insert After', 'ajax-load-more-anything' ); ?></option>
                                             </select>
                                         </td>
                                         <td>
