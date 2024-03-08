@@ -218,32 +218,32 @@ function ald_custom_javascript_code(){
 					<?php endif; ?>
 
 					// Append the Load More Button
-					jQuery("<?php esc_attr_e( $ald_wrapper_class ); ?>").append('<a data-glm-button-selector="<?php esc_attr_e( $ald_wrapper_class ); ?>"  href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); // phpcs:ignore ?></span></a>');
+					jQuery("<?php echo esc_attr( $ald_wrapper_class ); ?>").append('<a data-glm-button-selector="<?php echo esc_attr( $ald_wrapper_class ); ?>"  href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); // phpcs:ignore ?></span></a>');
 
 					<?php if ( $display_type == "flex" ) : ?>
 
-						jQuery("<?php esc_attr_e( $ald_load_class ); ?>").hide();
+						jQuery("<?php echo esc_attr( $ald_load_class ); ?>").hide();
 
 						// Show the initial visible items
-						jQuery("<?php esc_attr_e( $ald_load_class ); ?>").slice(0, <?php esc_attr_e( $ald_item_show ); ?>).css({ 'display': 'flex' });
+						jQuery("<?php echo esc_attr( $ald_load_class ); ?>").slice(0, <?php echo esc_attr( $ald_item_show ); ?>).css({ 'display': 'flex' });
 
 						// Calculate the hidden items
-						jQuery(document).find("<?php esc_attr_e( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php esc_attr_e( $ald_load_class ); ?>:hidden").length );
+						jQuery(document).find("<?php echo esc_attr( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php echo esc_attr( $ald_load_class ); ?>:hidden").length );
 
 						// Button Click Trigger
-						jQuery("<?php esc_attr_e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
+						jQuery("<?php echo esc_attr( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
 							e.preventDefault();
 
 							// Show the hidden items
-							jQuery("<?php esc_attr_e( $ald_load_class ); ?>:hidden").slice(0, <?php esc_attr_e( $ald_item_load ); ?>).css({ 'display': 'flex' });
+							jQuery("<?php echo esc_attr( $ald_load_class ); ?>:hidden").slice(0, <?php echo esc_attr( $ald_item_load ); ?>).css({ 'display': 'flex' });
 
 							// Hide if no more to load
-							if ( jQuery("<?php esc_attr_e( $ald_load_class ); ?>:hidden").length == 0 ) {
+							if ( jQuery("<?php echo esc_attr( $ald_load_class ); ?>:hidden").length == 0 ) {
 								jQuery(this).fadeOut('slow');
 							}
 
 							// ReCalculate the hidden items
-							jQuery(document).find("<?php esc_attr_e( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php esc_attr_e( $ald_load_class ); ?>:hidden").length );
+							jQuery(document).find("<?php echo esc_attr( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php echo esc_attr( $ald_load_class ); ?>:hidden").length );
 
 						});
 
@@ -251,25 +251,25 @@ function ald_custom_javascript_code(){
 					<?php elseif ( $display_type == "default" ) : ?>
 
 						// Show the initial visible items
-						jQuery("<?php esc_attr_e( $ald_load_class ); ?>").slice(0, <?php esc_attr_e( $ald_item_show ); ?>).show();
+						jQuery("<?php echo esc_attr( $ald_load_class ); ?>").slice(0, <?php echo esc_attr( $ald_item_show ); ?>).show();
 
 						// Calculate the hidden items
-						jQuery(document).find("<?php esc_attr_e( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php esc_attr_e( $ald_load_class ); ?>:hidden").length );
+						jQuery(document).find("<?php echo esc_attr( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php echo esc_attr( $ald_load_class ); ?>:hidden").length );
 
 						// Button Click Trigger
-						jQuery("<?php esc_attr_e( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
+						jQuery("<?php echo esc_attr( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
 							e.preventDefault();
 
 							// Show the hidden items
-							jQuery("<?php esc_attr_e( $ald_load_class ); ?>:hidden").slice(0, <?php esc_attr_e( $ald_item_load ); ?>).slideDown();
+							jQuery("<?php echo esc_attr( $ald_load_class ); ?>:hidden").slice(0, <?php echo esc_attr( $ald_item_load ); ?>).slideDown();
 
 							// Hide if no more to load
-							if ( jQuery("<?php esc_attr_e( $ald_load_class ); ?>:hidden").length == 0 ) {
+							if ( jQuery("<?php echo esc_attr( $ald_load_class ); ?>:hidden").length == 0 ) {
 								jQuery(this).fadeOut('slow');
 							}
 
 							// ReCalculate the hidden items
-							jQuery(document).find("<?php esc_attr_e( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php esc_attr_e( $ald_load_class ); ?>:hidden").length );
+							jQuery(document).find("<?php echo esc_attr( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php echo esc_attr( $ald_load_class ); ?>:hidden").length );
 
 						});
 					<?php else : ?>
@@ -277,8 +277,8 @@ function ald_custom_javascript_code(){
 					<?php endif; ?>
 
 					// Hide on initial if no div to show
-					if ( jQuery("<?php esc_attr_e( $ald_load_class ); ?>:hidden").length == 0 ) {
-						jQuery("<?php esc_attr_e( $ald_wrapper_class ); ?>").find("#loadMore").fadeOut('slow');
+					if ( jQuery("<?php echo esc_attr( $ald_load_class ); ?>:hidden").length == 0 ) {
+						jQuery("<?php echo esc_attr( $ald_wrapper_class ); ?>").find("#loadMore").fadeOut('slow');
 						//console.log( 'Load more button hidden because no more item to load' );
 					}
 
@@ -413,26 +413,26 @@ function ald_custom_javascript_code(){
 					<?php if( $event_type == "custom_button" ) : ?>
 						<?php $click_selector = $button_trigger_selector; ?>
 
-						jQuery("<?php esc_attr_e($custom_button_append); ?>").after('<button data-alm-click-selector="<?php esc_attr_e( $click_selector ); ?>" type="button" class="ald-ajax-btn button">'+loader+'<span class="ald-btn-label"><?php esc_attr_e( $button_label ); ?></span></button>');
+						jQuery("<?php echo esc_attr($custom_button_append); ?>").after('<button data-alm-click-selector="<?php echo esc_attr( $click_selector ); ?>" type="button" class="ald-ajax-btn button">'+loader+'<span class="ald-btn-label"><?php echo esc_html( $button_label ); ?></span></button>');
 
 					<?php endif; ?>
 
 					<?php if( $click_selector ) : ?>
 
-						jQuery( document ).on('click', '<?php esc_attr_e( $click_selector ); ?>', function(e){
+						jQuery( document ).on('click', '<?php echo esc_attr( $click_selector ); ?>', function(e){
 							e.preventDefault();
 
 							// Javascript Array Args
 							var args = [];
-							args['event_type'] = "<?php esc_attr_e( $event_type ); ?>";
-							args['custom_button_append'] = "<?php esc_attr_e( $custom_button_append ); ?>";
-							args['button_trigger_selector'] = "<?php esc_attr_e( $button_trigger_selector ); ?>";
-							args['button_label'] = "<?php esc_attr_e( $button_label ); ?>";
-							args['click_selector'] = "<?php esc_attr_e( $click_selector ); ?>";
-							args['hide_selector_wrapper'] = "<?php esc_attr_e( $hide_selector_wrapper ); ?>";
-							args['wrapper_to_hide'] = "<?php esc_attr_e( $wrapper_to_hide ); ?>";
-							args['update_browser_url'] = "<?php esc_attr_e( $update_browser_url ); ?>";
-							args['update_page_title'] = "<?php esc_attr_e( $update_page_title ); ?>";
+							args['event_type'] = "<?php echo esc_attr( $event_type ); ?>";
+							args['custom_button_append'] = "<?php echo esc_attr( $custom_button_append ); ?>";
+							args['button_trigger_selector'] = "<?php echo esc_attr( $button_trigger_selector ); ?>";
+							args['button_label'] = "<?php echo esc_attr( $button_label ); ?>";
+							args['click_selector'] = "<?php echo esc_attr( $click_selector ); ?>";
+							args['hide_selector_wrapper'] = "<?php echo esc_attr( $hide_selector_wrapper ); ?>";
+							args['wrapper_to_hide'] = "<?php echo esc_attr( $wrapper_to_hide ); ?>";
+							args['update_browser_url'] = "<?php echo esc_attr( $update_browser_url ); ?>";
+							args['update_page_title'] = "<?php echo esc_attr( $update_page_title ); ?>";
 							args['data_implement_selectors'] = '<?php echo json_encode( $data_implement_selectors ); ?>';
 
 							var targetUrl = ( e.target.href ) ? e.target.href : jQuery(this).context.href;
@@ -449,7 +449,7 @@ function ald_custom_javascript_code(){
 					<?php if( $event_type == "scroll_to_load"  ) : ?>
 
 						jQuery( window ).on('scroll', function(e){
-							jQuery('<?php esc_attr_e( $click_selector ); ?>').each(function(i,el){
+							jQuery('<?php echo esc_attr( $click_selector ); ?>').each(function(i,el){
 
 								var $this = jQuery(this);
 

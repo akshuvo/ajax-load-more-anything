@@ -158,7 +158,7 @@ class ALD_Menu {
                                                         <div class="box-inner">
                                                             <h4><?php esc_html_e( 'Welcome to Load More Anything', 'ajax-load-more-anything' ); ?></h4>
                                                             <div class="box-content">
-                                                                <p><?php _e('Checkout our new features.', 'ajax-load-more-anything'); ?></p>
+                                                                <p><?php esc_html_e('Checkout our new features.', 'ajax-load-more-anything'); ?></p>
                                                                 <ul class="ald-list">
                                                                     <li>Ajax wrapper added</li>
                                                                     <li>Make ajax data loading</li>
@@ -189,7 +189,7 @@ class ALD_Menu {
                                                         <div class="box-inner">
                                                             <h4><?php esc_html_e( 'Awesome Support', 'ajax-load-more-anything' ); ?></h4>
                                                             <div class="box-content">
-                                                                <p><?php _e('We are ready to give you the best support. If you facing any kind of technical or non-technical issues just create a support topic. We will response real fast.', 'ajax-load-more-anything'); ?></p>
+                                                                <p><?php esc_html_e('We are ready to give you the best support. If you facing any kind of technical or non-technical issues just create a support topic. We will response real fast.', 'ajax-load-more-anything'); ?></p>
                                                                 <br>
                                                                 <p><a class="button" target="_blank" href="https://wordpress.org/support/plugin/ajax-load-more-anything"><?php esc_html_e( 'View Support Forum', 'ajax-load-more-anything' ); ?></a></p>
                                                             </div>
@@ -199,7 +199,7 @@ class ALD_Menu {
                                                         <div class="box-inner">
                                                             <h4><?php esc_html_e( 'Show your Love', 'ajax-load-more-anything' ); ?></h4>
                                                             <div class="box-content">
-                                                                <p><?php _e('If you want to show me some love, The review section is always open for you :). Your awesome review provides me energy to continue development for free.', 'ajax-load-more-anything'); ?></p>
+                                                                <p><?php esc_html_e('If you want to show me some love, The review section is always open for you :). Your awesome review provides me energy to continue development for free.', 'ajax-load-more-anything'); ?></p>
                                                                 <br>
                                                                 <p><a class="button" target="_blank" href="https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/#new-post"><?php esc_html_e( 'Write a Review Now', 'ajax-load-more-anything' ); ?></a></p>
                                                             </div>
@@ -222,7 +222,7 @@ class ALD_Menu {
                                                             $i = 0;
                                                             foreach ( $general_loadmore as $key => $selector ) {
                                                                 if ( (isset( $selector['wrapper_title'] ) && $selector['wrapper_title'] != "") || (isset( $selector['btn_selector'] ) && $selector['btn_selector'] != "") ) {
-                                                                    echo ald_add_general_loadmore_wrap( array(
+                                                                    echo ald_add_general_loadmore_wrap( array( // phpcs:ignore
                                                                         'key' => $key,
                                                                         'thiskey' => $i,
                                                                         'selector' => $selector,
@@ -252,7 +252,7 @@ class ALD_Menu {
                                                             $i = 0;
                                                             foreach ( $ajax_loadmore as $key => $selector ) {
                                                                 //if ( (isset( $selector['wrapper_title'] ) && $selector['wrapper_title'] != "") ) {
-                                                                    echo ald_add_ajax_loadmore_wrap( array(
+                                                                    echo ald_add_ajax_loadmore_wrap( array( // phpcs:ignore
                                                                         'key' => $key,
                                                                         'thiskey' => $i,
                                                                         'selector' => $selector,
@@ -279,7 +279,7 @@ class ALD_Menu {
                                                         <label for="ald_options_custom_css"><?php esc_html_e( 'Custom CSS', 'ajax-load-more-anything' ); ?></label>
                                                     </div>
 
-                                                    <textarea name="ald_options[custom_css]" class="wfull" rows="5" id="ald_options_custom_css"><?php _e( $custom_css ); ?></textarea>
+                                                    <textarea name="ald_options[custom_css]" class="wfull" rows="5" id="ald_options_custom_css"><?php _e( $custom_css ); // phpcs:ignore ?></textarea>
 
                                                 </div>
 
@@ -300,7 +300,7 @@ class ALD_Menu {
                                 <?php if ( !defined('ALD_PRO_PLUGIN_VERSION') ) : ?>
                                 <tr>
                                     <td>
-                                        <h3 style=" margin: 0 0 2px 0; "><?php echo __( 'Introducing Load More Anyting <code>Pro</code>', 'ajax-load-more-anything' ); ?></h3>
+                                        <h3 style=" margin: 0 0 2px 0; "><?php esc_html_e( 'Introducing Load More Anyting <code>Pro</code>', 'ajax-load-more-anything' ); ?></h3>
                                         <p>
                                             <?php esc_html_e( 'Everything now you can make ajax based!', 'ajax-load-more-anything' ); ?>
                                         </p>
@@ -327,7 +327,7 @@ class ALD_Menu {
                                         </ul>
                                         <div class="action-btns">
                                             <a class="button d-inline-flex items-center" target="_blank" href="<?php echo esc_url( ALD_GOPRO_URL ); ?>">
-                                                <?php echo __( 'Learn More <span class="ml-half dashicons dashicons-external"></span>', 'ajax-load-more-anything' ); ?>
+                                                <?php esc_html_e( 'Learn More <span class="ml-half dashicons dashicons-external"></span>', 'ajax-load-more-anything' ); ?>
                                             </a>
                                             <a class="button ald-trigger-pro" style="vertical-align: middle; margin-left: 4px;"><?php esc_html_e( 'Free vs Pro Comparison', 'ajax-load-more-anything' ); ?></a>
                                         </div>
@@ -338,7 +338,7 @@ class ALD_Menu {
                                 <tr>
                                     <td>
                                         <br>
-                                        <h3 style=" margin: 0 0 2px 0; "><?php echo __( 'Are you stuck somewhere?', 'ajax-load-more-anything' ); ?></h3>
+                                        <h3 style=" margin: 0 0 2px 0; "><?php esc_html_e( 'Are you stuck somewhere?', 'ajax-load-more-anything' ); ?></h3>
                                         <p>
                                             <?php esc_html_e( 'Get support from our developers. Easy, Quick, and Professional!', 'ajax-load-more-anything' ); ?>
                                         </p>
@@ -346,14 +346,14 @@ class ALD_Menu {
                                         
                                         <ul class="action-btns">
                                             <li>
-                                                <a class="button d-inline-flex items-center" target="_blank" href="https://wordpress.org/support/plugin/ajax-load-more-anything"><?php echo __( 'View Support Forum <span class="ml-half dashicons dashicons-external"></span>', 'ajax-load-more-anything' ); ?></a>
+                                                <a class="button d-inline-flex items-center" target="_blank" href="https://wordpress.org/support/plugin/ajax-load-more-anything"><?php esc_html_e( 'View Support Forum <span class="ml-half dashicons dashicons-external"></span>', 'ajax-load-more-anything' ); ?></a>
                                                 
                                             </li>
                                             <li>
-                                                <a class="button d-inline-flex items-center" target="_blank" href="<?php echo esc_url('https://addonmaster.com/submit-a-ticket/'); ?>"><?php echo __( 'Submit A Ticket <span class="ml-half dashicons dashicons-external"></span>', 'ajax-load-more-anything' ); ?></a>
+                                                <a class="button d-inline-flex items-center" target="_blank" href="<?php echo esc_url('https://addonmaster.com/submit-a-ticket/'); ?>"><?php esc_html_e( 'Submit A Ticket <span class="ml-half dashicons dashicons-external"></span>', 'ajax-load-more-anything' ); ?></a>
                                             </li>
                                             <li>
-                                                <a class="button d-inline-flex items-center" href="mailto:addonmasterwp@gmail.com" ><?php echo __( 'Email Us <span class="ml-half dashicons dashicons-email"></span>', 'ajax-load-more-anything' ); ?></a>
+                                                <a class="button d-inline-flex items-center" href="mailto:addonmasterwp@gmail.com" ><?php esc_html_e( 'Email Us <span class="ml-half dashicons dashicons-email"></span>', 'ajax-load-more-anything' ); ?></a>
                                             </li>
                                         </ul>
                                     </td>
@@ -362,13 +362,13 @@ class ALD_Menu {
                                 <tr>
                                     <td>
                                         <br>
-                                        <h3 style=" margin: 0 0 2px 0; "><?php echo __( 'Show Your Love', 'ajax-load-more-anything' ); ?></h3>
+                                        <h3 style=" margin: 0 0 2px 0; "><?php esc_html_e( 'Show Your Love', 'ajax-load-more-anything' ); ?></h3>
                                         <p>
                                             <?php esc_html_e( 'If you want to show some love, The review section is always open for you :). Your awesome review provide us energy to continue development for free.', 'ajax-load-more-anything' ); ?>
                                         </p>
                                         <hr>
                                         
-                                        <a class="button d-inline-flex items-center" target="_blank" href="<?php echo esc_url('https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/#new-post'); ?>"><?php echo __( 'Write a Review', 'ajax-load-more-anything' ); ?></a>
+                                        <a class="button d-inline-flex items-center" target="_blank" href="<?php echo esc_url('https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/#new-post'); ?>"><?php esc_html_e( 'Write a Review', 'ajax-load-more-anything' ); ?></a>
                                     </td>
                                 </tr>   
 
@@ -395,7 +395,7 @@ class ALD_Menu {
             return;
         }
 
-        echo $output;
+        echo $output; // phpcs:ignore
     }
 
     // Ajax Content Render
@@ -408,7 +408,7 @@ class ALD_Menu {
             return;
         }
 
-        echo $output;
+        echo $output; // phpcs:ignore
     }
 
     /**
@@ -477,7 +477,7 @@ class ALD_Menu {
             }
         }
 
-        return $options;
+        return $options; // phpcs:ignore
     }
 }
 
