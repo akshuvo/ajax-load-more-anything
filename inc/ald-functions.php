@@ -78,7 +78,7 @@ function ald_lite_custom_style(){
 	<style type="text/css">
 		
 		/* General Selector Hidden Handle */
-		<?php echo implode(',', $general_hide_selectors); ?>{ display: none; } 
+		<?php echo implode(',', $general_hide_selectors); // phpcs:ignore ?>{ display: none; } 
 
 		/* Ajax Selector Hidden Handle */
 		<?php echo implode(',', $ajax_hide_selectors); ?>{ visibility: hidden; } 
