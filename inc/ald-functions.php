@@ -440,7 +440,6 @@ function ald_custom_javascript_code(){
 
 							<?php do_action( 'after_load_more_push_ajax', $value ); ?>
 							
-
 						});
 
 					<?php endif; ?>

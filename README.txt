@@ -3,11 +3,10 @@ Contributors: mdshuvo, addonmaster
 Tags: infinite scroll, ajax load more, ajax pagination, load more, ajax
 Requires at least: 4.6
 Tested up to: 6.4.3
-Requires PHP: 5.6
 Stable tag: 3.3.5
-License: GPLv3
-License URI: https://opensource.org/licenses/GPL-3.0
-
+Requires PHP: 5.6
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Add Load More button for your blog post, custom type, Comments, page, Category, Recent Posts, Woocommerce Product, custom Div or whatever you want.
 
