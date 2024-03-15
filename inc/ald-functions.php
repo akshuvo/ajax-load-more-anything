@@ -410,7 +410,7 @@ function ald_custom_javascript_code(){
 					<?php $update_page_title = isset( $value['update_page_title'] ) ? $value['update_page_title'] : ""; ?>
 					<?php $data_implement_selectors = isset( $value['data_implement_selectors'] ) ? $value['data_implement_selectors'] : array(); ?>
 
-					<?php if( $event_type == "custom_button" ) : ?>
+					<?php if( defined('ALD_PRO_PLUGIN_URL') && $event_type == "custom_button" ) : ?>
 						<?php $click_selector = $button_trigger_selector; ?>
 
 						jQuery("<?php echo esc_attr($custom_button_append); ?>").after('<button data-alm-click-selector="<?php echo esc_attr( $click_selector ); ?>" type="button" class="ald-ajax-btn button">'+loader+'<span class="ald-btn-label"><?php echo esc_html( $button_label ); ?></span></button>');
