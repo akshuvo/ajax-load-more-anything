@@ -346,14 +346,14 @@ class ALD_Menu {
                                         
                                         <ul class="action-btns">
                                             <li>
-                                                <a class="button d-inline-flex items-center" target="_blank" href="https://wordpress.org/support/plugin/ajax-load-more-anything"><?php esc_html_e( 'View Support Forum <span class="ml-half dashicons dashicons-external"></span>', 'ajax-load-more-anything' ); ?></a>
+                                                <a class="button d-inline-flex items-center" target="_blank" href="https://wordpress.org/support/plugin/ajax-load-more-anything"><?php esc_html_e( 'View Support Forum', 'ajax-load-more-anything' ); ?><span class="ml-half dashicons dashicons-external"></span></a>
                                                 
                                             </li>
                                             <li>
-                                                <a class="button d-inline-flex items-center" target="_blank" href="<?php echo esc_url('https://addonmaster.com/submit-a-ticket/'); ?>"><?php esc_html_e( 'Submit A Ticket <span class="ml-half dashicons dashicons-external"></span>', 'ajax-load-more-anything' ); ?></a>
+                                                <a class="button d-inline-flex items-center" target="_blank" href="<?php echo esc_url('https://addonmaster.com/submit-a-ticket/'); ?>"><?php esc_html_e( 'Submit A Ticket', 'ajax-load-more-anything' ); ?><span class="ml-half dashicons dashicons-external"></span></a>
                                             </li>
                                             <li>
-                                                <a class="button d-inline-flex items-center" href="mailto:addonmasterwp@gmail.com" ><?php esc_html_e( 'Email Us <span class="ml-half dashicons dashicons-email"></span>', 'ajax-load-more-anything' ); ?></a>
+                                                <a class="button d-inline-flex items-center" href="mailto:addonmasterwp@gmail.com" ><?php esc_html_e( 'Email Us', 'ajax-load-more-anything' ); ?><span class="ml-half dashicons dashicons-email"></span></a>
                                             </li>
                                         </ul>
                                     </td>
