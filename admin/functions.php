@@ -492,11 +492,16 @@ function ald_add_ajax_loadmore_wrap( $args ){
     $args = wp_parse_args( $args, [
         'thiskey' => '',
         'key' => '',
-        'selector' => array(),
+        'selector' => []
     ] );
 
     // Let's extract the array
     extract( $args['selector'] );
+
+    // Selectors
+    $selector = wp_parse_args( $args['selector'], [
+        'trigger_offset' => 2000,
+    ] );
 
     // Array key
     $key =  isset( $args['key'] ) ? $args['key'] : "";
@@ -603,7 +608,20 @@ function ald_add_ajax_loadmore_wrap( $args ){
                         </th>
                         <td>
                             <input id="ajax_loadmore-click_selector-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][click_selector]" value="<?php echo esc_attr( $click_selector ); ?>" placeholder="<?php echo esc_attr( '.nav-links a.link' ); ?>"/>
-                            <p><?php esc_html_e( 'Selector should be correct, otherwise ajax will fail to load contents', 'ajax-load-more-anything' ); ?></p>
+                            <p class="desc"><?php esc_html_e( 'Selector should be correct, otherwise ajax will fail to load contents', 'ajax-load-more-anything' ); ?></p>
+                        </td>
+                    </tr>
+
+                    <tr valign="top" data-id="trigger_offset" class="ajax_loadmore-trigger_offset ald-pro-field">
+                        <th scope="row">
+                            <div class="tf-label">
+                                <label for="ajax_loadmore-trigger_offset-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Trigger Offset', 'ajax-load-more-anything' ); ?></label>
+                            </div>
+                            <?php ald_available_in_pro(); ?>
+                        </th>
+                        <td>
+                            <input id="ajax_loadmore-trigger_offset-<?php echo esc_attr( $key ); ?>" class="regular-text" type="number" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][trigger_offset]" value="<?php echo esc_attr( $selector['trigger_offset'] ); ?>" placeholder="1500" min="0" />
+                            <p class="desc"><?php esc_html_e( 'The number of pixels from the bottom of the page to trigger the load more event', 'ajax-load-more-anything' ); ?></p>
                         </td>
                     </tr>
 
@@ -1006,6 +1024,9 @@ function ald_plugin_options_custom_js(){
         width: 320px;
         visibility: visible;
     }
+    .ald-pro-lock .pro-lock:after {
+        display: none;
+    }
     .pro-lock[data-modal-show="ald_go-pro"]:hover:after {background: #000;}
     </style>
     <script>
@@ -1016,3 +1037,18 @@ function ald_plugin_options_custom_js(){
     <?php
 }
 add_action( 'ald_options_js', 'ald_plugin_options_custom_js', 10 );
+
+// Available in Pro Lock
+function ald_available_in_pro(){
+    if ( defined('ALD_PRO_PLUGIN_VERSION') ) {
+        return;
+    }
+    ?>
+    <div class="ald-pro-lock">
+        <span class="pro-lock" data-modal-show="ald_go-pro" onclick="triggerGoPro()">
+            <span class="dashicons dashicons-lock"></span>
+            <span class="pro-lock-text"><?php esc_html_e( 'Get Pro', 'ajax-load-more-anything' ); ?></span>
+        </span>
+    </div>
+    <?php
+}

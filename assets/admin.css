@@ -639,3 +639,28 @@ a.add_disr {
 .left-panel sup {
     color: #2b74ff;
 }
+
+/* Pro CSS */
+.ald-pro-no .ald-pro-field .pro-lock:before {
+    display: none;
+}
+
+.ald-pro-no .ald-pro-field th, 
+.ald-pro-no .ald-pro-field td {
+    position: relative;
+}
+
+.ald-pro-no .ald-pro-field th .tf-label,
+.ald-pro-no .ald-pro-field td input,
+.ald-pro-no .ald-pro-field td p,
+.ald-pro-no .ald-pro-field td input {
+    opacity: 0.5;
+}
+
+.ald-pro-no .ald-pro-field .ald-pro-lock {
+    color: red;
+    position: absolute;
+    top: 15%;
+    right: 0;
+    opacity: 1;
+}

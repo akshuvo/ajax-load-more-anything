@@ -121,7 +121,7 @@ class ALD_Menu {
         <div class="wrap ald-wrap">
             <h1></h1>
 
-            <form method="post" id="ald_option_form">
+            <form method="post" id="ald_option_form" class="ald-option-form ald-pro-<?php echo ( defined('ALD_PRO_PLUGIN_VERSION') ) ? 'yes' : 'no'; ?>">
 
                 <table class="form-table">
                     <tr>

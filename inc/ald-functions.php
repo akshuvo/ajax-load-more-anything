@@ -459,11 +459,17 @@ function ald_custom_javascript_code(){
 
 								var tAdj = parseInt(t-(H/2));
 
-								if ( flag === false && (H >= tAdj) ) {
-									//console.log( 'inview' );
-									$this.trigger('click');
+								let isInview = H >= tAdj;
+
+								if( ald_params.ald_pro == "1" ){
+									isInview = isElementInViewport(el, 0);
+								}
+							
+								if ( flag === false && isInview ) {
+									// console.log( 'inview' );
+									jQuery(el).trigger('click');
 								} else {
-									//console.log( 'outview' );
+									// console.log( 'outview' );
 								}
 							});
 						});
@@ -471,6 +477,7 @@ function ald_custom_javascript_code(){
 					<?php endif; ?>
 
 				<?php endforeach; ?>
+
 
 				// Ajax Custom Button Trigger
 				jQuery( document ).on('click', 'button.ald-ajax-btn', function(e){
