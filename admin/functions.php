@@ -612,7 +612,7 @@ function ald_add_ajax_loadmore_wrap( $args ){
                         </td>
                     </tr>
 
-                    <tr valign="top" data-id="trigger_offset" class="ajax_loadmore-trigger_offset ald-pro-field">
+                    <tr valign="top" data-id="trigger_offset" class="ajax_loadmore-trigger_offset ald-pro-field hidden">
                         <th scope="row">
                             <div class="tf-label">
                                 <label for="ajax_loadmore-trigger_offset-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Trigger Offset', 'ajax-load-more-anything' ); ?></label>

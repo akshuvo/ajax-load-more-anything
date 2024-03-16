@@ -42,6 +42,13 @@ function ald_minify_css($input) {
     $input);
 }
 
+/**
+ * Check if Pro version is active
+ */
+function ald_is_pro(){
+	return defined('ALD_PRO_PLUGIN_VERSION');
+}
+
 /*
 * Custom CSS script
 */
@@ -394,7 +401,9 @@ function ald_custom_javascript_code(){
 			<?php if( $ajax_loadmore ) : ?>
 			<?php do_action( 'load_more_anything_ajax_loadmore', $ajax_loadmore ); ?>
 
-				<?php foreach ( $ajax_loadmore as $key => $value ) : ?>
+				<?php foreach ( $ajax_loadmore as $key => $value ) : 
+					error_log( print_r( $value, true ) );
+					?>
 
 					<?php $event_type = isset( $value['event_type'] ) ? $value['event_type'] : "selectors_click"; ?>
 
@@ -409,6 +418,8 @@ function ald_custom_javascript_code(){
 					<?php $update_browser_url = isset( $value['update_browser_url'] ) ? $value['update_browser_url'] : ""; ?>
 					<?php $update_page_title = isset( $value['update_page_title'] ) ? $value['update_page_title'] : ""; ?>
 					<?php $data_implement_selectors = isset( $value['data_implement_selectors'] ) ? $value['data_implement_selectors'] : array(); ?>
+
+					<?php $trigger_offset = ald_is_pro() && isset( $value['trigger_offset'] ) && !empty( $value['trigger_offset'] ) ? $value['trigger_offset'] : 0; ?>
 
 					<?php if( defined('ALD_PRO_PLUGIN_URL') && $event_type == "custom_button" ) : ?>
 						<?php $click_selector = $button_trigger_selector; ?>
@@ -462,7 +473,7 @@ function ald_custom_javascript_code(){
 								let isInview = H >= tAdj;
 
 								if( ald_params.ald_pro == "1" ){
-									isInview = isElementInViewport(el, 0);
+									isInview = isElementInViewport(el, <?php echo esc_attr( $trigger_offset ); ?>);
 								}
 							
 								if ( flag === false && isInview ) {

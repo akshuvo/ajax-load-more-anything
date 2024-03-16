@@ -181,11 +181,17 @@ let ald_pro = alda_params.ald_pro;
         	var $this = $(this);
         	var value = $this.val();
 
+            // Hide the offset field
+            jQuery('.ajax_loadmore-trigger_offset').hide();
+
         	if ( value == "scroll_to_load" ) {
 
         		$this.closest('.tf_ajax_sel_field').find('tr[data-id="hide_selector_wrapper"], tr[data-id="click_selector"]').fadeIn();
 
         		$this.closest('.tf_ajax_sel_field').find('tr[data-id="button_trigger_selector"], tr[data-id="custom_button_append"]').hide();
+
+                // Show the offset field
+                jQuery('.ajax_loadmore-trigger_offset').fadeIn('fast');
 
         	} else if( value == "custom_button" ) {
 
