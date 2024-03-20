@@ -3,7 +3,7 @@ Contributors: mdshuvo, addonmaster
 Tags: infinite scroll, ajax load more, ajax pagination, load more, ajax
 Requires at least: 4.6
 Tested up to: 6.4.3
-Stable tag: 3.3.5
+Stable tag: 3.3.6
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -56,6 +56,9 @@ Do you have lots of data in a table? load more anything plugin can make the tabl
 ### Load Almost Anything
 If you have any suitable wrapper then you can apply load more functionaly there. 
 
+### Works with any Theme
+Load More Anything works with any theme. You can use it with any theme. It's fully compatible with any theme.
+
 
 ### Features:
 * Infinite Scroll on Posts, Blogs, Archives, Categories, Pages, Products, and Custom Post Types 
@@ -71,6 +74,9 @@ If you have any suitable wrapper then you can apply load more functionaly there.
 * Feels like a Headless Website 
 * Update Browser URL on Ajax Load (*Available in Pro*)
 * Update Page Title on Ajax Load (*Available in Pro*)
+* Data Implement Type: Replace Data, Insert After, Insert Before
+* Ajax Preloader
+* Infinite Scroll Trigger Offset Control (*Available in Pro*)
 * Custom CSS and JS
 
 
@@ -104,22 +110,13 @@ If you have any suitable wrapper then you can apply load more functionaly there.
 
 ### Documentation and Support
 
-- For documentation and tutorials go to our [Documentation](https://addonmaster.com/docs-category/load-more-anything/). 
+- For documentation and tutorials go to our [Documentation](https://addonmaster.com/docs-category/load-more-anything/).
+- Submit A Ticket from [Here](https://addonmaster.com/submit-a-ticket/).
 - If you have any more questions, visit our support on the [Plugin's Forum](https://wordpress.org/support/plugin/ajax-load-more-anything).
 
 ### Happy User of Load More Anything?
 
-- Join our [Facebook Group](https://www.facebook.com/groups/addonmaster/).
-- Or rate us on [WordPress](https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/?filter=5#new-post) :)
-
-## Privacy Policy 
-Load More Anything uses [Appsero](https://appsero.com) SDK to collect some telemetry data upon user's confirmation. This helps us to troubleshoot problems faster & make product improvements.
-
-Appsero SDK **does not gather any data by default.** The SDK only starts gathering basic telemetry data **when a user allows it via the admin notice**. We collect the data to ensure a great user experience for all our users. 
-
-Integrating Appsero SDK **DOES NOT IMMEDIATELY** start gathering data, **without confirmation from users in any case.**
-
-Learn more about how [Appsero collects and uses this data](https://appsero.com/privacy-policy/).
+- Rate us on [WordPress](https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/?filter=5#new-post) :)
 
 
 == Installation ==
@@ -168,6 +165,13 @@ Create Topic in [Support forum](https://wordpress.org/support/plugin/ajax-load-m
 
 
 == Changelog ==
+
+= 3.3.6 – Mar 21, 2024 =
+- Code Improvement
+- Scroll to top after load more
+- Trigger Offset option support for Pro
+- Scripts and Styles enqueue improvement
+
 
 = 3.3.4 – Feb 07, 2024 =
 - WordPress 6.4.3 Compatibility

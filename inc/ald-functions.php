@@ -313,6 +313,9 @@ function ald_custom_javascript_code(){
 					main_xhr.abort();
 				}
 
+				// Add URL to args
+				args['target_url'] = url;
+
 				main_xhr = jQuery.ajax({
 					url: url,
 					asynch: true,
@@ -401,9 +404,7 @@ function ald_custom_javascript_code(){
 			<?php if( $ajax_loadmore ) : ?>
 			<?php do_action( 'load_more_anything_ajax_loadmore', $ajax_loadmore ); ?>
 
-				<?php foreach ( $ajax_loadmore as $key => $value ) : 
-					error_log( print_r( $value, true ) );
-					?>
+				<?php foreach ( $ajax_loadmore as $key => $value ) : ?>
 
 					<?php $event_type = isset( $value['event_type'] ) ? $value['event_type'] : "selectors_click"; ?>
 
@@ -473,7 +474,7 @@ function ald_custom_javascript_code(){
 								let isInview = H >= tAdj;
 
 								if( ald_params.ald_pro == "1" ){
-									isInview = isElementInViewport(el, <?php echo esc_attr( $trigger_offset ); ?>);
+									isInview = lmaIsViewport(el, <?php echo esc_attr( $trigger_offset ); ?>);
 								}
 							
 								if ( flag === false && isInview ) {

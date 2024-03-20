@@ -4,7 +4,7 @@
  * Plugin URI:   https://wordpress.org/plugins/ajax-load-more-anything/
  * Author:       AddonMaster
  * Author URI:   https://addonmaster.com/contact
- * Version: 	 3.3.5
+ * Version: 	 3.3.6
  * Description:  A simple plugin that help you to Load more any item with jQuery/Ajax. You can use Ajaxify Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce Product, Images, Photos, Videos, custom selector or whatever you want.
  * License:      GPL2
  * License URI:  https://www.gnu.org/licenses/gpl-2.0.html
@@ -26,7 +26,7 @@ final class Ajax_Load_More_Anything {
      *
      * @var string
      */
-    const version = '3.3.5';
+    const version = '3.3.6';
 
 	private function __construct() {
 		$this->define_constants();
@@ -94,7 +94,7 @@ final class Ajax_Load_More_Anything {
 	 */
 	function enqueue_scripts() {
 
-	    wp_enqueue_style( 'ald-styles', ALD_PLUGIN_ASSETS . '/styles.css', [], ALD_PLUGIN_VERSION );
+	    wp_enqueue_style( 'ald-styles', ALD_PLUGIN_ASSETS . '/styles.min.css', [], ALD_PLUGIN_VERSION );
 	    wp_enqueue_script( 'ald-scripts', ALD_PLUGIN_ASSETS . '/scripts.js', array('jquery'), ALD_PLUGIN_VERSION, true );
 
 		wp_localize_script( 'ald-scripts', 'ald_params',
@@ -115,8 +115,8 @@ final class Ajax_Load_More_Anything {
 	        return;
 	    }
 
-	    wp_register_style( 'ald-admin-styles', ALD_PLUGIN_ASSETS . '/admin.css', null, ALD_PLUGIN_VERSION );
-	    wp_register_script( 'ald-admin-scripts', ALD_PLUGIN_ASSETS . '/admin.js', array('jquery'), ALD_PLUGIN_VERSION, true );
+	    wp_register_style( 'ald-admin-styles', ALD_PLUGIN_ASSETS . '/admin.min.css', null, ALD_PLUGIN_VERSION );
+	    wp_register_script( 'ald-admin-scripts', ALD_PLUGIN_ASSETS . '/admin.min.js', array('jquery'), ALD_PLUGIN_VERSION, true );
 
 	    // Ajax Params
 	    wp_localize_script( 'ald-admin-scripts', 'alda_params',

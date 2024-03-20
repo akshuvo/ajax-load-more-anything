@@ -558,9 +558,9 @@ function ald_add_ajax_loadmore_wrap( $args ){
                         </th>
                         <td>
                             <select id="ajax_loadmore-event_type-<?php echo esc_attr( $key ); ?>" data-pro-val="custom_button" class="option-select-lmapro-modal-trigger regular-text ajax_loadmore-event_type" type="text" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][event_type]">
-                                <option value="selectors_click" <?php selected( $event_type, 'selectors_click' ); ?>><?php esc_html_e( 'Selector(s) Click', 'ajax-load-more-anything' ); ?></option>
+                                <option value="selectors_click" <?php selected( $event_type, 'selectors_click' ); ?>><?php esc_html_e( 'Selector(s) Click (Ajax Load)', 'ajax-load-more-anything' ); ?></option>
                                 <option value="scroll_to_load" <?php selected( $event_type, 'scroll_to_load' ); ?>><?php esc_html_e( 'Scroll to Load (Infinite Scroll)', 'ajax-load-more-anything' ); ?></option>
-                                <option value="custom_button" <?php selected( $event_type, 'custom_button' ); ?>><?php esc_html_e( 'Add Custom Button', 'ajax-load-more-anything' ); ?><?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' (Available in Pro) '; ?></option>
+                                <option value="custom_button" <?php selected( $event_type, 'custom_button' ); ?>><?php esc_html_e( 'Add Load More Button', 'ajax-load-more-anything' ); ?><?php echo defined('ALD_PRO_PLUGIN_URL') ? '' : ' (Available in Pro) '; ?></option>
                             </select>
                         </td>
                     </tr>
