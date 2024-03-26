@@ -84,10 +84,20 @@ function ald_lite_custom_style(){
 	<style type="text/css">
 		
 		/* General Selector Hidden Handle */
-		<?php echo implode(',', $general_hide_selectors); // phpcs:ignore ?>{ display: none; } 
+		<?php if( !empty( $general_hide_selectors ) ) : ?>
+			<?php echo implode(',', $general_hide_selectors); // phpcs:ignore ?>{ 
+				<?php if ( !(defined('ELEMENTOR_VERSION') && \Elementor\Plugin::$instance->preview->is_preview_mode()) ) : ?>
+					display: none; 
+				<?php endif; ?>
+			} 
+		<?php endif; ?>
+
 
 		/* Ajax Selector Hidden Handle */
-		<?php echo implode(',', $ajax_hide_selectors); // phpcs:ignore ?>{ visibility: hidden; } 
+		<?php if( !empty( $ajax_hide_selectors ) ) : ?>
+			<?php echo implode(',', $ajax_hide_selectors); // phpcs:ignore ?>{ visibility: hidden; } 
+		<?php endif; ?>
+
 
 		/* Custom CSS */
 		<?php echo  $custom_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
