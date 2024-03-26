@@ -389,7 +389,7 @@ function ald_add_general_loadmore_wrap( $args ){
                         </th>
                         <td>
                             <input id="general_loadmore-load_selector-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][load_selector]" value="<?php echo esc_attr( $load_selector ); ?>" placeholder="<?php echo esc_attr( '#selector .repeated_selector' ); ?>" />
-                            <p><?php echo esc_html( $load_more_item_selector_desc ); ?></p>
+                            <p><?php echo $load_more_item_selector_desc; // phpcs:ignore ?></p>
                         </td>
                     </tr>
 
@@ -425,7 +425,7 @@ function ald_add_general_loadmore_wrap( $args ){
                         </th>
                         <td>
                             <input id="general_loadmore-button_label-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][button_label]" value="<?php echo esc_attr( $button_label ); ?>" placeholder="<?php echo esc_attr( 'Load +[count] more' ); ?>" />
-                            <p><?php echo esc_html( $button_label_desc ) ?></p>
+                            <p><?php echo $button_label_desc; // phpcs:ignore ?></p>
                         </td>
                     </tr>
                     <tr valign="top">
