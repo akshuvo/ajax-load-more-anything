@@ -92,12 +92,10 @@ function ald_lite_custom_style(){
 			} 
 		<?php endif; ?>
 
-
 		/* Ajax Selector Hidden Handle */
 		<?php if( !empty( $ajax_hide_selectors ) ) : ?>
 			<?php echo implode(',', $ajax_hide_selectors); // phpcs:ignore ?>{ visibility: hidden; } 
 		<?php endif; ?>
-
 
 		/* Custom CSS */
 		<?php echo  $custom_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
