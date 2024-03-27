@@ -35,7 +35,7 @@ final class Ajax_Load_More_Anything {
 		add_action('plugins_loaded', array( $this, 'plugin_loaded' ), 10, 2);
 
 		// Enqueue frontend scripts
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 999 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ), 100 );
 
 		// trigger upon plugin activation/deactivation
@@ -81,9 +81,6 @@ final class Ajax_Load_More_Anything {
 	 * @return void
 	 */
 	function plugin_loaded() {
-		// Loading Text Domain for Internationalization
-		load_plugin_textdomain( 'ajax-load-more-anything', false, dirname( plugin_basename(__FILE__) ) . '/languages/' );
-
 		require_once( dirname( __FILE__ ) . '/inc/ald-functions.php' );
 		require_once( dirname( __FILE__ ) . '/admin/functions.php' );
 		require_once( dirname( __FILE__ ) . '/admin/Menu.php' );
@@ -94,8 +91,10 @@ final class Ajax_Load_More_Anything {
 	 */
 	function enqueue_scripts() {
 
+    	$jquery_dep  = get_ald_options('disable_jquery_dep') == 'on' ? [] : ['jquery'];
+
 	    wp_enqueue_style( 'ald-styles', ALD_PLUGIN_ASSETS . '/styles.min.css', [], ALD_PLUGIN_VERSION );
-	    wp_enqueue_script( 'ald-scripts', ALD_PLUGIN_ASSETS . '/scripts.js', array('jquery'), ALD_PLUGIN_VERSION, true );
+	    wp_enqueue_script( 'ald-scripts', ALD_PLUGIN_ASSETS . '/scripts.js', $jquery_dep, ALD_PLUGIN_VERSION, true );
 
 		wp_localize_script( 'ald-scripts', 'ald_params',
          	array(

@@ -116,6 +116,7 @@ class ALD_Menu {
         $general_loadmore = isset( $ald_options['general_loadmore'] ) ? $ald_options['general_loadmore'] : array();
         $ajax_loadmore = isset( $ald_options['ajax_loadmore'] ) ? $ald_options['ajax_loadmore'] : array();
         $custom_css  = isset( $ald_options['custom_css'] ) ? $ald_options['custom_css'] : "";
+        $disable_jquery_dep  = isset( $ald_options['disable_jquery_dep'] ) ? $ald_options['disable_jquery_dep'] : '';
 
         ?>
         <div class="wrap ald-wrap">
@@ -142,7 +143,7 @@ class ALD_Menu {
                                             <li class="active"><a href="#welcome"><?php echo esc_html__( 'Welcome', 'ajax-load-more-anything' ); ?></a></li>
                                             <li><a href="#general"><?php echo esc_html__( 'General Selectors', 'ajax-load-more-anything' ); ?></a></li>
                                             <li><a href="#ajax-based"><?php echo esc_html__( 'Ajax Based', 'ajax-load-more-anything' ); ?></a></li>
-                                            <li><a href="#custom-code"><?php echo esc_html__( 'Custom Code', 'ajax-load-more-anything' ); ?></a></li>
+                                            <li><a href="#functions"><?php echo esc_html__( 'Settings', 'ajax-load-more-anything' ); ?></a></li>
                                             <?php do_action( 'ald_options_menu', $ald_options ); ?>
                                         </ul>
                                     </div>
@@ -269,18 +270,28 @@ class ALD_Menu {
 
                                             </div>
 
-                                            <div id="custom-code" class="tf-tab-content">
+                                            <div id="functions" class="tf-tab-content">
                                                 <h4>
-                                                    <?php esc_html_e( 'Custom Code Panel', 'ajax-load-more-anything' ); ?>
-                                                    <div class="desc"><?php esc_html_e( 'Here you can add/modify custom css', 'ajax-load-more-anything' ); ?></div>
+                                                    <?php esc_html_e( 'Settings', 'ajax-load-more-anything' ); ?>
+                                                    <div class="desc"><?php esc_html_e( 'Here you can add custom css and custom js', 'ajax-load-more-anything' ); ?></div>
                                                 </h4>
                                                 <div class="tf-field-wrap">
+                                                    
                                                     <div class="ald-label">
-                                                        <label for="ald_options_custom_css"><?php esc_html_e( 'Custom CSS', 'ajax-load-more-anything' ); ?></label>
+                                                        <label><input type="checkbox" name="ald_options[disable_jquery_dep]" <?php checked($disable_jquery_dep, 'on' ); ?>><?php esc_html_e( 'Disable jQuery Dependency', 'ajax-load-more-anything' ); ?></label>
+                                                        <div class="desc"><?php esc_html_e( 'Leave this option unchecked if you are not sure about this option.', 'ajax-load-more-anything' ); ?></div>
                                                     </div>
 
-                                                    <textarea name="ald_options[custom_css]" class="wfull" rows="5" id="ald_options_custom_css"><?php _e( $custom_css ); // phpcs:ignore ?></textarea>
+                                                   
 
+                                                </div>
+                                                <div class="tf-field-wrap">
+                                                    <h4>
+                                                        <?php esc_html_e( 'Custom CSS', 'ajax-load-more-anything' ); ?>
+                                                        <div class="desc"><?php esc_html_e( 'Add your custom css here', 'ajax-load-more-anything' ); ?></div>
+                                                    </h4>
+                                                  
+                                                    <textarea name="ald_options[custom_css]" class="wfull" rows="5" id="ald_options_custom_css"><?php _e( $custom_css ); // phpcs:ignore ?></textarea>
                                                 </div>
 
                                                 <?php do_action( 'ald_options_js', $ald_options ); ?>

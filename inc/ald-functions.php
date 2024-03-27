@@ -1,4 +1,15 @@
 <?php
+// Get Options
+function get_ald_options( $key = '', $default = '' ){
+	$ald_options =  get_option( 'ald_options' ) ? get_option( 'ald_options' ) : array();
+
+	if( !empty( $key ) ){
+		return isset( $ald_options[$key] ) ? $ald_options[$key] : $default;
+	}
+
+	return $ald_options;
+}
+
 // CSS Minifier => http://ideone.com/Q5USEF + improvement(s)
 function ald_minify_css($input) {
     if(trim($input) === "") return $input;
