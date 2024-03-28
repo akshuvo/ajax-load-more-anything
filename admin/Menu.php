@@ -430,14 +430,11 @@ class ALD_Menu {
     public function enqueue_assets() {
         wp_enqueue_style( 'ald-admin-styles' );
         wp_enqueue_script( 'ald-admin-scripts' );
-        //wp_enqueue_script( 'wp-codemirror' );
 
         $cmcss_settings['codeEditor'] = wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
         $cmjs_settings['codeEditor'] = wp_enqueue_code_editor( array( 'type' => 'text/javascript' ) );
         wp_localize_script('ald-admin-scripts', 'cmcss_settings', $cmcss_settings);
         wp_localize_script('ald-admin-scripts', 'cmjs_settings', $cmjs_settings);
-        wp_enqueue_script('wp-theme-plugin-editor');
-        wp_enqueue_style('wp-codemirror');
     }
 
     // Option Save

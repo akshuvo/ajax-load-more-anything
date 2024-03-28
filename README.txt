@@ -3,7 +3,7 @@ Contributors: mdshuvo, addonmaster
 Tags: infinite scroll, ajax load more, ajax pagination, load more, ajax
 Requires at least: 4.6
 Tested up to: 6.4.3
-Stable tag: 3.3.6
+Stable tag: 3.3.7
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -165,6 +165,13 @@ Create Topic in [Support forum](https://wordpress.org/support/plugin/ajax-load-m
 
 
 == Changelog ==
+
+= 3.3.7 – Mar 29, 2024 =
+- Code Improvement
+- Added: Disable jQuery Dependency option (This option is helpfull for some website where jQuery is not working properly)
+- Fixed: Elementor Editor Issue
+- Checked with Latest WordPress
+
 
 = 3.3.6 – Mar 21, 2024 =
 - Code Improvement
