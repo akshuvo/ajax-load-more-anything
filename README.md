@@ -138,6 +138,19 @@ How to install Load More Anything.
 
 == Changelog ==
 
+= 3.3.7 – Mar 29, 2024 =
+- Code Improvement
+- Added: Disable jQuery Dependency option (This option is helpfull for some website where jQuery is not working properly)
+- Fixed: Elementor Editor Issue
+- Checked with Latest WordPress
+
+= 3.3.6 – Mar 21, 2024 =
+- Code Improvement
+- Scroll to top after load more
+- Trigger Offset option support for Pro
+- Scripts and Styles enqueue improvement
+
+
 = 3.3.4 – Feb 07, 2024 =
 - WordPress 6.4.3 Compatibility
 - Security Improvement
