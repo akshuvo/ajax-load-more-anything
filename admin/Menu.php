@@ -311,7 +311,7 @@ class ALD_Menu {
                                 <?php if ( !defined('ALD_PRO_PLUGIN_VERSION') ) : ?>
                                 <tr>
                                     <td>
-                                        <h3 style=" margin: 0 0 2px 0; "><?php esc_html_e( 'Introducing Load More Anyting <code>Pro</code>', 'ajax-load-more-anything' ); ?></h3>
+                                        <h3 style=" margin: 0 0 2px 0; "><?php esc_html_e( 'Introducing Load More Anyting', 'ajax-load-more-anything' ); ?><code>Pro</code></h3>
                                         <p>
                                             <?php esc_html_e( 'Everything now you can make ajax based!', 'ajax-load-more-anything' ); ?>
                                         </p>
@@ -338,7 +338,7 @@ class ALD_Menu {
                                         </ul>
                                         <div class="action-btns">
                                             <a class="button d-inline-flex items-center" target="_blank" href="<?php echo esc_url( ALD_GOPRO_URL ); ?>">
-                                                <?php esc_html_e( 'Learn More <span class="ml-half dashicons dashicons-external"></span>', 'ajax-load-more-anything' ); ?>
+                                                <?php esc_html_e( 'Learn More', 'ajax-load-more-anything' ); ?> <span class="ml-half dashicons dashicons-external"></span>
                                             </a>
                                             <a class="button ald-trigger-pro" style="vertical-align: middle; margin-left: 4px;"><?php esc_html_e( 'Free vs Pro Comparison', 'ajax-load-more-anything' ); ?></a>
                                         </div>

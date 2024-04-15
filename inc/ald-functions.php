@@ -240,10 +240,17 @@ function ald_custom_javascript_code(){
 					if( empty( $ald_wrapper_class ) || empty( $ald_load_class ) ) {
 						continue;
 					}
+
+					// Btn Classes
+					$ald_btn_class = ' btn loadMoreBtn ';
+					if( defined('ALD_PRO_PLUGIN_VERSION') ){
+						$ald_btn_class = apply_filters( 'lmag_button_class', $ald_btn_class, $value );
+					}
+
 					?>
 
 					// Append the Load More Button
-					jQuery("<?php echo esc_attr( $ald_wrapper_class ); ?>").append('<a data-glm-button-selector="<?php echo esc_attr( $ald_wrapper_class ); ?>"  href="#" class="<?php echo esc_attr( apply_filters( 'ald_general_loadmore_button_class', 'btn loadMoreBtn', $value ) ); ?>" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); // phpcs:ignore ?></span></a>');
+					jQuery("<?php echo esc_attr( $ald_wrapper_class ); ?>").append('<a data-glm-button-selector="<?php echo esc_attr( $ald_wrapper_class ); ?>"  href="#" class="<?php echo esc_attr( $ald_btn_class ); ?>" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); // phpcs:ignore ?></span></a>');
 
 					<?php if ( $display_type == "flex" ) : ?>
 
