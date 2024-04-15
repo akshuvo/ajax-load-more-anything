@@ -218,10 +218,8 @@ function ald_custom_javascript_code(){
 
 			var loader = '<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>';
 
-			<?php if( $general_loadmore ) : ?>
-
-				<?php foreach ( $general_loadmore as $key => $value ) : ?>
-					<?php 
+			<?php if( $general_loadmore ) : 
+				foreach ( $general_loadmore as $key => $value ) :
 					$value = wp_parse_args( $value, array(
 						'btn_selector' => '',
 						'load_selector' => '',
@@ -230,21 +228,22 @@ function ald_custom_javascript_code(){
 						'button_label' => __( 'Load More', 'ajax-load-more-anything' ),
 						'display_type' => '',
 					) );
-					?>
-					<?php $ald_wrapper_class = isset( $value['btn_selector'] ) && !empty( $value['btn_selector'] ) ? sanitize_text_field( $value['btn_selector'] ) : ''; ?>
-					<?php $ald_load_class =  isset( $value['load_selector'] ) && !empty( $value['load_selector'] ) ? sanitize_text_field( $value['load_selector'] ) : '';?>
-					<?php $ald_item_show = isset( $value['visible_items'] ) && !empty( $value['visible_items'] ) ? sanitize_text_field( $value['visible_items'] ) : '3'; ?>
-					<?php $ald_item_load = isset( $value['load_items'] ) && !empty( $value['load_items'] ) ? sanitize_text_field( $value['load_items'] ) : '3'; ?>
-					<?php $ald_load_label = isset( $value['button_label'] ) && !empty( $value['button_label'] ) ? sanitize_text_field( $value['button_label'] ) : __( 'Load More', 'ajax-load-more-anything' );?>
-					<?php $display_type = isset( $value['display_type'] ) && !empty( $value['display_type'] ) ? ald_sanitize_display_type( $value['display_type'] ) : '';?>
+					
+					$ald_wrapper_class = isset( $value['btn_selector'] ) && !empty( $value['btn_selector'] ) ? sanitize_text_field( $value['btn_selector'] ) : '';
+					$ald_load_class =  isset( $value['load_selector'] ) && !empty( $value['load_selector'] ) ? sanitize_text_field( $value['load_selector'] ) : '';
+					$ald_item_show = isset( $value['visible_items'] ) && !empty( $value['visible_items'] ) ? sanitize_text_field( $value['visible_items'] ) : '3'; 
+					$ald_item_load = isset( $value['load_items'] ) && !empty( $value['load_items'] ) ? sanitize_text_field( $value['load_items'] ) : '3'; 
+					$ald_load_label = isset( $value['button_label'] ) && !empty( $value['button_label'] ) ? sanitize_text_field( $value['button_label'] ) : __( 'Load More', 'ajax-load-more-anything' );
+					$display_type = isset( $value['display_type'] ) && !empty( $value['display_type'] ) ? ald_sanitize_display_type( $value['display_type'] ) : '';
 
 					// Skip is selectors are empty
-					<?php if( empty( $ald_wrapper_class ) || empty( $ald_load_class ) ) :?>
-						<?php continue; ?>
-					<?php endif; ?>
+					if( empty( $ald_wrapper_class ) || empty( $ald_load_class ) ) {
+						continue;
+					}
+					?>
 
 					// Append the Load More Button
-					jQuery("<?php echo esc_attr( $ald_wrapper_class ); ?>").append('<a data-glm-button-selector="<?php echo esc_attr( $ald_wrapper_class ); ?>"  href="#" class="btn loadMoreBtn" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); // phpcs:ignore ?></span></a>');
+					jQuery("<?php echo esc_attr( $ald_wrapper_class ); ?>").append('<a data-glm-button-selector="<?php echo esc_attr( $ald_wrapper_class ); ?>"  href="#" class="<?php echo esc_attr( apply_filters( 'ald_general_loadmore_button_class', 'btn loadMoreBtn', $value ) ); ?>" id="loadMore"><span class="loadMoreBtn-label"><?php echo ald_button_label( $ald_load_label ); // phpcs:ignore ?></span></a>');
 
 					<?php if ( $display_type == "flex" ) : ?>
 
@@ -257,7 +256,7 @@ function ald_custom_javascript_code(){
 						jQuery(document).find("<?php echo esc_attr( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php echo esc_attr( $ald_load_class ); ?>:hidden").length );
 
 						// Button Click Trigger
-						jQuery("<?php echo esc_attr( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
+						jQuery("<?php echo esc_attr( $ald_wrapper_class ); ?>").find(".loadMoreBtn").on('click', function (e) {
 							e.preventDefault();
 
 							// Show the hidden items
@@ -283,7 +282,7 @@ function ald_custom_javascript_code(){
 						jQuery(document).find("<?php echo esc_attr( $ald_wrapper_class ); ?> .ald-count").text( jQuery("<?php echo esc_attr( $ald_load_class ); ?>:hidden").length );
 
 						// Button Click Trigger
-						jQuery("<?php echo esc_attr( $ald_wrapper_class ); ?>").find("#loadMore").on('click', function (e) {
+						jQuery("<?php echo esc_attr( $ald_wrapper_class ); ?>").find(".loadMoreBtn").on('click', function (e) {
 							e.preventDefault();
 
 							// Show the hidden items
@@ -304,7 +303,7 @@ function ald_custom_javascript_code(){
 
 					// Hide on initial if no div to show
 					if ( jQuery("<?php echo esc_attr( $ald_load_class ); ?>:hidden").length == 0 ) {
-						jQuery("<?php echo esc_attr( $ald_wrapper_class ); ?>").find("#loadMore").fadeOut('slow');
+						jQuery("<?php echo esc_attr( $ald_wrapper_class ); ?>").find(".loadMoreBtn").fadeOut('slow');
 						//console.log( 'Load more button hidden because no more item to load' );
 					}
 
