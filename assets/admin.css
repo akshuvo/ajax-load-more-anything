@@ -661,7 +661,11 @@ a.add_disr {
 .ald-pro-no .ald-pro-field .ald-pro-lock {
     color: red;
     position: absolute;
-    top: 15%;
+    top: 20px;
     right: 0;
     opacity: 1;
+}
+
+.ald-pro-no .ald-pro-field input {
+    pointer-events: none;
 }

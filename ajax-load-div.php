@@ -4,7 +4,7 @@
  * Plugin URI:   https://wordpress.org/plugins/ajax-load-more-anything/
  * Author:       AddonMaster
  * Author URI:   https://addonmaster.com/contact
- * Version: 	 3.3.7
+ * Version: 	 3.3.8
  * Description:  A simple plugin that help you to Load more any item with jQuery/Ajax. You can use Ajaxify Load More button for your blog post, Comments, page, Category, Recent Posts, Sidebar widget Data, Woocommerce Product, Images, Photos, Videos, custom selector or whatever you want.
  * License:      GPL2
  * License URI:  https://www.gnu.org/licenses/gpl-2.0.html
@@ -26,7 +26,7 @@ final class Ajax_Load_More_Anything {
      *
      * @var string
      */
-    const version = '3.3.7';
+    const version = '3.3.8';
 
 	private function __construct() {
 		$this->define_constants();

@@ -377,7 +377,7 @@ function ald_add_general_loadmore_wrap( $args ){
                         </th>
                         <td>
                             <input id="general_loadmore-btn_selector-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][btn_selector]" value="<?php echo esc_attr( $btn_selector ); ?>" placeholder="<?php echo esc_attr( '#selector' ); ?>" />
-                            <p><?php echo esc_html( $load_more_button_wrapper_desc ); ?></p>
+                            <p class="desc"><?php echo esc_html( $load_more_button_wrapper_desc ); ?></p>
                         </td>
                     </tr>
 
@@ -389,7 +389,7 @@ function ald_add_general_loadmore_wrap( $args ){
                         </th>
                         <td>
                             <input id="general_loadmore-load_selector-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][load_selector]" value="<?php echo esc_attr( $load_selector ); ?>" placeholder="<?php echo esc_attr( '#selector .repeated_selector' ); ?>" />
-                            <p><?php echo $load_more_item_selector_desc; // phpcs:ignore ?></p>
+                            <p class="desc"><?php echo $load_more_item_selector_desc; // phpcs:ignore ?></p>
                         </td>
                     </tr>
 
@@ -401,7 +401,7 @@ function ald_add_general_loadmore_wrap( $args ){
                         </th>
                         <td>
                             <input id="general_loadmore-visible_items-<?php echo esc_attr( $key ); ?>" class="regular-text" type="number" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][visible_items]" value="<?php echo esc_attr( $visible_items ); ?>" placeholder="<?php echo esc_attr( '6' ); ?>"/>
-                            <p><?php echo esc_html( $visiable_items_desc ); ?></p>
+                            <p class="desc"><?php echo esc_html( $visiable_items_desc ); ?></p>
                         </td>
                     </tr>
 
@@ -413,7 +413,7 @@ function ald_add_general_loadmore_wrap( $args ){
                         </th>
                         <td>
                             <input id="general_loadmore-load_items-<?php echo esc_attr( $key ); ?>" class="regular-text" type="number" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][load_items]" value="<?php echo esc_attr( $load_items ); ?>" placeholder="<?php echo esc_attr( '3' ); ?>" />
-                            <p><?php echo esc_html( $load_items_desc ); ?></p>
+                            <p class="desc"><?php echo esc_html( $load_items_desc ); ?></p>
                         </td>
                     </tr>
 
@@ -425,7 +425,7 @@ function ald_add_general_loadmore_wrap( $args ){
                         </th>
                         <td>
                             <input id="general_loadmore-button_label-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][button_label]" value="<?php echo esc_attr( $button_label ); ?>" placeholder="<?php echo esc_attr( 'Load +[count] more' ); ?>" />
-                            <p><?php echo $button_label_desc; // phpcs:ignore ?></p>
+                            <p class="desc"><?php echo $button_label_desc; // phpcs:ignore ?></p>
                         </td>
                     </tr>
                     <tr valign="top">
@@ -448,7 +448,19 @@ function ald_add_general_loadmore_wrap( $args ){
                                     
                             </select>
                             
-                            <p><?php esc_html_e( 'Select display property for load more items.', 'ajax-load-more-anything' ); ?></p>
+                            <p class="desc"><?php esc_html_e( 'Select display property for load more items.', 'ajax-load-more-anything' ); ?></p>
+                        </td>
+                    </tr>
+                    <tr valign="top" class="ald-pro-field ">
+                        <th scope="row">
+                            <div class="tf-label">
+                                <label for="general_loadmore-button_classes-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Button Classes', 'ajax-load-more-anything' ); ?></label>
+                            </div>
+                            <?php ald_available_in_pro(); ?>
+                        </th>
+                        <td>
+                            <input id="general_loadmore-button_classes-<?php echo esc_attr( $key ); ?>" class="regular-text" type="text" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][button_classes]" value="<?php echo esc_attr( $button_classes ); ?>" placeholder="button btn-primary" />
+                            <p class="desc"><?php esc_html_e( 'Add classes to the load more button. Separate multiple classes with a space.', 'ajax-load-more-anything' ); ?></p>
                         </td>
                     </tr>
                 </table>
