@@ -138,6 +138,11 @@ How to install Load More Anything.
 
 == Changelog ==
 
+= 3.3.8 – Apr 16, 2024 =
+- Code Improvements
+- Translation updates
+- Checked with Latest WordPress (v6.5.2)
+
 = 3.3.7 – Mar 29, 2024 =
 - Code Improvement
 - Added: Disable jQuery Dependency option (This option is helpfull for some website where jQuery is not working properly)
