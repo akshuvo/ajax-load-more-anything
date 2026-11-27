@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<ruleset name="Load More Anything WordPress Coding Standards">
+	<description>PHP_CodeSniffer ruleset for Load More Anything (Free).</description>
+
+	<!-- CLI defaults -->
+	<arg value="sp"/>
+	<arg name="extensions" value="php"/>
+	<arg name="basepath" value="./"/>
+	<arg name="parallel" value="8"/>
+	<arg name="colors"/>
+
+	<!-- Target files -->
+	<file>.</file>
+
+	<!-- Exclusions -->
+	<exclude-pattern>*/.git/*</exclude-pattern>
+	<exclude-pattern>*/appsero/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern type="relative">build/*</exclude-pattern>
+
+	<!-- Minimum supported WordPress and PHP versions -->
+	<config name="minimum_wp_version" value="5.8"/>
+	<config name="testVersion" value="7.4-"/>
+
+	<!-- WordPress Coding Standards -->
+	<rule ref="WordPress-Core"/>
+	<rule ref="WordPress-Extra"/>
+	<rule ref="WordPress-Docs"/>
+
+	<!-- Allow legacy main/class filenames, bootstrap helpers & modern short array syntax -->
+	<rule ref="WordPress">
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+		<exclude name="Universal.Files.SeparateFunctionsFromOO.Mixed"/>
+		<exclude name="Squiz.Commenting.FileComment.Missing"/>
+		<exclude name="Squiz.Commenting.FileComment.MissingPackageTag"/>
+	</rule>
+
+	<!-- Enforce plugin text domain -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="ajax-load-more-anything"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Legacy 3-letter prefixes (ald/ALD/ama) are preserved for 5,000+ active installs & Pro contract compatibility -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<exclude name="WordPress.NamingConventions.PrefixAllGlobals"/>
+	</rule>
+</ruleset>

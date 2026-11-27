@@ -1,0 +1,15 @@
+.git
+.github
+.gitignore
+.distignore
+.DS_Store
+.wordpress
+AGENTS.md
+docs
+phpcs.xml
+scripts
+tests
+node_modules
+build
+*.zip
+__pycache__

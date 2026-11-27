@@ -1,101 +1,137 @@
 .loadMoreBtn {
-    color: inherit;
+	color: inherit;
+}
+
+.ald-sr-live {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
 }
 
 .lds-ellipsis {
-  display: none;
-  position: relative;
-  width: 80px;
-  height: 12px;
-}
-.lds-ellipsis div {
-  position: absolute;
-  top: 0;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #fff;
-  animation-timing-function: cubic-bezier(0, 1, 1, 0);
-}
-.lds-ellipsis div:nth-child(1) {
-  left: 8px;
-  animation: lds-ellipsis1 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(2) {
-  left: 8px;
-  animation: lds-ellipsis2 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(3) {
-  left: 32px;
-  animation: lds-ellipsis2 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(4) {
-  left: 56px;
-  animation: lds-ellipsis3 0.6s infinite;
-}
-@keyframes lds-ellipsis1 {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-@keyframes lds-ellipsis3 {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0);
-  }
-}
-@keyframes lds-ellipsis2 {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(24px, 0);
-  }
+	display: none;
+	position: relative;
+	width: 80px;
+	height: 12px;
 }
 
-.ald-ajax-btn{
-	min-width: 160px
+.lds-ellipsis div {
+	position: absolute;
+	top: 0;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: currentColor;
+	animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+	left: 8px;
+	animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+	left: 8px;
+	animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+	left: 32px;
+	animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+	left: 56px;
+	animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+	0% {
+		transform: scale(0);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+@keyframes lds-ellipsis3 {
+	0% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(0);
+	}
+}
+
+@keyframes lds-ellipsis2 {
+	0% {
+		transform: translate(0, 0);
+	}
+	100% {
+		transform: translate(24px, 0);
+	}
+}
+
+.ald-ajax-btn {
+	min-width: 160px;
+	cursor: pointer;
+}
+
+.ald-ajax-btn.loading {
+	cursor: wait;
+	opacity: 0.85;
 }
 
 .ald-ajax-btn.loading .ald-btn-label {
-    display: none;
+	display: none;
 }
 
-.ald-ajax-btn.loading .lds-ellipsis{
+.ald-ajax-btn.loading .lds-ellipsis {
 	display: inline-block;
 }
 
-/* Laser Loader */
+/* Top Progress Bar */
 .ald_laser_loader {
 	visibility: hidden;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: #e1e4e8;
-    z-index: 99999;
-    width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 2px;
+	background: #e1e4e8;
+	z-index: 99999;
+	width: 100%;
+	pointer-events: none;
 }
 
 .ald_laser_loader.show {
-    visibility: visible;
+	visibility: visible;
 }
 
 .ald_loader_progress {
-    background: linear-gradient(to left, rgb(35, 13, 194), rgb(255, 146, 0));
-    box-shadow: rgb(35 13 194) 0px 0px 10px;
-    height: 100%;
-    position: absolute;
-    z-index: 99999;
-    left: 0px;
-    width: 100%;
-    top: 0px;
-    transform: translate3d(-100%, 0px, 0px);
-    transition: all 2000ms cubic-bezier(0, 0, 0.2, 1) 0s;
+	background: linear-gradient(to left, rgb(35, 13, 194), rgb(255, 146, 0));
+	box-shadow: rgb(35 13 194) 0 0 10px;
+	height: 100%;
+	position: absolute;
+	z-index: 99999;
+	left: 0;
+	width: 100%;
+	top: 0;
+	transform: translate3d(-100%, 0, 0);
+	transition: transform 2000ms cubic-bezier(0, 0, 0.2, 1) 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.lds-ellipsis div {
+		animation: none;
+	}
+	.ald_loader_progress {
+		transition: none;
+	}
 }

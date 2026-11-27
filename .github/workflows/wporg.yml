@@ -1,0 +1,124 @@
+name: Deploy to WordPress.org Repository
+
+on:
+  release:
+    types: [published]
+  pull_request:
+  push:
+    branches: [main, dev]
+  workflow_dispatch:
+    inputs:
+      assets_only:
+        description: 'Sync only .wordpress/ icons, banners & screenshots to WordPress.org SVN /assets'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wordpress-org-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.event_name != 'release' || !github.event.release.prerelease
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    env:
+      WPORG_PLUGIN_SLUG: ${{ vars.WPORG_PLUGIN_SLUG || 'ajax-load-more-anything' }}
+      RELEASE_DIR: /tmp/alma-release-${{ github.run_id }}-${{ github.run_attempt }}
+      RELEASE_TAG: ${{ github.event.release.tag_name }}
+      ASSETS_ONLY: ${{ github.event_name == 'workflow_dispatch' && inputs.assets_only == true && 'true' || 'false' }}
+    steps:
+      - name: Check out exact release tag (or validation commit)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event_name == 'release' && format('refs/tags/{0}', github.event.release.tag_name) || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install SVN
+        run: sudo apt-get update && sudo apt-get install -y subversion
+
+      - name: Test release failure boundaries
+        run: python3 -B -m unittest discover -s tests -p 'test_release.py' -v
+
+      - name: Build the approved package and listing assets
+        shell: bash
+        run: |
+          args=()
+          if [[ "$GITHUB_EVENT_NAME" == release ]]; then
+            args+=(--tag "$RELEASE_TAG")
+          fi
+          python3 -B scripts/release.py build --output "$RELEASE_DIR" "${args[@]}"
+
+      - name: Check packaged PHP syntax
+        run: python3 -B scripts/lint_package.py "$RELEASE_DIR/$WPORG_PLUGIN_SLUG"
+
+      - name: Activate and smoke-test the ZIP in disposable WordPress
+        env:
+          WP_DB_USER: root
+          WP_DB_PASSWORD: root
+          WP_DB_HOST: 127.0.0.1
+        run: |
+          sudo systemctl start mysql
+          python3 -B scripts/smoke_test.py "$RELEASE_DIR/$WPORG_PLUGIN_SLUG.zip" "$RUNNER_TEMP/alma-wp"
+
+      - name: Stage and validate SVN without committing
+        shell: bash
+        run: |
+          args=()
+          if [[ "$ASSETS_ONLY" == "true" ]]; then
+            args+=(--assets-only)
+          elif [[ "$GITHUB_EVENT_NAME" != release ]]; then
+            args+=(--check-existing)
+          fi
+          python3 -B scripts/release.py stage --output "$RELEASE_DIR" "${args[@]}"
+
+      - name: Commit validated trunk, tag, and listing assets to WordPress.org SVN
+        if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.assets_only == true)
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+        shell: bash
+        run: |
+          args=()
+          if [[ "$GITHUB_EVENT_NAME" == release ]]; then
+            args+=(--tag "$RELEASE_TAG")
+          fi
+          python3 -B scripts/release.py publish --output "$RELEASE_DIR" "${args[@]}"
+
+      - name: Verify exported SVN, WordPress.org ZIP, assets and listing
+        if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.assets_only == true)
+        shell: bash
+        run: |
+          args=(--attempts 12)
+          if [[ "$ASSETS_ONLY" == "true" ]]; then
+            args+=(--assets-only)
+          fi
+          python3 -B scripts/release.py verify --output "$RELEASE_DIR" "${args[@]}"
+
+      - name: Attach the verified package to the GitHub release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload "$RELEASE_TAG" "$RELEASE_DIR/$WPORG_PLUGIN_SLUG.zip" --repo "$GITHUB_REPOSITORY" --clobber
+          gh release download "$RELEASE_TAG" --pattern "$WPORG_PLUGIN_SLUG.zip" --dir "$RELEASE_DIR/github-download" --repo "$GITHUB_REPOSITORY"
+          cmp "$RELEASE_DIR/$WPORG_PLUGIN_SLUG.zip" "$RELEASE_DIR/github-download/$WPORG_PLUGIN_SLUG.zip"
+
+      - name: Preserve manifests, pending diff and verification evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-evidence-${{ github.run_id }}
+          path: |
+            ${{ env.RELEASE_DIR }}/*.json
+            ${{ env.RELEASE_DIR }}/*.xml
+            ${{ env.RELEASE_DIR }}/*.txt
+            ${{ env.RELEASE_DIR }}/*.zip
+          if-no-files-found: warn

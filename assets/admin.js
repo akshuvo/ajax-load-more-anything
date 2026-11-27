@@ -1,293 +1,564 @@
-let ald_pro = alda_params.ald_pro;
-(function($) {
-	"use strict";
-	$(document).ready(function(){
+/**
+ * Load More Anything — Admin UI Controller
+ */
+(function ($) {
+	'use strict';
 
-        // Modal Show Function
-        function am_modal_show( id ){
-            if ( id ) {
-                $(document).find(id).fadeIn('fast');
-            }
-        }
+	var params = window.alda_params || {};
+	var aldPro = params.ald_pro || '0';
+	var i18n = params.i18n || {};
+	var presets = params.presets || { general: {}, ajax: {} };
+	var cssEditor = null;
+	var jsEditor = null;
+	var lastFocusedBeforeModal = null;
 
-        $( document ).on('am_modal_show', function(e,data){
-            am_modal_show( data );
-        });
+	/**
+	 * Display a frosted toast notification in the bottom-right corner.
+	 *
+	 * @param {string} message Toast message.
+	 * @param {string} type    'success' | 'error' | 'info'
+	 */
+	function showToast(message, type) {
+		var $stack = $('#ald-toast-stack');
+		if (!$stack.length || !message) {
+			return;
+		}
+		var $toast = $('<div>', {
+			'class': 'ald-toast ald-toast--' + (type || 'info'),
+			role: 'status'
+		}).text(message);
+		$stack.append($toast);
+		window.setTimeout(function () {
+			$toast.fadeOut(200, function () {
+				$toast.remove();
+			});
+		}, 3500);
+	}
 
-        // Modal Close
-        $( document ).on('click', '.am-modal-close', function(e){
-            $(this).closest('.am_go-pro-modal-outer').fadeOut();
-        });
+	/**
+	 * Update unsaved-changes pill in the sticky topbar.
+	 *
+	 * @param {boolean} dirty Whether there are unsaved edits.
+	 */
+	function setDirtyState(dirty) {
+		var $state = $('#ald-save-state');
+		if (!$state.length) {
+			return;
+		}
+		if (dirty) {
+			$state.removeClass('is-saved').addClass('is-dirty').text(i18n.unsavedChanges || 'Unsaved changes');
+		} else {
+			$state.removeClass('is-dirty').addClass('is-saved').text(i18n.allChangesSaved || 'All changes saved');
+		}
+	}
 
-		// Tab controlling
-	    $(document).on('click', '.tf-tab-nav a', function(e){
-	    	e.preventDefault();
-	    	var targetDiv = $(this).attr('href');
+	/**
+	 * Open Go Pro comparison modal with focus restoration.
+	 *
+	 * @param {string} selector Modal CSS selector.
+	 */
+	function openModal(selector) {
+		var $modal = $(selector || '#ald_go-pro');
+		if (!$modal.length) {
+			return;
+		}
+		lastFocusedBeforeModal = document.activeElement;
+		$modal.prop('hidden', false);
+		$modal.find('.am-modal-close').first().trigger('focus');
+	}
 
-    		if(!$(this).parent().hasClass('active')){
-                $(this).parent().addClass('active').siblings().removeClass('active');
-            }
-            $('.tf-tab-container').find(targetDiv).addClass('active').siblings().removeClass('active');
+	/**
+	 * Close Go Pro comparison modal and restore focus.
+	 */
+	function closeModal() {
+		var $modal = $('#ald_go-pro');
+		if (!$modal.length || $modal.prop('hidden')) {
+			return;
+		}
+		$modal.prop('hidden', true);
+		if (lastFocusedBeforeModal && typeof lastFocusedBeforeModal.focus === 'function') {
+			lastFocusedBeforeModal.focus();
+		}
+	}
 
-            //location.hash = targetDiv;
-            history.pushState({}, '', targetDiv);
+	/**
+	 * Activate a settings tab by hash selector (e.g. '#general').
+	 *
+	 * @param {string} targetHash Tab anchor hash.
+	 * @param {boolean} pushHash  Whether to update URL hash.
+	 */
+	function activateTab(targetHash, pushHash) {
+		if (!targetHash || targetHash.charAt(0) !== '#') {
+			return;
+		}
+		var $link = $('.tf-tab-nav a').filter(function () {
+			return $(this).attr('href') === targetHash;
+		}).first();
 
-    	});
-
-	    // Active tab from location
-    	var hash = window.location.hash;
-    	$('.tf-tab-nav a[href="'+hash+'"]').click();
-
-        $(window).on('hashchange', function(){
-            var a = /^#?chapter(\d+)-section(\d+)\/?$/i.exec(location.hash);
-        });
-
-        // Add General Load More
-        $(document).on('click', '.tf_add-general-wrapper', function(){
-            var $this = $(this);
-
-            var keyLen = jQuery('.tf_gen_sel_field').length;
-
-            if ( keyLen >= 6 && ald_pro == "0" ) {
-                // return;
-            }
-
-            var data = {
-                action: 'ald_add_general_loadmore',
-                key: keyLen,
-                thiskey: keyLen,
-                nonce: $this.attr('data-nonce')
-            }
-
-            $.ajax({
-              url: ajaxurl,
-              type: 'post',
-              data: data,
-              beforeSend : function ( xhr ) {
-                $this.prop('disabled', true);
-              },
-              success: function( res ) {
-                $this.prop('disabled', false);
-
-                // Data push
-                $('.tf_gen_sel_fields').append(res);
-              },
-              error: function( result ) {
-                $this.prop('disabled', false);
-                console.error( result );
-              }
-            });
-        });
-
-        // Add Ajax Load More
-        $(document).on('click', '.tf_add-ajax-wrapper', function(){
-            var $this = $(this);
-
-            var keyLen = jQuery('.tf_ajax_sel_field').length;
-
-            if ( keyLen >= 1 && ald_pro == "0" ) {
-                // jQuery(document).trigger('am_modal_show', '#ald_go-pro');
-                // return;
-            }
-
-            var data = {
-                action: 'ald_add_ajax_loadmore',
-                key: keyLen,
-                thiskey: keyLen,
-                nonce: $this.attr('data-nonce')
-            }
-
-            $.ajax({
-              url: ajaxurl,
-              type: 'post',
-              data: data,
-              beforeSend : function ( xhr ) {
-                $this.prop('disabled', true);
-              },
-              success: function( res ) {
-                $this.prop('disabled', false);
-
-                // Data push
-                $('.tf_ajax_sel_fields').append(res);
-              },
-              error: function( result ) {
-                $this.prop('disabled', false);
-                console.error( result );
-              }
-            });
-        });
-
-        // Delete field
-        $(document).on('click', 'span.delete_field ', function(e){
-            e.preventDefault();
-            $(this).closest('.tf_gen_sel_field, .tf_ajax_sel_field').remove();
-            return false;
-        });
-
-        // Field toggle
-        $(document).on('click', '.ald-toggle-head', function(e){
-
-            // Return if click on input
-            if ( $(e.target).is('input') && $(this).parent().hasClass('opened') ) {
-                return;
-            }
-
-            $(this).parent().toggleClass('opened').find('.ald-toggle-wrap').slideToggle('fast');
-
-        });
-
-        // Generate unique ID
-		function makeid(length) {
-		   var result           = '';
-		   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-		   var charactersLength = characters.length;
-		   for ( var i = 0; i < length; i++ ) {
-		      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-		   }
-		   return result;
+		var $panel = $('.tf-tab-container').find(targetHash).first();
+		if (!$link.length || !$panel.length) {
+			return;
 		}
 
-        // Add Data Implement Row
-        $(document).on('click', '.add_disr', function(e){
-        	var $this = $(this);
+		$('.tf-tab-nav li').removeClass('active').find('a').attr('aria-selected', 'false');
+		$link.attr('aria-selected', 'true').parent().addClass('active');
 
-        	$this.closest('.data_implement_selectors_row').find('.delete_disr').removeClass('disabled');
+		$('.tf-tab-container > .tf-tab-content').removeClass('active');
+		$panel.addClass('active');
 
-            var row = $this.closest('tbody').find('.disr_empty-row').clone(true);
-            row.removeClass( 'disr_empty-row screen-reader-text' );
+		if (pushHash && window.history && typeof window.history.replaceState === 'function') {
+			window.history.replaceState(null, '', targetHash);
+		}
 
-            row.html(function(i, oldHTML) {
-		        return oldHTML.replace(/\${j}/g, makeid(3));
-		    });
+		if (targetHash === '#functions') {
+			window.setTimeout(function () {
+				if (cssEditor && cssEditor.codemirror) {
+					cssEditor.codemirror.refresh();
+				}
+				if (jsEditor && jsEditor.codemirror) {
+					jsEditor.codemirror.refresh();
+				}
+			}, 40);
+		}
+	}
 
-            row.insertBefore( $this.closest('table').find('tbody>tr:last') );
-            return false;
-        });
+	/**
+	 * Update wrapper counters, index pills, and empty-state placeholders.
+	 */
+	function syncWrapperCounters() {
+		var $genCards = $('.tf_gen_sel_field');
+		var $ajaxCards = $('.tf_ajax_sel_field');
 
-        // Remove Data Implement Row
-        $(document).on('click', '.delete_disr', function(e){
+		$genCards.each(function (idx) {
+			$(this).find('.ald-wrapper-card__index').text('#' + (idx + 1));
+		});
+		$ajaxCards.each(function (idx) {
+			$(this).find('.ald-wrapper-card__index').text('#' + (idx + 1));
+		});
 
-            if( $(this).closest('tbody').find('.data_implement_selectors_row').length > 2 ) {
-            	$(this).closest('.data_implement_selectors_row').remove();
-            } else {
-            	$(this).addClass('disabled');
-            }
+		$('[data-ald-count="general"], [data-ald-kpi="general"]').text($genCards.length);
+		$('[data-ald-count="ajax"], [data-ald-kpi="ajax"]').text($ajaxCards.length);
 
-            return false;
-        });
+		$('[data-empty-for="general"]').prop('hidden', $genCards.length > 0);
+		$('[data-empty-for="ajax"]').prop('hidden', $ajaxCards.length > 0);
+	}
 
-        // Event Type Field Hide/Show
-        $(document).on('change', '.ajax_loadmore-event_type', function(){
-        	var $this = $(this);
-        	var value = $this.val();
+	/**
+	 * Toggle conditional fields scoped strictly inside a single Ajax wrapper card.
+	 *
+	 * @param {jQuery} $card The `.tf_ajax_sel_field` card element.
+	 */
+	function syncAjaxCardVisibility($card) {
+		if (!$card || !$card.length) {
+			return;
+		}
+		var eventType = $card.find('.ajax_loadmore-event_type').val() || 'selectors_click';
+		var hideWrapper = $card.find('.ajax_loadmore-hide_selector_wrapper').val() || 'no';
 
-            // Hide the offset field
-            jQuery('.ajax_loadmore-trigger_offset').hide();
+		var $pill = $card.find('.ald-event-pill');
+		if (eventType === 'scroll_to_load') {
+			$pill.text(i18n.scrollEvent || 'Infinite Scroll');
+		} else if (eventType === 'custom_button') {
+			$pill.text(i18n.buttonEvent || 'Load More Button');
+		} else {
+			$pill.text(i18n.clickEvent || 'Selector Click');
+		}
 
-        	if ( value == "scroll_to_load" ) {
+		var show = function (id, visible) {
+			$card.find('[data-id="' + id + '"]').prop('hidden', !visible);
+		};
 
-        		$this.closest('.tf_ajax_sel_field').find('tr[data-id="hide_selector_wrapper"], tr[data-id="click_selector"]').fadeIn();
+		if (eventType === 'scroll_to_load') {
+			show('click_selector', true);
+			show('trigger_offset', true);
+			show('hide_selector_wrapper', true);
+			show('wrapper_to_hide', hideWrapper === 'yes');
+			show('custom_button_append', false);
+			show('button_trigger_selector', false);
+			show('button_label_row', false);
+			show('no_more_text_row', false);
+		} else if (eventType === 'custom_button') {
+			show('click_selector', false);
+			show('trigger_offset', false);
+			show('custom_button_append', true);
+			show('button_trigger_selector', true);
+			show('button_label_row', true);
+			show('no_more_text_row', true);
+			show('hide_selector_wrapper', true);
+			show('wrapper_to_hide', hideWrapper === 'yes');
+		} else {
+			show('click_selector', true);
+			show('trigger_offset', false);
+			show('custom_button_append', false);
+			show('button_trigger_selector', false);
+			show('button_label_row', false);
+			show('no_more_text_row', false);
+			show('hide_selector_wrapper', false);
+			show('wrapper_to_hide', false);
+		}
+	}
 
-        		$this.closest('.tf_ajax_sel_field').find('tr[data-id="button_trigger_selector"], tr[data-id="custom_button_append"]').hide();
+	/**
+	 * Generate a short random key for nested Data Implement Selector rows.
+	 *
+	 * @returns {string}
+	 */
+	function makeRowKey() {
+		var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+		var out = 'r';
+		for (var i = 0; i < 5; i++) {
+			out += chars.charAt(Math.floor(Math.random() * chars.length));
+		}
+		return out;
+	}
 
-                // Show the offset field
-                jQuery('.ajax_loadmore-trigger_offset').fadeIn('fast');
+	/**
+	 * Append a new Data Implement Selector row inside a card's table.
+	 *
+	 * @param {jQuery} $tbody Table tbody element.
+	 * @param {Object} values Optional initial values { data_selector, implement_type }.
+	 */
+	function appendDisRow($tbody, values) {
+		var $template = $tbody.find('.disr_empty-row').first();
+		if (!$template.length) {
+			return;
+		}
+		var rowKey = makeRowKey();
+		var $row = $template.clone();
+		$row.removeClass('disr_empty-row').prop('hidden', false);
+		$row.find('input, select').each(function () {
+			var $el = $(this);
+			var name = ($el.attr('name') || '').replace(/__ROW__/g, rowKey);
+			$el.attr('name', name).prop('disabled', false);
+		});
+		if (values) {
+			if (values.data_selector) {
+				$row.find('input').val(values.data_selector);
+			}
+			if (values.implement_type) {
+				$row.find('select').val(values.implement_type);
+			}
+		}
+		$row.insertBefore($template);
+	}
 
-        	} else if( value == "custom_button" ) {
+	/**
+	 * Request a new wrapper card via AJAX and optionally populate it with a preset.
+	 *
+	 * @param {string}   group    'general' | 'ajax'
+	 * @param {Function} callback Optional callback receiving the newly appended $card.
+	 */
+	function addWrapper(group, callback) {
+		var isGeneral = group === 'general';
+		var $btn = isGeneral ? $('.tf_add-general-wrapper') : $('.tf_add-ajax-wrapper');
+		var currentCount = isGeneral ? $('.tf_gen_sel_field').length : $('.tf_ajax_sel_field').length;
+		var limit = isGeneral ? 6 : 1;
 
-        		$this.closest('.tf_ajax_sel_field').find('tr[data-id="hide_selector_wrapper"], tr[data-id="custom_button_append"], tr[data-id="button_trigger_selector"]').fadeIn();
+		if (aldPro === '0' && currentCount >= limit) {
+			openModal('#ald_go-pro');
+			return;
+		}
 
-        		$this.closest('.tf_ajax_sel_field').find('tr[data-id="click_selector"]').hide();
-        	} else {
+		$.ajax({
+			url: params.ajaxurl || window.ajaxurl,
+			type: 'POST',
+			dataType: 'json',
+			data: {
+				action: isGeneral ? 'ald_add_general_loadmore' : 'ald_add_ajax_loadmore',
+				thiskey: currentCount,
+				nonce: $btn.attr('data-nonce')
+			},
+			beforeSend: function () {
+				$btn.prop('disabled', true);
+			},
+			success: function (res) {
+				$btn.prop('disabled', false);
+				if (!res || !res.success) {
+					showToast((res && res.data && res.data.message) || i18n.addError, 'error');
+					return;
+				}
+				if (res.data && res.data.limit_reached) {
+					openModal('#ald_go-pro');
+					return;
+				}
+				var $container = isGeneral ? $('.tf_gen_sel_fields') : $('.tf_ajax_sel_fields');
+				var $card = $(res.data.html);
+				$container.append($card);
+				if (!isGeneral) {
+					syncAjaxCardVisibility($card);
+				}
+				syncWrapperCounters();
+				setDirtyState(true);
+				if (typeof callback === 'function') {
+					callback($card);
+				}
+			},
+			error: function () {
+				$btn.prop('disabled', false);
+				showToast(i18n.addError || 'Could not add wrapper.', 'error');
+			}
+		});
+	}
 
-        		$this.closest('.tf_ajax_sel_field').find('tr[data-id="click_selector"]').fadeIn();
+	/**
+	 * Apply a one-click General or Ajax preset into a freshly created wrapper card.
+	 *
+	 * @param {string} group     'general' | 'ajax'
+	 * @param {string} presetKey Preset identifier.
+	 */
+	function applyPreset(group, presetKey) {
+		var preset = presets[group] && presets[group][presetKey];
+		if (!preset) {
+			return;
+		}
 
-        		$this.closest('.tf_ajax_sel_field').find('[data-id="custom_button_append"], [data-id="button_trigger_selector"], [data-id="hide_selector_wrapper"], [data-id="wrapper_to_hide"]').hide();
+		addWrapper(group, function ($card) {
+			if (group === 'general') {
+				$card.find('input[name$="[wrapper_title]"]').val(preset.wrapper_title || '');
+				$card.find('input[name$="[btn_selector]"]').val(preset.btn_selector || '');
+				$card.find('input[name$="[load_selector]"]').val(preset.load_selector || '').trigger('input');
+				$card.find('input[name$="[visible_items]"]').val(preset.visible_items || '6');
+				$card.find('input[name$="[load_items]"]').val(preset.load_items || '3');
+				$card.find('input[name$="[button_label]"]').val(preset.button_label || '');
+				$card.find('select[name$="[display_type]"]').val(preset.display_type || 'default');
+			} else {
+				$card.find('input[name$="[wrapper_title]"]').val(preset.wrapper_title || '');
+				$card.find('select[name$="[event_type]"]').val(preset.event_type || 'selectors_click');
+				$card.find('input[name$="[click_selector]"]').val(preset.click_selector || '');
+				$card.find('select[name$="[hide_selector_wrapper]"]').val(preset.hide_selector_wrapper || 'no');
+				$card.find('input[name$="[wrapper_to_hide]"]').val(preset.wrapper_to_hide || '');
 
-        	}
+				var $tbody = $card.find('.ald-dis-table tbody');
+				$tbody.find('.data_implement_selectors_row:not(.disr_empty-row)').remove();
+				if (Array.isArray(preset.data_implement_selectors) && preset.data_implement_selectors.length) {
+					preset.data_implement_selectors.forEach(function (row) {
+						appendDisRow($tbody, row);
+					});
+				} else {
+					appendDisRow($tbody);
+				}
+				syncAjaxCardVisibility($card);
+			}
 
+			showToast(i18n.presetApplied || 'Preset applied. Remember to save changes.', 'success');
+		});
+	}
 
-        });
+	/**
+	 * Initialize WordPress CodeMirror editors when available.
+	 */
+	function initCodeEditors() {
+		if (!window.wp || !window.wp.codeEditor) {
+			return;
+		}
+		var $cssField = $('#ald_options_custom_css');
+		if ($cssField.length && window.cmcss_settings && window.cmcss_settings.codeEditor) {
+			cssEditor = window.wp.codeEditor.initialize($cssField, window.cmcss_settings);
+			if (cssEditor && cssEditor.codemirror) {
+				cssEditor.codemirror.on('change', function () {
+					setDirtyState(true);
+				});
+			}
+		}
 
-        // Hide Selector Event Handle
-        $(document).on('change', '.ajax_loadmore-hide_selector_wrapper', function(){
-        	var $this = $(this);
-        	var value = $this.val();
+		var $jsField = $('#ald_options_custom_js');
+		if ($jsField.length && !$jsField.prop('disabled') && window.cmjs_settings && window.cmjs_settings.codeEditor) {
+			jsEditor = window.wp.codeEditor.initialize($jsField, window.cmjs_settings);
+			if (jsEditor && jsEditor.codemirror) {
+				jsEditor.codemirror.on('change', function () {
+					setDirtyState(true);
+				});
+			}
+		}
+	}
 
-        	if ( value == "yes" ) {
-        		$this.closest('.tf_ajax_sel_field').find('tr[data-id="wrapper_to_hide"]').fadeIn();
-        	} else {
-        		$this.closest('.tf_ajax_sel_field').find('tr[data-id="wrapper_to_hide"]').hide();
-        	}
+	$(function () {
+		// Backward-compatible custom event for Pro/legacy triggers.
+		$(document).on('am_modal_show', function (e, modalSelector) {
+			openModal(modalSelector);
+		});
 
-        });
+		$(document).on('click', '.am-modal-close', function (e) {
+			e.preventDefault();
+			closeModal();
+		});
 
-        // Enable Code Editor
-        wp.codeEditor.initialize($('#ald_options_custom_css'), cmcss_settings);
-        wp.codeEditor.initialize($('#ald_options_custom_js'), cmjs_settings);
+		$(document).on('keydown', function (e) {
+			if (e.key === 'Escape') {
+				closeModal();
+			}
+			if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') {
+				e.preventDefault();
+				$('#ald_option_form').trigger('submit');
+			}
+		});
 
-        // Save Options
-        $(document).on('submit', '#ald_option_form', function(e){
-            e.preventDefault();
-            var $this = $(this);
+		// Tab navigation & keyboard support.
+		$(document).on('click', '.tf-tab-nav a', function (e) {
+			e.preventDefault();
+			activateTab($(this).attr('href'), true);
+		});
 
-            var form_data = new FormData(this);
-       
+		$(document).on('click', '.ald-jump-tab', function () {
+			activateTab($(this).attr('data-target'), true);
+		});
 
-            $.ajax({
-                url: ajaxurl,
-                data: form_data,
-                type: 'post',
-                contentType: false,
-                processData: false,
-                beforeSend : function ( xhr ) {
-                  $this.find('[type="submit"]').prop('disabled', true);
-                },
-                success: function( res ) {
-                  $this.find('[type="submit"]').prop('disabled', false);
+		$(document).on('keydown', '.tf-tab-nav a', function (e) {
+			var $links = $('.tf-tab-nav a');
+			var idx = $links.index(this);
+			if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+				e.preventDefault();
+				$links.eq((idx + 1) % $links.length).trigger('focus').trigger('click');
+			} else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+				e.preventDefault();
+				$links.eq((idx - 1 + $links.length) % $links.length).trigger('focus').trigger('click');
+			}
+		});
 
-                },
-                error: function( res ) {
-                  $this.find('[type="submit"]').prop('disabled', false);
+		// Activate tab from initial hash.
+		if (window.location.hash) {
+			activateTab(window.location.hash, false);
+		}
 
-                }
-            });
-        });
+		// Wrapper Add / Preset / Delete / Accordion.
+		$(document).on('click', '.tf_add-general-wrapper', function () {
+			addWrapper('general');
+		});
 
-        // Trigger Pro modal on option selection
-        $(document).on('change', '.option-select-lmapro-modal-trigger', function(){
+		$(document).on('click', '.tf_add-ajax-wrapper', function () {
+			addWrapper('ajax');
+		});
 
-            if ( ald_pro == "0" ) {
-                var $this = $(this);
+		$(document).on('click', '.ald-preset-btn', function () {
+			applyPreset($(this).attr('data-preset-group'), $(this).attr('data-preset-key'));
+		});
 
-                var value = $this.val();
-                var checkVal = $this.attr('data-pro-val');
+		$(document).on('click', '.delete_field', function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+			$(this).closest('.tf_gen_sel_field, .tf_ajax_sel_field').remove();
+			syncWrapperCounters();
+			setDirtyState(true);
+			showToast(i18n.wrapperRemoved || 'Wrapper removed. Save changes to apply.', 'info');
+		});
 
-                if ( value == checkVal ) {
-                    jQuery(document).trigger('am_modal_show', '#ald_go-pro');
-                    return;
-                }
-            }
-        });
+		$(document).on('click keydown', '.ald-toggle-head', function (e) {
+			if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') {
+				return;
+			}
+			if ($(e.target).is('input, button, .dashicons-trash') || $(e.target).closest('button').length) {
+				return;
+			}
+			e.preventDefault();
+			var $card = $(this).closest('.ald-wrapper-card');
+			var $body = $card.find('.ald-toggle-wrap').first();
+			var isOpen = $card.hasClass('opened');
 
-        // Field toggle
-        $(document).on('click', '.ald-trigger-pro', function(e){
-            e.preventDefault();
-            jQuery(document).trigger('am_modal_show', '#ald_go-pro');
-        });  
+			$card.toggleClass('opened', !isOpen);
+			$body.prop('hidden', isOpen);
+			$(this).attr('aria-expanded', !isOpen ? 'true' : 'false');
+		});
 
+		// Live summary chip update for General load_selector.
+		$(document).on('input', 'input[name$="[load_selector]"]', function () {
+			var val = $.trim($(this).val());
+			$(this).closest('.ald-wrapper-card').find('.ald-wrapper-card__summary').text(val || 'No selector configured yet');
+		});
+
+		// Data Implement Selector repeater rows.
+		$(document).on('click', '.add_disr', function (e) {
+			e.preventDefault();
+			var $tbody = $(this).closest('tbody');
+			appendDisRow($tbody);
+			setDirtyState(true);
+		});
+
+		$(document).on('click', '.delete_disr', function (e) {
+			e.preventDefault();
+			var $tbody = $(this).closest('tbody');
+			var $visibleRows = $tbody.find('.data_implement_selectors_row:not(.disr_empty-row)');
+			if ($visibleRows.length > 1) {
+				$(this).closest('.data_implement_selectors_row').remove();
+				setDirtyState(true);
+			}
+		});
+
+		// Scoped conditional visibility per Ajax wrapper card.
+		$(document).on('change', '.ajax_loadmore-event_type, .ajax_loadmore-hide_selector_wrapper', function () {
+			var $select = $(this);
+			if ($select.hasClass('option-select-lmapro-modal-trigger') && aldPro === '0') {
+				if ($select.val() === $select.attr('data-pro-val')) {
+					$select.val('selectors_click');
+					openModal('#ald_go-pro');
+				}
+			}
+			syncAjaxCardVisibility($select.closest('.tf_ajax_sel_field'));
+		});
+
+		// Mark form dirty on edits.
+		$(document).on('input change', '#ald_option_form input, #ald_option_form select, #ald_option_form textarea', function () {
+			setDirtyState(true);
+		});
+
+		// Pro upsell triggers (buttons & keyboard-accessible locked cards).
+		$(document).on('click keydown', '.ald-trigger-pro', function (e) {
+			if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') {
+				return;
+			}
+			e.preventDefault();
+			openModal('#ald_go-pro');
+		});
+
+		// AJAX Save Settings (syncs CodeMirror buffers first).
+		$(document).on('submit', '#ald_option_form', function (e) {
+			e.preventDefault();
+			var $form = $(this);
+			var $submitBtn = $form.find('.am_submit_button');
+
+			if (cssEditor && cssEditor.codemirror) {
+				cssEditor.codemirror.save();
+			}
+			if (jsEditor && jsEditor.codemirror) {
+				jsEditor.codemirror.save();
+			}
+
+			var formData = new window.FormData(this);
+
+			$.ajax({
+				url: params.ajaxurl || window.ajaxurl,
+				type: 'POST',
+				dataType: 'json',
+				data: formData,
+				contentType: false,
+				processData: false,
+				beforeSend: function () {
+					$submitBtn.prop('disabled', true);
+					$submitBtn.find('.ald-submit-label').text(i18n.saving || 'Saving…');
+				},
+				success: function (res) {
+					$submitBtn.prop('disabled', false);
+					$submitBtn.find('.ald-submit-label').text(i18n.saveChanges || 'Save Changes');
+
+					if (res && res.success) {
+						setDirtyState(false);
+						showToast((res.data && res.data.message) || i18n.savedSuccess, 'success');
+					} else {
+						showToast((res && res.data && res.data.message) || i18n.saveError, 'error');
+					}
+				},
+				error: function () {
+					$submitBtn.prop('disabled', false);
+					$submitBtn.find('.ald-submit-label').text(i18n.saveChanges || 'Save Changes');
+					showToast(i18n.saveError || 'Could not save settings.', 'error');
+				}
+			});
+		});
+
+		// Initial render pass (replaces removed jQuery 3 $(window).load()).
+		$('.tf_ajax_sel_field').each(function () {
+			syncAjaxCardVisibility($(this));
+		});
+		syncWrapperCounters();
+		initCodeEditors();
 	});
-
-    $(window).load(function(){
-        // Reserialize wrappers
-        $('.gen_wrap_sl').each(function(i,el){
-            $(this).text( parseInt( i + 1 ) );
-        });
-
-        // Trigger on load
-        $('.ajax_loadmore-hide_selector_wrapper').trigger('change');
-        if ( ald_pro != "0" ) {
-            $('.ajax_loadmore-event_type').trigger('change');
-        }
-    });
 })(jQuery);

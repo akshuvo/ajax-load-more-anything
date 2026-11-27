@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Load More Anything icon">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0066cc"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.96"/>
+      <stop offset="100%" stop-color="#e6f0fc" stop-opacity="0.92"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="56" fill="url(#bg)"/>
+  <rect x="44" y="42" width="168" height="36" rx="12" fill="url(#card)"/>
+  <rect x="44" y="92" width="168" height="36" rx="12" fill="url(#card)" opacity="0.88"/>
+  <rect x="44" y="142" width="168" height="36" rx="12" fill="url(#card)" opacity="0.55"/>
+  <circle cx="128" cy="198" r="30" fill="#ffffff"/>
+  <path d="M128 184v24m0 0l-10-10m10 10l10-10" fill="none" stroke="#0066cc" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

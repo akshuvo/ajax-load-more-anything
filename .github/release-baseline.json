@@ -1,0 +1,23 @@
+{
+  "version": "3.3.9",
+  "files": {
+    "README.md": "dafdc0fe43ac48fa1566a264eaf7be66f0c3e2b773343bf39f3dc59b5411e3ef",
+    "README.txt": "0c7f4b4606bc8ebc49edb314d971412425b57587270c8b5aac691407e422a89f",
+    "admin/Menu.php": "9e62189348ef79372fdd1784ef880eb9a9f03bc2bf9330a87ede984df0c94a3f",
+    "admin/functions.php": "ba733845405927ee74f434d6357a634f0294a30b51a4dff011b6ba8bd076bf70",
+    "ajax-load-div.php": "17926a34cb430b28a57b0fdfc78ae5b52240ae6f0ff1d9213265d592c3c9c5c9",
+    "appsero/src/Client.php": "a8bfc8f75ad8cfdc37908657632ee20821c6fc6e03c2229495c52372a8502ed3",
+    "appsero/src/Insights.php": "5396ae389025f8e7a8d61f2d38e9f0af34de7456442f6660b24d4e34c0fe65e5",
+    "appsero/src/License.php": "608c5bd17ca13a2aef2f08d42711e966121eadc868cc3006089c1ccb813f7c00",
+    "assets/admin.css": "b27b1546d04d1d487624a74e66b44dd5cf980f90d37f4442b5905bd74316b633",
+    "assets/admin.js": "489d43efdb4032cbbe109dd6799a3962f05c662a44c7630e047868757075fa04",
+    "assets/admin.min.css": "04be15601f125794d67f1a865b63e86110d7b78d0b8068fa2e7e221d9caf26dc",
+    "assets/admin.min.js": "68a92c9b3ec9673f137340afa72261a099b3fb371b333f909c69f45aebc1f6e5",
+    "assets/scripts.js": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "assets/scripts.min.js": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "assets/styles.css": "6a56371602b553ec7a4fa358277bb2c87d38484502b41453c0540df83f29f193",
+    "assets/styles.min.css": "8a099f9bdf21d644333fac3dee44390804bb62185a202b722a9fc7c237107a20",
+    "inc/ald-functions.php": "25df81bdfa755221faa85c05a481482822149242ae259ac39cb992d2e795136e",
+    "languages/ajax-load-more-anything.pot": "05af4ee0363a8cd408e84ee3765dd78fe687d711d746fdef3da7a664dded64e3"
+  }
+}
