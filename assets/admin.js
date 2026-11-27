@@ -415,10 +415,15 @@
 			}
 		});
 
-		// Activate tab from initial hash.
+		// Activate tab from initial hash and support in-page hash changes (e.g. clicking Pro license notice link).
 		if (window.location.hash) {
 			activateTab(window.location.hash, false);
 		}
+		$(window).on('hashchange', function () {
+			if (window.location.hash) {
+				activateTab(window.location.hash, false);
+			}
+		});
 
 		// Wrapper Add / Preset / Delete / Accordion.
 		$(document).on('click', '.tf_add-general-wrapper', function () {
@@ -495,8 +500,11 @@
 			syncAjaxCardVisibility($select.closest('.tf_ajax_sel_field'));
 		});
 
-		// Mark form dirty on edits.
+		// Mark form dirty on settings edits (exclude Pro's standalone AJAX license tab).
 		$(document).on('input change', '#ald_option_form input, #ald_option_form select, #ald_option_form textarea', function () {
+			if ($(this).closest('#license-menu').length) {
+				return;
+			}
 			setDirtyState(true);
 		});
 

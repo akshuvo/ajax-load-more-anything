@@ -1,409 +1,916 @@
-#, fuzzy
+# Copyright (C) 2026 AddonMaster
+# This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Load More Anything\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-16 13:54+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Project-Id-Version: Load More Anything 3.3.10\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ajax-load-more-anything\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: \n"
-"Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.2; wp-6.0.1\n"
-"X-Domain: ajax-load-more-anything"
+"POT-Creation-Date: 2026-11-27T06:10:18+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: ajax-load-more-anything\n"
 
-#. Description of the plugin
-msgid ""
-"A simple plugin that help you to Load more any item with jQuery/Ajax. You "
-"can use Ajaxify Load More button for your blog post, Comments, page, "
-"Category, Recent Posts, Sidebar widget Data, Woocommerce Product, Images, "
-"Photos, Videos, custom selector or whatever you want."
-msgstr ""
-
-#: admin/Menu.php:267
-msgid "Add Ajax Wrapper"
-msgstr ""
-
-#: admin/functions.php:463
-msgid ""
-"Add classes to the load more button. Separate multiple classes with a space."
-msgstr ""
-
-#: admin/functions.php:575
-msgid "Add Load More Button"
-msgstr ""
-
-#: admin/Menu.php:237
-msgid "Add Wrapper"
-msgstr ""
-
-#: admin/Menu.php:291
-msgid "Add your custom css here"
-msgstr ""
-
-#. Author of the plugin
-msgid "AddonMaster"
-msgstr ""
-
-#: admin/Menu.php:145
-msgid "Ajax Based"
-msgstr ""
-
-#: admin/Menu.php:245
-msgid "Ajaxify Selector"
-msgstr ""
-
-#: admin/Menu.php:352
-msgid "Are you stuck somewhere?"
-msgstr ""
-
-#: admin/Menu.php:191
-msgid "Awesome Support"
-msgstr ""
-
-#: admin/functions.php:457
-msgid "Button Classes"
-msgstr ""
-
-#: admin/functions.php:595
-msgid "Button click trigger Selector"
-msgstr ""
-
-#: admin/functions.php:583
-msgid "Button Insert Selector"
-msgstr ""
-
-#: admin/functions.php:607
-msgid "Button Label"
-msgstr ""
-
-#: admin/functions.php:588
-msgid "Button will be insert after this selector."
-msgstr ""
-
-#: admin/functions.php:361
-msgid "Change title to anything you like. Ex: For Homepage"
-msgstr ""
-
-#: admin/functions.php:554
-msgid "Change title to anything you like. Ex: Homepage Posts"
-msgstr ""
-
-#: admin/Menu.php:162
-msgid "Checkout our new features."
-msgstr ""
-
-#: admin/Menu.php:290
-msgid "Custom CSS"
-msgstr ""
-
-#: admin/functions.php:999
-msgid "Custom JavaScript"
-msgstr ""
-
-#: admin/functions.php:669
-msgid "Data Implement Selectors"
-msgstr ""
-
-#: admin/functions.php:703
-msgid "Data Selector"
-msgstr ""
-
-#: admin/Menu.php:281
-msgid "Disable jQuery Dependency"
-msgstr ""
-
-#: admin/Menu.php:367
-msgid "Email Us"
-msgstr ""
-
-#: admin/functions.php:760
-msgid "Enter data selector here"
-msgstr ""
-
-#: admin/functions.php:618
-msgid "Enter Selector"
-msgstr ""
-
-#: admin/functions.php:352 admin/functions.php:544
-msgid ""
-"Enter the name of Load More Button <br> Use <code>+[count]</code> for "
-"countable button like +15 more"
-msgstr ""
-
-#: admin/functions.php:662
-msgid "Enter the selector of the wrapper which you want to hide from visitors"
-msgstr ""
-
-#: admin/functions.php:568
-msgid "Event Type:"
-msgstr ""
-
-#: admin/Menu.php:316
-msgid "Everything now you can make ajax based!"
-msgstr ""
-
-#: admin/Menu.php:343
-msgid "Free vs Pro Comparison"
-msgstr ""
-
-#: admin/Menu.php:144
-msgid "General Selectors"
-msgstr ""
-
-#: admin/Menu.php:215
-msgid "General Selectors Panel"
-msgstr ""
-
-#: admin/functions.php:1062
-msgid "Get Pro"
-msgstr ""
-
-#: admin/Menu.php:354
-msgid "Get support from our developers. Easy, Quick, and Professional!"
-msgstr ""
-
-#: ajax-load-div.php:147
-msgid "GO PRO"
-msgstr ""
-
-#: admin/Menu.php:276
-msgid "Here you can add custom css and custom js"
-msgstr ""
-
-#: admin/Menu.php:216
-msgid ""
-"Here you can enable load more items which are already visible in your web "
-"page"
-msgstr ""
-
-#: admin/functions.php:643
-msgid "Hide Selector(s) wrapper"
-msgstr ""
-
-#: admin/functions.php:349 admin/functions.php:541
-msgid "How Many Item Will Load When Click Load More Button?"
-msgstr ""
-
-#: admin/functions.php:346 admin/functions.php:538
-msgid "How many item will show initially"
-msgstr ""
-
-#. Author URI of the plugin
-msgid "https://addonmaster.com/contact"
-msgstr ""
-
-#. URI of the plugin
-msgid "https://wordpress.org/plugins/ajax-load-more-anything/"
-msgstr ""
-
-#: admin/Menu.php:203
-msgid ""
-"If you want to show me some love, The review section is always open for you :"
-"). Your awesome review provides me energy to continue development for free."
-msgstr ""
-
-#: admin/Menu.php:378
-msgid ""
-"If you want to show some love, The review section is always open for you :). "
-"Your awesome review provide us energy to continue development for free."
-msgstr ""
-
-#: admin/functions.php:704
-msgid "Implement Type"
-msgstr ""
-
-#: admin/functions.php:724 admin/functions.php:745 admin/functions.php:766
-msgid "Insert After"
-msgstr ""
-
-#: admin/functions.php:725 admin/functions.php:744 admin/functions.php:765
-msgid "Insert Before"
-msgstr ""
-
-#: admin/Menu.php:314
-msgid "Introducing Load More Anyting"
-msgstr ""
-
-#: admin/Menu.php:341
-msgid "Learn More"
-msgstr ""
-
-#: admin/Menu.php:282
-msgid "Leave this option unchecked if you are not sure about this option."
-msgstr ""
-
-#: admin/functions.php:348 admin/functions.php:540
-msgid "Load Items"
-msgstr ""
-
-#: inc/ald-functions.php:228 inc/ald-functions.php:236
-msgid "Load More"
-msgstr ""
-
-#. Name of the plugin
-#: admin/Menu.php:30
+#. Plugin Name of the plugin
+#: ajax-load-div.php
+#: admin/functions.php:777
+#: admin/Menu.php:35
+#: admin/Menu.php:36
 msgid "Load More Anything"
 msgstr ""
 
-#: admin/Menu.php:29
-msgid "Load More Anything Option Panel"
+#. Plugin URI of the plugin
+#: ajax-load-div.php
+msgid "https://wordpress.org/plugins/ajax-load-more-anything/"
 msgstr ""
 
-#: admin/functions.php:816
-msgid "Load More Anyting"
+#. Description of the plugin
+#: ajax-load-div.php
+msgid "A lightweight plugin that lets you add Load More buttons, Ajax pagination, and Infinite Scroll to blog posts, WooCommerce products, comments, lists, tables, or any CSS selector."
 msgstr ""
 
-#: admin/functions.php:351 admin/functions.php:543
+#. Author of the plugin
+#: ajax-load-div.php
+msgid "AddonMaster"
+msgstr ""
+
+#. Author URI of the plugin
+#: ajax-load-div.php
+msgid "https://addonmaster.com/contact"
+msgstr ""
+
+#: admin/functions.php:106
+#: admin/functions.php:107
+msgid "List Items"
+msgstr ""
+
+#: admin/functions.php:112
+msgid "Show +[count] More"
+msgstr ""
+
+#: admin/functions.php:116
+#: admin/functions.php:117
+msgid "Table Rows"
+msgstr ""
+
+#: admin/functions.php:122
+msgid "Load +[count] Rows"
+msgstr ""
+
+#: admin/functions.php:126
+#: admin/functions.php:127
+msgid "Flex Card Grid"
+msgstr ""
+
+#: admin/functions.php:132
+msgid "Load +[count] More"
+msgstr ""
+
+#: admin/functions.php:136
+msgid "WP Comments"
+msgstr ""
+
+#: admin/functions.php:137
+msgid "Post Comments"
+msgstr ""
+
+#: admin/functions.php:142
+msgid "Load +[count] Comments"
+msgstr ""
+
+#: admin/functions.php:148
+#: admin/functions.php:149
+msgid "WordPress Blog Archive"
+msgstr ""
+
+#: admin/functions.php:166
+#: admin/functions.php:167
+msgid "Gutenberg Query Loop"
+msgstr ""
+
+#: admin/functions.php:184
+#: admin/functions.php:185
+msgid "WooCommerce Shop Grid"
+msgstr ""
+
+#: admin/functions.php:202
+#: admin/functions.php:203
+msgid "Elementor Posts / Loop"
+msgstr ""
+
+#: admin/functions.php:230
+#: admin/functions.php:261
+#: admin/functions.php:458
+msgid "Permission denied."
+msgstr ""
+
+#: admin/functions.php:235
+msgid "Security check failed. Please refresh and try again."
+msgstr ""
+
+#: admin/functions.php:246
+#: ajax-load-div.php:176
+msgid "Settings saved successfully."
+msgstr ""
+
+#: admin/functions.php:266
+#: admin/functions.php:463
+msgid "Security check failed."
+msgstr ""
+
+#. translators: %d: Wrapper number.
+#: admin/functions.php:327
+#, php-format
+msgid "General Wrapper #%d"
+msgstr ""
+
+#: admin/functions.php:351
+msgid "Wrapper title"
+msgstr ""
+
+#: admin/functions.php:352
+msgid "Rename this wrapper (e.g. Homepage List)"
+msgstr ""
+
+#: admin/functions.php:359
+msgid "No selector configured yet"
+msgstr ""
+
+#: admin/functions.php:365
+#: admin/functions.php:567
+msgid "Remove wrapper"
+msgstr ""
+
+#: admin/functions.php:375
+msgid "Button Insert Wrapper Selector"
+msgstr ""
+
+#: admin/functions.php:377
+msgid "The Load More button will be appended inside the end of this container."
+msgstr ""
+
+#: admin/functions.php:381
+msgid "Repeated Items Selector"
+msgstr ""
+
+#: admin/functions.php:386
+msgid "CSS selector matching each repeated item. Example: <code>.parent_selector .items</code>"
+msgstr ""
+
+#: admin/functions.php:394
+msgid "Visible Items Initially"
+msgstr ""
+
+#: admin/functions.php:396
+msgid "How many items are visible before clicking Load More."
+msgstr ""
+
+#: admin/functions.php:400
+msgid "Items Per Click"
+msgstr ""
+
+#: admin/functions.php:402
+msgid "How many additional items reveal on each click."
+msgstr ""
+
+#: admin/functions.php:406
 msgid "Load More Button Label"
 msgstr ""
 
-#: admin/functions.php:339 admin/functions.php:531
-msgid "Load More Button Selector"
+#: admin/functions.php:407
+msgid "Load +[count] more"
 msgstr ""
 
-#: admin/functions.php:340 admin/functions.php:532
-msgid "Load more button will be insert end of this selector"
+#: admin/functions.php:411
+msgid "Use <code>[count]</code> to display the remaining hidden count (e.g. <code>Load +[count] more</code>)."
 msgstr ""
 
-#: admin/functions.php:342 admin/functions.php:534
-msgid "Load More Items Selector"
+#: admin/functions.php:419
+msgid "Item Display Type"
 msgstr ""
 
-#: admin/functions.php:648 admin/functions.php:689 admin/functions.php:695
-msgid "No"
+#: admin/functions.php:425
+#: admin/functions.php:581
+#: admin/functions.php:648
+#: admin/functions.php:656
+msgid "(Pro)"
 msgstr ""
 
-#: admin/functions.php:723 admin/functions.php:743 admin/functions.php:764
-msgid "Replace Data"
+#: admin/functions.php:432
+msgid "CSS display property applied when revealing hidden items."
 msgstr ""
 
-#: admin/functions.php:804
-msgid "Save Changes"
+#: admin/functions.php:437
+msgid "Custom Button Classes"
 msgstr ""
 
-#: admin/functions.php:574
+#: admin/functions.php:441
+msgid "Space-separated CSS classes appended to the Load More button."
+msgstr ""
+
+#. translators: %d: Wrapper number.
+#: admin/functions.php:524
+#, php-format
+msgid "Ajax Wrapper #%d"
+msgstr ""
+
+#: admin/functions.php:529
+#: admin/functions.php:605
+#: inc/ald-functions.php:360
+#: inc/ald-functions.php:428
+msgid "Load More"
+msgstr ""
+
+#: admin/functions.php:543
+#: ajax-load-div.php:184
+msgid "Selector Click"
+msgstr ""
+
+#: admin/functions.php:544
+#: ajax-load-div.php:185
+msgid "Infinite Scroll"
+msgstr ""
+
+#: admin/functions.php:545
+#: ajax-load-div.php:186
+msgid "Load More Button"
+msgstr ""
+
+#: admin/functions.php:561
+msgid "Ajax wrapper title"
+msgstr ""
+
+#: admin/functions.php:562
+msgid "Rename this wrapper (e.g. Blog Posts)"
+msgstr ""
+
+#: admin/functions.php:577
+msgid "Event Trigger Type"
+msgstr ""
+
+#: admin/functions.php:579
+msgid "Selector(s) Click (Ajax Pagination)"
+msgstr ""
+
+#: admin/functions.php:580
 msgid "Scroll to Load (Infinite Scroll)"
 msgstr ""
 
-#: admin/functions.php:451
-msgid "Select display property for load more items."
+#: admin/functions.php:581
+msgid "Add Load More Button"
 msgstr ""
 
-#: admin/functions.php:434
-msgid "Select display type"
+#: admin/functions.php:586
+msgid "Pagination Link Selector"
 msgstr ""
 
-#: admin/functions.php:343 admin/functions.php:535
-msgid ""
-"Selector for load more items. Example: <code>.parent_selector .items</code>"
+#: admin/functions.php:588
+msgid "Selector of the next-page or pagination link to intercept."
 msgstr ""
 
-#: admin/functions.php:623
-msgid "Selector should be correct, otherwise ajax will fail to load contents"
+#: admin/functions.php:592
+msgid "Button Insert After Selector"
 msgstr ""
 
-#: admin/functions.php:573
-msgid "Selector(s) Click (Ajax Load)"
+#: admin/functions.php:594
+msgid "The custom Ajax button is inserted immediately after this element."
 msgstr ""
 
-#: ajax-load-div.php:150 admin/Menu.php:146 admin/Menu.php:275
-msgid "Settings"
-msgstr ""
-
-#: admin/Menu.php:376
-msgid "Show Your Love"
-msgstr ""
-
-#: admin/Menu.php:201
-msgid "Show your Love"
-msgstr ""
-
-#: admin/Menu.php:364
-msgid "Submit A Ticket"
-msgstr ""
-
-#: admin/functions.php:636
-msgid ""
-"The number of pixels from the bottom of the page to trigger the load more "
-"event"
-msgstr ""
-
-#: admin/Menu.php:246
-msgid ""
-"This options is for ajax based load like: Posts, Products, Custom Post Type, "
-"etc"
+#: admin/functions.php:598
+msgid "Underlying Next-Link Selector"
 msgstr ""
 
 #: admin/functions.php:600
-msgid "This selector will be trigger when the button clicked."
+msgid "Triggered automatically when visitors click your Load More button."
 msgstr ""
 
-#: admin/functions.php:630
-msgid "Trigger Offset"
+#: admin/functions.php:604
+msgid "Button Label"
 msgstr ""
 
-#: admin/functions.php:680
-msgid "Update Browser URL?"
+#: admin/functions.php:609
+msgid "No More Items Label"
 msgstr ""
 
-#: admin/functions.php:683
-msgid "Update Page Title?"
+#: admin/functions.php:610
+#: inc/ald-functions.php:429
+#: inc/ald-functions.php:542
+msgid "No more items to load"
 msgstr ""
 
-#: admin/functions.php:841 admin/functions.php:968
-msgid "Upgrade to Pro"
+#: admin/functions.php:615
+msgid "Infinite Scroll Trigger Offset (px)"
 msgstr ""
 
-#: admin/Menu.php:195 admin/Menu.php:360
-msgid "View Support Forum"
+#: admin/functions.php:619
+msgid "Pixels before the pagination link enters the viewport to pre-fetch the next page."
 msgstr ""
 
-#: admin/functions.php:345 admin/functions.php:537
-msgid "Visible Items"
+#: admin/functions.php:623
+msgid "Hide Original Pagination Wrapper?"
 msgstr ""
 
-#: admin/Menu.php:193
-msgid ""
-"We are ready to give you the best support. If you facing any kind of "
-"technical or non-technical issues just create a support topic. We will "
-"response real fast."
+#: admin/functions.php:625
+#: admin/functions.php:639
+#: admin/functions.php:647
+#: admin/functions.php:655
+msgid "No"
 msgstr ""
 
-#: admin/Menu.php:143
-msgid "Welcome"
-msgstr ""
-
-#: admin/Menu.php:160
-msgid "Welcome to Load More Anything"
-msgstr ""
-
-#: admin/functions.php:657
-msgid "Wrapper Selector to hide"
-msgstr ""
-
-#. %s: Number of the wrapper
-#: admin/functions.php:336 admin/functions.php:523
-#, php-format
-msgid "Wrapper Title #%s"
-msgstr ""
-
-#: admin/Menu.php:382
-msgid "Write a Review"
-msgstr ""
-
-#: admin/Menu.php:205
-msgid "Write a Review Now"
-msgstr ""
-
-#: admin/functions.php:649 admin/functions.php:690 admin/functions.php:696
+#: admin/functions.php:626
+#: admin/functions.php:648
+#: admin/functions.php:656
 msgid "Yes"
 msgstr ""
 
-#: admin/functions.php:1000
-msgid "You can trigger custom functions from here."
+#: admin/functions.php:631
+msgid "Pagination Wrapper to Hide"
+msgstr ""
+
+#: admin/functions.php:633
+msgid "Hidden visually via CSS while staying accessible to the trigger logic."
+msgstr ""
+
+#: admin/functions.php:637
+msgid "Scroll to Container After Load?"
+msgstr ""
+
+#: admin/functions.php:640
+msgid "Yes (smooth scroll to top of updated container)"
+msgstr ""
+
+#: admin/functions.php:645
+msgid "Update Browser URL?"
+msgstr ""
+
+#: admin/functions.php:653
+msgid "Update Page Title?"
+msgstr ""
+
+#: admin/functions.php:661
+msgid "Data Implement Selectors"
+msgstr ""
+
+#: admin/functions.php:662
+msgid "Choose which containers from the fetched page should be appended, prepended, or replaced (tip: add a second row with \"Replace Data\" for the pagination container)."
+msgstr ""
+
+#: admin/functions.php:668
+msgid "Target CSS Selector"
+msgstr ""
+
+#: admin/functions.php:669
+msgid "Insert Mode"
+msgstr ""
+
+#: admin/functions.php:670
+msgid "Actions"
+msgstr ""
+
+#: admin/functions.php:690
+#: admin/functions.php:712
+#: admin/functions.php:731
+msgid "Replace Data"
+msgstr ""
+
+#: admin/functions.php:691
+#: admin/functions.php:711
+#: admin/functions.php:732
+msgid "Insert After (Append)"
+msgstr ""
+
+#: admin/functions.php:692
+#: admin/functions.php:713
+#: admin/functions.php:733
+msgid "Insert Before (Prepend)"
+msgstr ""
+
+#: admin/functions.php:697
+#: admin/functions.php:718
+#: admin/functions.php:738
+msgid "Remove row"
+msgstr ""
+
+#: admin/functions.php:698
+#: admin/functions.php:719
+#: admin/functions.php:739
+msgid "Add row"
+msgstr ""
+
+#: admin/functions.php:707
+msgid "e.g. ul.products or .posts-wrapper"
+msgstr ""
+
+#: admin/functions.php:727
+msgid "e.g. .woocommerce-pagination"
+msgstr ""
+
+#: admin/functions.php:764
+#: ajax-load-div.php:175
+msgid "Save Changes"
+msgstr ""
+
+#: admin/functions.php:796
+msgid "Close modal"
+msgstr ""
+
+#: admin/functions.php:798
+msgid "Pro Upgrade"
+msgstr ""
+
+#: admin/functions.php:799
+msgid "Upgrade to Load More Anything Pro"
+msgstr ""
+
+#: admin/functions.php:800
+msgid "Unlock unlimited General & Ajax wrappers, custom Ajax buttons, browser URL/Title sync, trigger offset, and custom JavaScript."
+msgstr ""
+
+#: admin/functions.php:802
+#: admin/Menu.php:112
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: admin/functions.php:810
+msgid "Feature"
+msgstr ""
+
+#: admin/functions.php:811
+msgid "Free"
+msgstr ""
+
+#: admin/functions.php:812
+#: admin/functions.php:906
+msgid "Pro"
+msgstr ""
+
+#: admin/functions.php:817
+msgid "General (DOM) Wrappers"
+msgstr ""
+
+#: admin/functions.php:818
+msgid "Up to 6"
+msgstr ""
+
+#: admin/functions.php:819
+#: admin/functions.php:824
+msgid "Unlimited"
+msgstr ""
+
+#: admin/functions.php:822
+msgid "Ajax Based Wrappers"
+msgstr ""
+
+#: admin/functions.php:823
+msgid "1"
+msgstr ""
+
+#: admin/functions.php:827
+msgid "Custom Ajax Load More Button"
+msgstr ""
+
+#: admin/functions.php:828
+#: admin/functions.php:833
+#: admin/functions.php:838
+#: admin/functions.php:843
+#: admin/functions.php:853
+msgid "Not included"
+msgstr ""
+
+#: admin/functions.php:829
+#: admin/functions.php:834
+#: admin/functions.php:839
+#: admin/functions.php:844
+#: admin/functions.php:848
+#: admin/functions.php:849
+#: admin/functions.php:854
+msgid "Included"
+msgstr ""
+
+#: admin/functions.php:832
+msgid "Dynamic Browser URL & Page Title Sync"
+msgstr ""
+
+#: admin/functions.php:837
+msgid "Infinite Scroll Trigger Offset"
+msgstr ""
+
+#: admin/functions.php:842
+msgid "Extra CSS Display Types & Button Classes"
+msgstr ""
+
+#: admin/functions.php:847
+#: admin/Menu.php:407
+msgid "Custom CSS"
+msgstr ""
+
+#: admin/functions.php:852
+msgid "Custom JavaScript & Priority Support"
+msgstr ""
+
+#: admin/functions.php:877
+msgid "Custom JavaScript"
+msgstr ""
+
+#: admin/functions.php:878
+msgid "Trigger custom callbacks after Ajax or General items load (e.g. lightbox, masonry, or analytics hooks)."
+msgstr ""
+
+#: admin/functions.php:886
+msgid "Unlock Custom JavaScript in Pro"
+msgstr ""
+
+#: admin/Menu.php:51
+msgid "You do not have permission to access this page."
+msgstr ""
+
+#: admin/Menu.php:87
+msgid "Load More Anything Settings"
+msgstr ""
+
+#: admin/Menu.php:100
+msgid "Pro Active"
+msgstr ""
+
+#: admin/Menu.php:102
+msgid "Free Edition"
+msgstr ""
+
+#: admin/Menu.php:108
+#: ajax-load-div.php:182
+msgid "All changes saved"
+msgstr ""
+
+#: admin/Menu.php:120
+msgid "Settings navigation"
+msgstr ""
+
+#: admin/Menu.php:125
+msgid "Overview"
+msgstr ""
+
+#: admin/Menu.php:131
+#: admin/Menu.php:280
+msgid "General Selectors"
+msgstr ""
+
+#: admin/Menu.php:138
+msgid "Ajax Based"
+msgstr ""
+
+#: admin/Menu.php:145
+msgid "Settings & Code"
+msgstr ""
+
+#: admin/Menu.php:153
+msgid "Load More Anything Pro"
+msgstr ""
+
+#: admin/Menu.php:154
+msgid "Unlock Unlimited Wrappers"
+msgstr ""
+
+#: admin/Menu.php:156
+msgid "Unlimited General & Ajax wrappers"
+msgstr ""
+
+#: admin/Menu.php:157
+msgid "Custom Ajax Load More button"
+msgstr ""
+
+#: admin/Menu.php:158
+msgid "Dynamic Browser URL & Title sync"
+msgstr ""
+
+#: admin/Menu.php:159
+msgid "Infinite Scroll Trigger Offset & Custom JS"
+msgstr ""
+
+#: admin/Menu.php:163
+msgid "Get Pro"
+msgstr ""
+
+#: admin/Menu.php:167
+msgid "Compare Free vs Pro"
+msgstr ""
+
+#: admin/Menu.php:174
+msgid "Need Help?"
+msgstr ""
+
+#: admin/Menu.php:175
+msgid "Check selector guides, open a support topic, or share a review."
+msgstr ""
+
+#: admin/Menu.php:178
+msgid "Documentation"
+msgstr ""
+
+#: admin/Menu.php:182
+msgid "Support Forum"
+msgstr ""
+
+#: admin/Menu.php:186
+msgid "Submit a Ticket"
+msgstr ""
+
+#: admin/Menu.php:190
+msgid "Write a Review"
+msgstr ""
+
+#: admin/Menu.php:202
+msgid "Welcome to Load More Anything"
+msgstr ""
+
+#: admin/Menu.php:203
+msgid "Turn any existing list, post grid, WooCommerce archive, or comment thread into a smooth Load More or Infinite Scroll experience."
+msgstr ""
+
+#: admin/Menu.php:209
+msgid "General Wrappers"
+msgstr ""
+
+#: admin/Menu.php:214
+#: admin/Menu.php:225
+msgid "Unlimited in Pro"
+msgstr ""
+
+#: admin/Menu.php:215
+msgid "Up to 6 in Free"
+msgstr ""
+
+#: admin/Menu.php:220
+msgid "Ajax Wrappers"
+msgstr ""
+
+#: admin/Menu.php:226
+msgid "1 active in Free"
+msgstr ""
+
+#: admin/Menu.php:231
+msgid "Frontend Engine"
+msgstr ""
+
+#: admin/Menu.php:232
+msgid "Modern"
+msgstr ""
+
+#: admin/Menu.php:233
+msgid "DOMParser + IntersectionObserver"
+msgstr ""
+
+#: admin/Menu.php:240
+msgid "General Selectors (Already on Page)"
+msgstr ""
+
+#: admin/Menu.php:241
+msgid "Instant DOM"
+msgstr ""
+
+#: admin/Menu.php:243
+msgid "Best when all items are already rendered in the HTML (menus, lists, table rows, galleries, comments, or widgets) and you want to reveal them in batches with a live +[count] counter."
+msgstr ""
+
+#: admin/Menu.php:245
+msgid "Configure General Selectors"
+msgstr ""
+
+#: admin/Menu.php:250
+msgid "Ajax Based (Paginated Archives)"
+msgstr ""
+
+#: admin/Menu.php:251
+msgid "Infinite Scroll & Ajax"
+msgstr ""
+
+#: admin/Menu.php:253
+msgid "Best for WordPress posts, Gutenberg Query Loop, WooCommerce shop grids, search results, and custom post types that already output pagination links."
+msgstr ""
+
+#: admin/Menu.php:255
+msgid "Configure Ajax Selectors"
+msgstr ""
+
+#: admin/Menu.php:262
+msgid "Quick-Start Recipes"
+msgstr ""
+
+#: admin/Menu.php:263
+msgid "One-click presets available inside General & Ajax tabs"
+msgstr ""
+
+#: admin/Menu.php:281
+msgid "Hide and progressively reveal elements that are already rendered on your page."
+msgstr ""
+
+#: admin/Menu.php:286
+msgid "Add General Wrapper"
+msgstr ""
+
+#: admin/Menu.php:291
+msgid "General selector presets"
+msgstr ""
+
+#: admin/Menu.php:292
+#: admin/Menu.php:345
+msgid "Quick presets:"
+msgstr ""
+
+#: admin/Menu.php:323
+msgid "No General wrappers yet"
+msgstr ""
+
+#: admin/Menu.php:324
+msgid "Click \"Add General Wrapper\" or pick a quick preset above to add Load More to lists, comments, tables, or card grids."
+msgstr ""
+
+#: admin/Menu.php:333
+msgid "Ajax Based Selectors"
+msgstr ""
+
+#: admin/Menu.php:334
+msgid "Fetch paginated posts, WooCommerce products, Gutenberg Query Loops, or comments dynamically without reloading the page."
+msgstr ""
+
+#: admin/Menu.php:339
+msgid "Add Ajax Wrapper"
+msgstr ""
+
+#: admin/Menu.php:344
+msgid "Ajax selector presets"
+msgstr ""
+
+#: admin/Menu.php:376
+msgid "No Ajax wrappers yet"
+msgstr ""
+
+#: admin/Menu.php:377
+msgid "Add an Ajax wrapper or click a WordPress / Gutenberg / WooCommerce preset above to get started."
+msgstr ""
+
+#: admin/Menu.php:386
+msgid "Settings & Custom Code"
+msgstr ""
+
+#: admin/Menu.php:387
+msgid "Configure script compatibility and add custom CSS or JavaScript."
+msgstr ""
+
+#: admin/Menu.php:394
+msgid "Disable jQuery Script Dependency"
+msgstr ""
+
+#: admin/Menu.php:395
+msgid "Enable only if your theme bundles or dequeues WordPress core jQuery in a custom way. Leave unchecked for standard sites."
+msgstr ""
+
+#: admin/Menu.php:408
+msgid "Injected cleanly via wp_add_inline_style whenever Load More rules are active."
+msgstr ""
+
+#: ajax-load-div.php:174
+msgid "Saving…"
+msgstr ""
+
+#: ajax-load-div.php:177
+msgid "Could not save settings. Please try again."
+msgstr ""
+
+#: ajax-load-div.php:178
+msgid "Could not add wrapper. Please refresh and try again."
+msgstr ""
+
+#: ajax-load-div.php:179
+msgid "Preset applied. Remember to save changes."
+msgstr ""
+
+#: ajax-load-div.php:180
+msgid "Wrapper removed. Save changes to apply."
+msgstr ""
+
+#: ajax-load-div.php:181
+msgid "Unsaved changes"
+msgstr ""
+
+#: ajax-load-div.php:183
+msgid "Remove this wrapper?"
+msgstr ""
+
+#: ajax-load-div.php:187
+msgid "Untitled Wrapper"
+msgstr ""
+
+#: ajax-load-div.php:215
+msgid "Go Pro"
+msgstr ""
+
+#: ajax-load-div.php:218
+msgid "Settings"
+msgstr ""
+
+#: inc/ald-functions.php:49
+msgid "Default (Slide Down)"
+msgstr ""
+
+#: inc/ald-functions.php:54
+msgid "Flex"
+msgstr ""
+
+#: inc/ald-functions.php:59
+msgid "Block"
+msgstr ""
+
+#: inc/ald-functions.php:64
+msgid "Grid"
+msgstr ""
+
+#: inc/ald-functions.php:69
+msgid "Inline"
+msgstr ""
+
+#: inc/ald-functions.php:74
+msgid "Inline Block"
+msgstr ""
+
+#: inc/ald-functions.php:79
+msgid "Inline Flex"
+msgstr ""
+
+#: inc/ald-functions.php:84
+msgid "Inline Grid"
+msgstr ""
+
+#: inc/ald-functions.php:89
+msgid "Inline Table"
+msgstr ""
+
+#: inc/ald-functions.php:94
+msgid "Contents"
+msgstr ""
+
+#: inc/ald-functions.php:99
+msgid "List Item"
+msgstr ""
+
+#: inc/ald-functions.php:104
+msgid "Run In"
+msgstr ""
+
+#: inc/ald-functions.php:109
+msgid "Table"
+msgstr ""
+
+#: inc/ald-functions.php:114
+msgid "Table Caption"
+msgstr ""
+
+#: inc/ald-functions.php:119
+msgid "Table Column Group"
+msgstr ""
+
+#: inc/ald-functions.php:124
+msgid "Table Header Group"
+msgstr ""
+
+#: inc/ald-functions.php:129
+msgid "Table Footer Group"
+msgstr ""
+
+#: inc/ald-functions.php:134
+msgid "Table Row Group"
+msgstr ""
+
+#: inc/ald-functions.php:139
+msgid "Table Cell"
+msgstr ""
+
+#: inc/ald-functions.php:144
+msgid "Table Column"
+msgstr ""
+
+#: inc/ald-functions.php:149
+msgid "Table Row"
+msgstr ""
+
+#: inc/ald-functions.php:154
+msgid "Initial"
+msgstr ""
+
+#: inc/ald-functions.php:159
+msgid "Inherit"
+msgstr ""
+
+#: inc/ald-functions.php:543
+msgid "Loading more items…"
+msgstr ""
+
+#: inc/ald-functions.php:544
+msgid "Additional items loaded."
+msgstr ""
+
+#: inc/ald-functions.php:545
+msgid "Unable to load more items. Please try again."
 msgstr ""
