@@ -82,6 +82,11 @@ class ALD_Menu {
 
 		$ajax_active_count = count( $ajax_loadmore );
 		$presets           = ald_get_selector_presets();
+		$stack_presets     = ald_get_stack_presets();
+		$quick_recipes     = [
+			'general' => [ 'list_items', 'table_rows', 'card_grid', 'comments' ],
+			'ajax'    => [ 'wp_blog', 'gutenberg', 'woocommerce', 'elementor' ],
+		];
 		?>
 		<div class="wrap ald-wrap ald-app">
 			<h1 class="screen-reader-text"><?php esc_html_e( 'Load More Anything Settings', 'ajax-load-more-anything' ); ?></h1>
@@ -159,11 +164,11 @@ class ALD_Menu {
 									<li><?php esc_html_e( 'Infinite Scroll Trigger Offset & Custom JS', 'ajax-load-more-anything' ); ?></li>
 								</ul>
 								<div class="ald-side-card__actions">
-									<a class="ald-btn ald-btn--primary ald-btn--block" target="_blank" rel="noopener noreferrer" href="<?php echo esc_url( ALD_GOPRO_URL ); ?>">
+									<a class="ald-btn ald-btn--primary ald-btn--block" target="_blank" rel="noopener noreferrer" href="<?php echo esc_url( ald_get_pro_url( 'sidebar_card' ) ); ?>">
 										<?php esc_html_e( 'Get Pro', 'ajax-load-more-anything' ); ?>
 										<span class="dashicons dashicons-external" aria-hidden="true"></span>
 									</a>
-									<button type="button" class="ald-btn ald-btn--secondary ald-btn--block ald-trigger-pro">
+									<button type="button" class="ald-btn ald-btn--secondary ald-btn--block ald-trigger-pro" data-pro-surface="sidebar_card">
 										<?php esc_html_e( 'Compare Free vs Pro', 'ajax-load-more-anything' ); ?>
 									</button>
 								</div>
@@ -182,8 +187,8 @@ class ALD_Menu {
 									<?php esc_html_e( 'Support Forum', 'ajax-load-more-anything' ); ?>
 									<span class="dashicons dashicons-external" aria-hidden="true"></span>
 								</a>
-								<a target="_blank" rel="noopener noreferrer" href="<?php echo esc_url( 'https://addonmaster.com/submit-a-ticket/' ); ?>">
-									<?php esc_html_e( 'Submit a Ticket', 'ajax-load-more-anything' ); ?>
+								<a target="_blank" rel="noopener noreferrer" href="<?php echo esc_url( 'https://addonmaster.com/contact/' ); ?>">
+									<?php esc_html_e( 'Contact AddonMaster', 'ajax-load-more-anything' ); ?>
 									<span class="dashicons dashicons-external" aria-hidden="true"></span>
 								</a>
 								<a target="_blank" rel="noopener noreferrer" href="<?php echo esc_url( 'https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/#new-post' ); ?>">
@@ -223,7 +228,7 @@ class ALD_Menu {
 										<?php
 										echo $is_pro
 											? esc_html__( 'Unlimited in Pro', 'ajax-load-more-anything' )
-											: esc_html__( '1 active in Free', 'ajax-load-more-anything' );
+											: esc_html__( '1 wrapper in Free', 'ajax-load-more-anything' );
 										?>
 									</span>
 								</div>
@@ -257,20 +262,43 @@ class ALD_Menu {
 								</div>
 							</div>
 
+							<?php if ( ! empty( $stack_presets ) ) : ?>
+								<div class="ald-card">
+									<h3><?php esc_html_e( 'Presets for Your Site', 'ajax-load-more-anything' ); ?></h3>
+									<div class="ald-preset-bar">
+										<?php foreach ( $stack_presets as [ $group, $preset_id ] ) : ?>
+											<button type="button" class="ald-preset-btn" data-preset-group="<?php echo esc_attr( $group ); ?>" data-preset-key="<?php echo esc_attr( $preset_id ); ?>">
+												<?php echo esc_html( $presets[ $group ][ $preset_id ]['title'] ); ?>
+											</button>
+										<?php endforeach; ?>
+									</div>
+								</div>
+							<?php endif; ?>
+
 							<div class="ald-card">
 								<div class="ald-card__head">
 									<h3><?php esc_html_e( 'Quick-Start Recipes', 'ajax-load-more-anything' ); ?></h3>
-									<span class="ald-muted"><?php esc_html_e( 'One-click presets available inside General & Ajax tabs', 'ajax-load-more-anything' ); ?></span>
 								</div>
 								<div class="ald-recipe-grid">
-									<?php foreach ( $presets['ajax'] as $preset_id => $preset ) : ?>
-										<div class="ald-recipe-chip">
-											<strong><?php echo esc_html( $preset['title'] ); ?></strong>
-											<code><?php echo esc_html( $preset['click_selector'] ); ?></code>
-										</div>
+									<?php foreach ( $quick_recipes as $group => $preset_ids ) : ?>
+										<?php foreach ( $preset_ids as $preset_id ) : ?>
+											<button type="button" class="ald-recipe-chip ald-preset-btn" data-preset-group="<?php echo esc_attr( $group ); ?>" data-preset-key="<?php echo esc_attr( $preset_id ); ?>">
+												<strong><?php echo esc_html( $presets[ $group ][ $preset_id ]['title'] ); ?></strong>
+											</button>
+										<?php endforeach; ?>
 									<?php endforeach; ?>
 								</div>
 							</div>
+
+							<div class="ald-card">
+								<h3><?php esc_html_e( 'Post Grid Master', 'ajax-load-more-anything' ); ?></h3>
+								<p><?php esc_html_e( 'Building a new filterable post or product grid from scratch? Try our sister plugin Post Grid Master.', 'ajax-load-more-anything' ); ?></p>
+								<a class="ald-btn ald-btn--secondary" target="_blank" rel="noopener noreferrer" href="<?php echo esc_url( 'https://wordpress.org/plugins/ajax-filter-posts/' ); ?>">
+									<?php esc_html_e( 'Explore Post Grid Master', 'ajax-load-more-anything' ); ?>
+								</a>
+							</div>
+
+							<?php ald_review_card(); ?>
 						</section>
 
 						<!-- General Selectors Tab -->
@@ -502,14 +530,16 @@ class ALD_Menu {
 				}
 
 				$sanitized['general_loadmore'][ $clean_key ] = [
-					'wrapper_title'  => isset( $value['wrapper_title'] ) ? sanitize_text_field( $value['wrapper_title'] ) : '',
-					'btn_selector'   => isset( $value['btn_selector'] ) ? ald_sanitize_css_selector( $value['btn_selector'] ) : '',
-					'load_selector'  => isset( $value['load_selector'] ) ? ald_sanitize_css_selector( $value['load_selector'] ) : '',
-					'visible_items'  => isset( $value['visible_items'] ) && '' !== $value['visible_items'] ? (string) absint( $value['visible_items'] ) : '',
-					'load_items'     => isset( $value['load_items'] ) && '' !== $value['load_items'] ? (string) max( 1, absint( $value['load_items'] ) ) : '',
-					'button_label'   => isset( $value['button_label'] ) ? sanitize_text_field( $value['button_label'] ) : '',
-					'display_type'   => isset( $value['display_type'] ) ? ald_sanitize_display_type( $value['display_type'] ) : 'default',
-					'button_classes' => ( $is_pro && isset( $value['button_classes'] ) ) ? ald_sanitize_class_list( $value['button_classes'] ) : '',
+					'wrapper_title'    => isset( $value['wrapper_title'] ) ? sanitize_text_field( $value['wrapper_title'] ) : '',
+					'btn_selector'     => isset( $value['btn_selector'] ) ? ald_sanitize_css_selector( $value['btn_selector'] ) : '',
+					'load_selector'    => isset( $value['load_selector'] ) ? ald_sanitize_css_selector( $value['load_selector'] ) : '',
+					'visible_items'    => isset( $value['visible_items'] ) && '' !== $value['visible_items'] ? (string) absint( $value['visible_items'] ) : '',
+					'load_items'       => isset( $value['load_items'] ) && '' !== $value['load_items'] ? (string) max( 1, absint( $value['load_items'] ) ) : '',
+					'button_label'     => isset( $value['button_label'] ) ? sanitize_text_field( $value['button_label'] ) : '',
+					'display_type'     => isset( $value['display_type'] ) ? ald_sanitize_display_type( $value['display_type'] ) : 'default',
+					'enabled'          => 'no' === ( $value['enabled'] ?? 'yes' ) ? 'no' : 'yes',
+					'button_placement' => 'after' === ( $value['button_placement'] ?? 'inside' ) ? 'after' : 'inside',
+					'button_classes'   => ( $is_pro && isset( $value['button_classes'] ) ) ? ald_sanitize_class_list( $value['button_classes'] ) : '',
 				];
 
 				++$general_count;
@@ -551,7 +581,7 @@ class ALD_Menu {
 							continue;
 						}
 						$implement_type = isset( $dis_row['implement_type'] ) ? sanitize_key( $dis_row['implement_type'] ) : 'replace_data';
-						if ( ! in_array( $implement_type, [ 'replace_data', 'insert_after', 'insert_before' ], true ) ) {
+						if ( ! in_array( $implement_type, [ 'replace_data', 'insert_after', 'insert_before', 'insert_after_elements' ], true ) ) {
 							$implement_type = 'replace_data';
 						}
 						$clean_dis_key               = sanitize_key( (string) $dis_key );
@@ -565,6 +595,7 @@ class ALD_Menu {
 				$sanitized['ajax_loadmore'][ $clean_key ] = [
 					'wrapper_title'            => isset( $value['wrapper_title'] ) ? sanitize_text_field( $value['wrapper_title'] ) : '',
 					'event_type'               => $event_type,
+					'enabled'                  => 'no' === ( $value['enabled'] ?? 'yes' ) ? 'no' : 'yes',
 					'custom_button_append'     => isset( $value['custom_button_append'] ) ? ald_sanitize_css_selector( $value['custom_button_append'] ) : '',
 					'button_trigger_selector'  => isset( $value['button_trigger_selector'] ) ? ald_sanitize_css_selector( $value['button_trigger_selector'] ) : '',
 					'button_label'             => isset( $value['button_label'] ) ? sanitize_text_field( $value['button_label'] ) : '',

@@ -130,15 +130,19 @@ class ReleaseTests(unittest.TestCase):
         (wp_dir / 'icon-256x256.png').write_bytes(b'\x89PNG\r\n\x1a\nicon-256')
         (wp_dir / 'banner-1544x500.png').write_bytes(b'\x89PNG\r\n\x1a\nbanner-1544')
         (wp_dir / 'screenshot-1.png').write_bytes(b'\x89PNG\r\n\x1a\nshot-1')
+        blueprint_dir = wp_dir / 'blueprints'
+        blueprint_dir.mkdir()
+        shutil.copyfile(ROOT / '.wordpress' / release.LISTING_BLUEPRINT, blueprint_dir / 'blueprint.json')
+        self.assertIn(release.LISTING_BLUEPRINT, release.listing_assets(self.source, allow_untracked=True))
         release.run('git', 'add', '.wordpress', cwd=self.source)
         release.run('git', 'commit', '-qm', 'add listing assets', cwd=self.source)
         self.build()
 
         zip_files = release.zip_manifest(self.output / (release.SLUG + '.zip'))
-        self.assertFalse(any(p.startswith('.wordpress') or p.startswith('screenshot-') for p in zip_files))
+        self.assertFalse(any(p.startswith(('.wordpress', 'screenshot-', 'blueprints/')) for p in zip_files))
         listing_manifest = release.read_json(self.output / 'listing-assets-manifest.json')
         self.assertEqual(sorted(listing_manifest),
-                         ['banner-1544x500.png', 'icon-256x256.png', 'icon.svg', 'screenshot-1.png'])
+                         ['banner-1544x500.png', release.LISTING_BLUEPRINT, 'icon-256x256.png', 'icon.svg', 'screenshot-1.png'])
 
         repository = self.base / 'initial-repo'
         release.run('svnadmin', 'create', str(repository))
@@ -158,10 +162,48 @@ class ReleaseTests(unittest.TestCase):
             'image/png'
         )
 
+        self.assertEqual(
+            release.run('svn', 'propget', 'svn:mime-type', 'assets/' + release.LISTING_BLUEPRINT,
+                        cwd=self.output / 'svn').strip(),
+            'application/json'
+        )
+
+        (blueprint_dir / 'another.json').write_text('{}')
+        release.run('git', 'add', '.wordpress/blueprints/another.json', cwd=self.source)
+        for allow_untracked in (False, True):
+            with self.assertRaisesRegex(RuntimeError, 'Invalid WordPress.org listing asset filename'):
+                release.listing_assets(self.source, allow_untracked=allow_untracked)
+        release.run('git', 'rm', '-f', '.wordpress/blueprints/another.json', cwd=self.source)
+
         (wp_dir / 'random-note.txt').write_text('not allowed')
         release.run('git', 'add', '.wordpress/random-note.txt', cwd=self.source)
         with self.assertRaisesRegex(RuntimeError, 'Invalid WordPress.org listing asset filename'):
             release.build(self.source, self.base / 'invalid-asset-build')
+
+    def test_blueprint_allowed_in_assets_only_stage(self):
+        blueprint = self.source / '.wordpress' / release.LISTING_BLUEPRINT
+        blueprint.parent.mkdir(parents=True)
+        blueprint.write_text('{}')
+        release.build(self.source, self.output, allow_untracked=True)
+        repository = self.base / 'assets-only-repository'
+        release.run('svnadmin', 'create', str(repository))
+        url = repository.as_uri()
+        release.run('svn', 'mkdir', url + '/trunk', url + '/tags', url + '/assets', '-m', 'initial')
+        with patch.object(release, 'SVN_URL', url):
+            release.stage(self.source, self.output, assets_only=True)
+        self.assertEqual(set(release.manifest(self.output / 'svn/assets')), {release.LISTING_BLUEPRINT})
+
+        (self.output / 'svn/assets/blueprints/disallowed.json').write_text('{}')
+        with self.assertRaisesRegex(RuntimeError, 'Listing assets'):
+            release.validate_stage(self.source, self.output)
+
+    def test_blueprint_parent_symlink_is_rejected(self):
+        directory = self.source / '.wordpress'
+        directory.mkdir()
+        (directory / 'blueprints').symlink_to(ROOT / '.wordpress/blueprints')
+        for allow_untracked in (False, True):
+            with self.assertRaisesRegex(RuntimeError, 'Symlink rejected'):
+                release.listing_assets(self.source, allow_untracked=allow_untracked)
 
     def test_local_svn_accepts_complete_tag_rejects_tampering(self):
         wc = self.local_svn_stage()

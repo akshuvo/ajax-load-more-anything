@@ -90,9 +90,6 @@ final class Ajax_Load_More_Anything {
 		if ( ! defined( 'ALD_PLUGIN_ASSETS' ) ) {
 			define( 'ALD_PLUGIN_ASSETS', ALD_PLUGIN_URL . 'assets' );
 		}
-		if ( ! defined( 'ALD_GOPRO_URL' ) ) {
-			define( 'ALD_GOPRO_URL', 'https://addonmaster.com/load-more-anything/?utm_source=dashboard&utm_medium=popuptop&utm_campaign=wpuser' );
-		}
 	}
 
 	/**
@@ -162,15 +159,16 @@ final class Ajax_Load_More_Anything {
 			'ald-admin-scripts',
 			'alda_params',
 			[
-				'nonce'      => wp_create_nonce( 'ald_nonce' ),
-				'ajaxurl'    => admin_url( 'admin-ajax.php' ),
-				'ald_pro'    => ald_is_pro() ? '1' : '0',
-				'freeLimits' => [
+				'nonce'       => wp_create_nonce( 'ald_nonce' ),
+				'ajaxurl'     => admin_url( 'admin-ajax.php' ),
+				'ald_pro'     => ald_is_pro() ? '1' : '0',
+				'freeLimits'  => [
 					'general' => 6,
 					'ajax'    => 1,
 				],
-				'presets'    => function_exists( 'ald_get_selector_presets' ) ? ald_get_selector_presets() : [],
-				'i18n'       => [
+				'proContexts' => ald_get_pro_contexts(),
+				'presets'     => function_exists( 'ald_get_selector_presets' ) ? ald_get_selector_presets() : [],
+				'i18n'        => [
 					'saving'          => __( 'Saving…', 'ajax-load-more-anything' ),
 					'saveChanges'     => __( 'Save Changes', 'ajax-load-more-anything' ),
 					'savedSuccess'    => __( 'Settings saved successfully.', 'ajax-load-more-anything' ),
@@ -185,6 +183,9 @@ final class Ajax_Load_More_Anything {
 					'scrollEvent'     => __( 'Infinite Scroll', 'ajax-load-more-anything' ),
 					'buttonEvent'     => __( 'Load More Button', 'ajax-load-more-anything' ),
 					'untitledWrapper' => __( 'Untitled Wrapper', 'ajax-load-more-anything' ),
+					'enabled'         => __( 'Enabled', 'ajax-load-more-anything' ),
+					'disabled'        => __( 'Disabled', 'ajax-load-more-anything' ),
+					'dismissError'    => __( 'The review card could not be dismissed. Please try again.', 'ajax-load-more-anything' ),
 				],
 			]
 		);
@@ -212,13 +213,30 @@ final class Ajax_Load_More_Anything {
 		$plugin_links = [];
 
 		if ( ! defined( 'ALD_PRO_PLUGIN_VERSION' ) ) {
-			$plugin_links[] = '<a target="_blank" rel="noopener noreferrer" href="' . esc_url( ALD_GOPRO_URL ) . '"><b style="color:#b45309;">&#9733; ' . esc_html__( 'Go Pro', 'ajax-load-more-anything' ) . '</b></a>';
+			$plugin_links[] = '<a target="_blank" rel="noopener noreferrer" href="' . esc_url( ald_get_pro_url( 'plugins_row' ) ) . '"><b style="color:#b45309;">&#9733; ' . esc_html__( 'Go Pro', 'ajax-load-more-anything' ) . '</b></a>';
 		}
 
 		$plugin_links[] = '<a href="' . esc_url( admin_url( 'admin.php?page=ald_setting' ) ) . '">' . esc_html__( 'Settings', 'ajax-load-more-anything' ) . '</a>';
 
 		return array_merge( $plugin_links, $links );
 	}
+}
+
+/**
+ * Build a Pro upgrade URL for a specific dashboard entry point.
+ *
+ * @param string $surface Upgrade entry point.
+ * @return string
+ */
+function ald_get_pro_url( $surface = 'general' ) {
+	return add_query_arg(
+		[
+			'utm_source'   => 'dashboard',
+			'utm_medium'   => sanitize_key( $surface ),
+			'utm_campaign' => 'wpuser',
+		],
+		'https://addonmaster.com/load-more-anything/'
+	);
 }
 
 /**

@@ -93,3 +93,32 @@ php -d mysqli.default_socket="$GM_SOCK" "$(which wp)" \
 - **Live Browser QA (`http://grid-master.local/` at `1440x900`):**
   - WP Admin `page=ald_setting`: all 5 tabs (`Overview`, `General Selectors`, `Ajax Based`, `Settings & Code`, `License & Updates`), conditional field toggling, CodeMirror CSS & Pro JS editors, AJAX Save Changes + `"Settings saved successfully."` toast verified with **0 console errors**.
   - Frontend WooCommerce Shop (`http://grid-master.local/shop/`): verified `.ald-ajax-btn` ("Load More Products") injected after `ul.products`, `.woocommerce-pagination` hidden, clicking button loaded `/shop/page/2/` (`12` → `17` products), synced browser URL (`/shop/page/2/`) & page title (`Shop – Page 2 – Grid Master`), auto-hid button after last page, with **0 console errors**.
+
+## Sprint 1 verification (2026-11-28)
+
+The sprint changes are in the working tree. The release remains at `3.3.10`. Plugin Check reports `mismatched_plugin_name` for the requested WordPress.org listing title and the existing plugin header, alongside the known Appsero and development-file findings.
+
+Run these commands from the Free repository:
+
+```sh
+for f in admin/Menu.php admin/functions.php ajax-load-div.php inc/ald-functions.php; do
+  php -l "$f" || exit 1
+done
+for f in assets/admin.js assets/admin.min.js assets/scripts.js assets/scripts.min.js; do
+  node --check "$f" || exit 1
+done
+"$HOME/.config/composer/vendor/bin/phpcs" --report=summary
+python3 -B -m unittest discover -s tests -p 'test_release.py' -v
+python3 -B scripts/release.py build --output /tmp/ald-sprint1-verified --allow-untracked
+python3 -B scripts/lint_package.py /tmp/ald-sprint1-verified/ajax-load-more-anything
+php -d mysqli.default_socket="$HOME/Library/Application Support/Local/run/T9DCTDfna/mysql/mysqld.sock" \
+  "$(command -v wp)" --path=../../.. --url=http://grid-master.local \
+  --skip-plugins=load-more-anything-pro,gridmaster-pro \
+  --exec='WP_CLI::add_wp_hook("option_active_plugins", function($plugins){ if(is_array($plugins) && !in_array("plugin-check/plugin.php", $plugins, true)){ $plugins[] = "plugin-check/plugin.php"; } return $plugins; });' \
+  plugin check ajax-load-more-anything --include-experimental --format=json
+```
+
+- PHP and JavaScript syntax passed, WPCS reported zero errors and warnings, and all 18 release tests passed. The release ZIP contains 18 runtime files and all packaged PHP parsed. The Blueprint shipped with the 10 listing assets and stayed outside the ZIP.
+- The LocalWP Chromium suite ran with `/bin/bash /tmp/ald-sprint1-qa/run.sh`. It checked Free alone and Free with Pro, both with the site's existing stack. Both passed the admin controls, preset application, save and reload, native display, fail-open behavior, administrator diagnostics, and two successive zero-gap infinite-scroll loads. The Pro suite also checked custom class and display overrides, the custom Ajax button, URL and title updates, and Back navigation. The Free suite checked contextual Pro locks and review card eligibility, dismissal, and nonce handling. The WordPress Blog Archive preset in Storefront and the Astra preset each loaded three pages with one pagination wrapper throughout. LocalWP restored the original theme, plugins, and settings and removed the temporary user and test content.
+- The checked Blueprint passed the official WordPress Playground JSON schema. The seed and showcase ran on LocalWP and in WordPress Playground using `/bin/bash /tmp/ald-sprint1-qa/playground-test.sh`. The Playground run installed the checked local ZIP in place of the published plugin, then exercised four, eight, and twelve Ajax posts, the table row counter, and the 20-comment thread.
+- The AddonMaster contact page returned HTTP 200. The proposed demo index returned HTTP 404, so the listing points readers to the WordPress.org Live Preview when available. The public Preview toggle, licensing, and the frontend output of the other builder and theme presets were outside this verification.

@@ -11,6 +11,7 @@
 	var cssEditor = null;
 	var jsEditor = null;
 	var lastFocusedBeforeModal = null;
+	var proContexts = params.proContexts || {};
 
 	/**
 	 * Display a frosted toast notification in the bottom-right corner.
@@ -56,15 +57,22 @@
 	 * Open Go Pro comparison modal with focus restoration.
 	 *
 	 * @param {string} selector Modal CSS selector.
+	 * @param {string} surface  Upgrade context.
 	 */
-	function openModal(selector) {
+	function openModal(selector, surface) {
 		var $modal = $(selector || '#ald_go-pro');
 		if (!$modal.length) {
 			return;
 		}
+		var context = proContexts[surface] || proContexts.general;
+		if (context && $modal.is('#ald_go-pro')) {
+			$modal.find('#ald-pro-modal-title').text(context.title);
+			$modal.find('.ald-pro-modal-description').text(context.description);
+			$modal.find('.ald-pro-modal-cta').attr('href', context.url);
+		}
 		lastFocusedBeforeModal = document.activeElement;
 		$modal.prop('hidden', false);
-		$modal.find('.am-modal-close').first().trigger('focus');
+		$modal.find('button.am-modal-close').first().trigger('focus');
 	}
 
 	/**
@@ -152,7 +160,9 @@
 		if (!$card || !$card.length) {
 			return;
 		}
-		var eventType = $card.find('.ajax_loadmore-event_type').val() || 'selectors_click';
+		var $event = $card.find('.ajax_loadmore-event_type');
+		var eventType = $event.val() || 'selectors_click';
+		$event.data('aldPreviousEvent', eventType);
 		var hideWrapper = $card.find('.ajax_loadmore-hide_selector_wrapper').val() || 'no';
 
 		var $pill = $card.find('.ald-event-pill');
@@ -252,10 +262,15 @@
 		var isGeneral = group === 'general';
 		var $btn = isGeneral ? $('.tf_add-general-wrapper') : $('.tf_add-ajax-wrapper');
 		var currentCount = isGeneral ? $('.tf_gen_sel_field').length : $('.tf_ajax_sel_field').length;
-		var limit = isGeneral ? 6 : 1;
+		var limit = (params.freeLimits || {})[group] || (isGeneral ? 6 : 1);
+		var upgradeSurface = isGeneral ? 'limit_general' : 'limit_ajax';
+
+		if ($btn.prop('disabled')) {
+			return;
+		}
 
 		if (aldPro === '0' && currentCount >= limit) {
-			openModal('#ald_go-pro');
+			openModal('#ald_go-pro', upgradeSurface);
 			return;
 		}
 
@@ -278,7 +293,7 @@
 					return;
 				}
 				if (res.data && res.data.limit_reached) {
-					openModal('#ald_go-pro');
+					openModal('#ald_go-pro', upgradeSurface);
 					return;
 				}
 				var $container = isGeneral ? $('.tf_gen_sel_fields') : $('.tf_ajax_sel_fields');
@@ -313,6 +328,8 @@
 		}
 
 		addWrapper(group, function ($card) {
+			activateTab(group === 'general' ? '#general' : '#ajax-based', true);
+			$card.find('.ald_ajax_wrap_title').trigger('focus');
 			if (group === 'general') {
 				$card.find('input[name$="[wrapper_title]"]').val(preset.wrapper_title || '');
 				$card.find('input[name$="[btn_selector]"]').val(preset.btn_selector || '');
@@ -321,6 +338,7 @@
 				$card.find('input[name$="[load_items]"]').val(preset.load_items || '3');
 				$card.find('input[name$="[button_label]"]').val(preset.button_label || '');
 				$card.find('select[name$="[display_type]"]').val(preset.display_type || 'default');
+				$card.find('select[name$="[button_placement]"]').val(preset.button_placement || 'inside');
 			} else {
 				$card.find('input[name$="[wrapper_title]"]').val(preset.wrapper_title || '');
 				$card.find('select[name$="[event_type]"]').val(preset.event_type || 'selectors_click');
@@ -370,6 +388,40 @@
 				});
 			}
 		}
+	}
+
+	function syncWrapperEnabled($card, enabled) {
+		$card.find('.ald-wrapper-enabled').val(enabled ? 'yes' : 'no');
+		$card.find('.ald-wrapper-enable').attr('aria-pressed', enabled ? 'true' : 'false')
+			.text(enabled ? i18n.enabled : i18n.disabled);
+	}
+
+	function duplicateWrapper($source) {
+		var group = $source.hasClass('tf_gen_sel_field') ? 'general' : 'ajax';
+
+		addWrapper(group, function ($card) {
+			$source.find(':input[name]').not('.data_implement_selectors_row :input').each(function () {
+				var field = this.name.slice(this.name.lastIndexOf('['));
+				$card.find(':input[name$="' + field + '"]').val($(this).val());
+			});
+			syncWrapperEnabled($card, $source.find('.ald-wrapper-enabled').val() !== 'no');
+
+			if (group === 'ajax') {
+				var $tbody = $card.find('.ald-dis-table tbody');
+				$tbody.find('.data_implement_selectors_row:not(.disr_empty-row)').remove();
+				$source.find('.data_implement_selectors_row:not(.disr_empty-row)').each(function () {
+					appendDisRow($tbody, {
+						data_selector: $(this).find('input').val(),
+						implement_type: $(this).find('select').val()
+					});
+				});
+				syncAjaxCardVisibility($card);
+			} else {
+				$card.find('input[name$="[load_selector]"]').trigger('input');
+			}
+
+			$card.find('.ald_ajax_wrap_title').trigger('focus');
+		});
 	}
 
 	$(function () {
@@ -438,6 +490,33 @@
 			applyPreset($(this).attr('data-preset-group'), $(this).attr('data-preset-key'));
 		});
 
+		$(document).on('click', '.ald-wrapper-enable', function () {
+			syncWrapperEnabled($(this).closest('.ald-wrapper-card'), $(this).attr('aria-pressed') === 'false');
+			setDirtyState(true);
+		});
+
+		$(document).on('click', '.ald-wrapper-duplicate', function () {
+			duplicateWrapper($(this).closest('.ald-wrapper-card'));
+		});
+
+		$(document).on('click', '.ald-dismiss-review', function () {
+			var $button = $(this).prop('disabled', true);
+			$.post(params.ajaxurl, {
+				action: 'ald_dismiss_review',
+				nonce: $button.attr('data-nonce')
+			}).done(function (res) {
+				if (res && res.success) {
+					$button.closest('.ald-review-card').remove();
+				} else {
+					showToast(i18n.dismissError, 'error');
+				}
+			}).fail(function () {
+				showToast(i18n.dismissError, 'error');
+			}).always(function () {
+				$button.prop('disabled', false);
+			});
+		});
+
 		$(document).on('click', '.delete_field', function (e) {
 			e.preventDefault();
 			e.stopPropagation();
@@ -489,20 +568,20 @@
 		});
 
 		// Scoped conditional visibility per Ajax wrapper card.
-		$(document).on('change', '.ajax_loadmore-event_type, .ajax_loadmore-hide_selector_wrapper', function () {
+		$(document).on('change', '.ajax_loadmore-event_type, .ajax_loadmore-hide_selector_wrapper', function (e) {
 			var $select = $(this);
-			if ($select.hasClass('option-select-lmapro-modal-trigger') && aldPro === '0') {
-				if ($select.val() === $select.attr('data-pro-val')) {
-					$select.val('selectors_click');
-					openModal('#ald_go-pro');
-				}
+			if ($select.hasClass('option-select-lmapro-modal-trigger') && aldPro === '0' && $select.val() === $select.attr('data-pro-val')) {
+				$select.val($select.data('aldPreviousEvent') || 'selectors_click');
+				e.stopImmediatePropagation();
+				openModal('#ald_go-pro', 'custom_button');
+				return;
 			}
 			syncAjaxCardVisibility($select.closest('.tf_ajax_sel_field'));
 		});
 
 		// Mark form dirty on settings edits (exclude Pro's standalone AJAX license tab).
 		$(document).on('input change', '#ald_option_form input, #ald_option_form select, #ald_option_form textarea', function () {
-			if ($(this).closest('#license-menu').length) {
+			if ($(this).closest('#license-menu').length || ($(this).hasClass('ajax_loadmore-event_type') && aldPro === '0' && $(this).val() === 'custom_button')) {
 				return;
 			}
 			setDirtyState(true);
@@ -514,7 +593,7 @@
 				return;
 			}
 			e.preventDefault();
-			openModal('#ald_go-pro');
+			openModal('#ald_go-pro', $(this).attr('data-pro-surface'));
 		});
 
 		// AJAX Save Settings (syncs CodeMirror buffers first).

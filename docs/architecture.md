@@ -38,10 +38,10 @@ ajax-load-more-anything/
 ### Bootstrap Sequence (`ajax-load-div.php`)
 
 1. Guards `ABSPATH` and initializes singleton `Ajax_Load_More_Anything::init()`.
-2. Defines `ALD_PLUGIN_VERSION` (`'3.3.10'`, with canonical `Ajax_Load_More_Anything::VERSION` and legacy `::version`), `ALD_PLUGIN_FILE`, `ALD_PLUGIN_PATH`, `ALD_PLUGIN_URL`, `ALD_PLUGIN_ASSETS`, `ALD_GOPRO_URL`.
+2. Defines `ALD_PLUGIN_VERSION` (`'3.3.10'`, with canonical `Ajax_Load_More_Anything::VERSION` and legacy `::version`), `ALD_PLUGIN_FILE`, `ALD_PLUGIN_PATH`, `ALD_PLUGIN_URL`, and `ALD_PLUGIN_ASSETS`. Dashboard upgrade links use `ald_get_pro_url( $surface )`.
 3. `plugins_loaded` loads `inc/ald-functions.php` always and loads `admin/functions.php` + `admin/Menu.php` only inside `is_admin()` (which includes `admin-ajax.php`).
 4. `wp_enqueue_scripts` (prio `999`) registers `ald-styles` and `ald-scripts` (choosing `.min` when `! SCRIPT_DEBUG`, honoring `disable_jquery_dep`), and enqueues them **conditionally only when `ald_has_frontend_config()` is true**:
-   - Attaches initial hide rules + sanitized `custom_css` via `wp_add_inline_style( 'ald-styles', ald_get_frontend_inline_css() )`.
+   - Attaches sanitized `custom_css` via `wp_add_inline_style( 'ald-styles', ald_get_frontend_inline_css() )`.
    - Localizes full structured runtime config into `ald_params` via `wp_localize_script( 'ald-scripts', 'ald_params', ald_get_frontend_config() )`.
 5. `admin_enqueue_scripts` (prio `100`) enqueues `ald-admin-styles`, `ald-admin-scripts`, WordPress CodeMirror (`text/css` + `text/javascript`), and `alda_params` (including `presets`, `freeLimits`, `i18n`) **strictly on `toplevel_page_ald_setting`**.
 6. `ama_appsero_init_tracker_ajax_load_more_anything()` initializes opt-in `Appsero\Client` (`7e201c93-ae5f-4a3a-8ead-d1ccf4ad5e30`).
@@ -65,19 +65,22 @@ No custom DB tables or shortcodes are created. Primary option is `ald_options` i
 [
 	'general_loadmore' => [
 		'gen_<key>' => [
-			'wrapper_title'  => 'Demo Cards',
-			'btn_selector'   => '.demo-cards',
-			'load_selector'  => '.demo-cards .card',
-			'visible_items'  => '3',
-			'load_items'     => '3',
-			'button_label'   => 'Show +[count] More',
-			'display_type'   => 'default', // Free: default|flex; Pro: +21 CSS display values
-			'button_classes' => 'button custom-pro-btn', // Pro
+			'wrapper_title'    => 'Demo Cards',
+			'enabled'          => 'yes', // Defaults to yes when absent
+			'button_placement' => 'after', // Defaults to inside when absent
+			'btn_selector'     => '.demo-cards',
+			'load_selector'    => '.demo-cards .card',
+			'visible_items'    => '3',
+			'load_items'       => '3',
+			'button_label'     => 'Show +[count] More',
+			'display_type'     => 'default', // Free: default|flex; Pro: +21 CSS display values
+			'button_classes'   => 'button custom-pro-btn', // Pro
 		],
 	],
 	'ajax_loadmore' => [
 		'ajax_<key>' => [
 			'wrapper_title'            => 'WooCommerce Shop Grid',
+			'enabled'                  => 'yes', // Defaults to yes when absent
 			'event_type'               => 'selectors_click', // selectors_click | scroll_to_load | custom_button (Pro)
 			'custom_button_append'     => 'ul.products',
 			'button_trigger_selector'  => '.woocommerce-pagination a.next',
@@ -111,19 +114,24 @@ No custom DB tables or shortcodes are created. Primary option is `ald_options` i
 
 - **Cupertino × WordPress-Native Design System (`assets/admin.css` & `assets/admin.js`):** Strictly scoped under `.ald-app` / `body.toplevel_page_ald_setting` with frosted sticky topbar, unsaved-changes badge, primary Save Changes button with live spinner, `Ctrl/Cmd + S` save shortcut, WAI-ARIA tablist (`Overview`, `General Selectors`, `Ajax Based`, `Settings & Code`, plus Pro `License & Updates`), bottom-right frosted toasts, and accessible Go Pro comparison modal rendered strictly inside `plugin_page()` (zero global `admin_footer` leaks, zero inline `<script>`/`<style>`).
 - **One-Click Selector Presets (`ald_get_selector_presets()`):**
-  - General: `List Items`, `Table Rows`, `Flex Card Grid`, `WP Comments`.
-  - Ajax: `WordPress Blog Archive`, `Gutenberg Query Loop`, `WooCommerce Shop Grid`, `Elementor Posts / Loop`.
-- **Hardened Admin AJAX (`admin/functions.php`):** `ald_save_settings`, `ald_add_general_loadmore`, and `ald_add_ajax_loadmore` all enforce `current_user_can( 'manage_options' )` and `wp_verify_nonce()` independently and return JSON responses (`wp_send_json_success` / `wp_send_json_error`).
+  - General presets include lists, table rows, Flex or Grid cards, comments, and Post Grid Master cards. The card recipes place the button after the container.
+  - Ajax presets include WordPress Blog Archive, Gutenberg Query Loop, WooCommerce classic shop and Product Collection, Elementor, and theme-specific archives and builders.
+  - Overview recipes switch tabs and add a populated wrapper. Suggested presets use the active parent theme and the WooCommerce, Elementor, Block Theme, and Post Grid Master checks.
+- **Wrapper controls:** Enable or disable each saved wrapper and duplicate settings within the existing Free wrapper limits. Disabled wrappers remain editable and count toward those limits.
+- **Overview and upgrade cards:** The Pro dialog resolves localized copy and a tagged upgrade URL from each control. Overview contains a Post Grid Master link and a review card for administrators with a configured wrapper and an install/tracking timestamp at least 14 days old. Dismissal is stored in `ald_review_dismissed` user meta.
+- **Hardened Admin AJAX (`admin/functions.php`):** `ald_save_settings`, `ald_add_general_loadmore`, `ald_add_ajax_loadmore`, and `ald_dismiss_review` all enforce `current_user_can( 'manage_options' )` and `wp_verify_nonce()` independently and return JSON responses (`wp_send_json_success` / `wp_send_json_error`).
 
 ---
 
 ## 4. Modern Frontend Runtime Engine (`assets/scripts.js`)
 
-- **General Load More:** Safely creates `.loadMoreBtn` via jQuery DOM construction (retaining `#loadMore` only on the first injected button to avoid duplicate IDs), applies `default` (`slideDown`) or exact configured CSS `display` (`flex`, `grid`, etc.), updates `.ald-count`, announces loaded batches to `.ald-sr-live`, and fires `ald_general_content_loaded`.
+- **General Load More:** Checks that both selectors match, inserts `.loadMoreBtn` inside the container or in an adjacent `.ald-btn-wrap`, and applies `.ald-item-hidden` only to the deferred items. Removing the class restores native CSS display, or applies an explicit allowlisted display type. The counter tracks the class even under a collapsed ancestor. Public button classes and `ald_general_content_loaded` remain available.
+- **Selector diagnostics:** Frontend wrappers report zero matches with their key and selector field to administrators with `manage_options` in the browser console.
 - **Ajax Load More & Infinite Scroll:**
   - Isolated per-wrapper `state` (`isLoading`, `xhr`, `observer`) with full `error` / abort recovery (never gets stuck).
   - Same-origin URL validation and safe link extraction (`$(e.target).closest('a').attr('href')` — no jQuery 3 removed `.context`).
   - Safe HTML parsing via `DOMParser` (prevents script execution on parse and matches both root & nested selectors via `parsedDoc.querySelectorAll()`).
-  - `IntersectionObserver` infinite scroll with `rootMargin` for Pro `trigger_offset` (and rAF-throttled fallback calling `lmaIsViewport`).
+  - Infinite scroll uses `IntersectionObserver` with `rootMargin` for Pro `trigger_offset` and a scroll fallback. Pagination can use `.ald-sr-only` to stay accessible without occupying layout space. A one-pixel sentinel outside the clipped wrapper marks the position of the next link.
+  - `insert_after_elements` inserts complete matched elements after the last current match. The WordPress Blog Archive preset uses this for articles and a separate replacement rule for pagination.
   - Triggers `ald_ajax_content_ready` (`[data, args, parsedDoc]`), `ald_ajax_content_loaded` (`[data, args]`), `ald_ajax_content_success` (`[args, parsedDoc]`), `ald_ajax_content_error`, plus `$(document.body).trigger('post-load')` and Elementor `runReadyTrigger` re-initialization.
   - Optional smooth `scroll_to_top` to the first updated container and customizable `no_more_text`.

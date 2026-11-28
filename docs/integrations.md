@@ -41,7 +41,7 @@
 | Interface | Producer | Consumer | Contract |
 |---|---|---|---|
 | Script handle `ald-scripts` | Free (`ajax-load-div.php:97`) | Pro (`js/lma-pro.min.js` dependency) | Must remain registered/enqueued on frontend |
-| Global `ald_params` | Free (`wp_localize_script`) | Free + Pro frontend JS | `{ nonce, ajaxurl, ald_pro: '1' \| '0' }` |
+| Global `ald_params` | Free (`wp_localize_script`) | Free + Pro frontend JS | `{ nonce, ajaxurl, diagnostics, ald_pro: '1' \| '0' }` |
 | Global `alda_params` | Free (`wp_localize_script`) | Free admin JS (`assets/admin.js`) | `{ nonce, ajaxurl, ald_pro: '1' \| '0' }` |
 | Global function `lmaIsViewport(el, offset)` | Pro (`js/lma-pro.js`) | Free `scroll_to_load` loop (`inc/ald-functions.php:502`) | Called whenever `ald_params.ald_pro == "1"` |
 | Event `ald_ajax_content_ready` | Free (`$(document).trigger`) | Pro (`js/lma-pro.js`) | Args: `[data, args]`; Pro updates `document.title` when `args.update_page_title == 'yes'` |
@@ -53,15 +53,19 @@
 
 | Capability | Free | Pro |
 |---|---|---|
-| General (DOM) wrappers | Up to **6** *(Go Pro modal table incorrectly states 5)* | Unlimited |
+| General (DOM) wrappers | Up to **6** | Unlimited |
 | Ajax wrappers | **1** | Unlimited |
 | General `display_type` | `default`, `flex` | +21 CSS display values (`grid`, `inline-block`, `table-row`, etc.) |
 | General `button_classes` | Locked UI field | Appended via `lmag_button_class` (`origin/licenser` 1.2.4+) |
 | Ajax `event_type` | `selectors_click`, `scroll_to_load` | + `custom_button` (injects `.ald-ajax-btn`) |
 | Ajax `trigger_offset` | Locked UI field (defaults to `0`) | Custom px offset via `lmaIsViewport()` |
-| Ajax `update_browser_url` / `update_page_title` | Disabled `<option>` | Enabled (`history.pushState` / `document.title`) |
+| Ajax `update_browser_url` / `update_page_title` | Locked controls with a contextual upgrade dialog | Enabled (`history.pushState` / `document.title`) |
 | `custom_css` | Included | Included |
 | `custom_js` | Locked upsell box | Editable CodeMirror textarea + `wp_footer` output |
+
+General and Ajax wrappers support an optional `enabled` value. Missing values behave as `yes`. The value `no` disables frontend execution and keeps the wrapper in settings. General wrappers also accept `button_placement: inside | after`. The default `inside` preserves existing placement, and `after` places `.loadMoreBtn` in a sibling `.ald-btn-wrap`. Pro still contributes classes through `lmag_button_class` and its explicit display types are applied by Free.
+
+Ajax implementation rows accept `insert_after_elements` to insert complete elements as siblings. Existing modes continue processing the matched container's inner HTML. Public Ajax events and their payloads are unchanged.
 
 ---
 
@@ -101,10 +105,10 @@ Verified live against `http://portal-addonmaster.local/wp-json/licenser/v1/publi
   - Registers General & Ajax button labels via `icl_register_string()` and translates via `apply_filters( 'wpml_translate_single_string', ... )`.
   - **Backward-compatibility caveat:** The WPML string domain is historically misspelled `'Load More Anyting'`. Changing it silently would orphan existing users' WPML translations; keep it or migrate gracefully.
 - **Elementor (`inc/ald-functions.php:100`):**
-  - Skips emitting `display: none` for General selectors when `defined('ELEMENTOR_VERSION') && \Elementor\Plugin::$instance->preview->is_preview_mode()`.
-  - **Bug to harden in Phase 1:** Does not guard against null `\Elementor\Plugin::$instance` or `->preview`, and does not re-trigger Elementor frontend widget handlers after Ajax content injection.
+  - Skips initializing General wrappers in Elementor preview mode.
+  - After Ajax updates the target, Free calls Elementor's frontend handler when available.
 - **WooCommerce & Gutenberg (`README.txt` & Ajax Engine):**
   - Works via selector-based full-page HTML extraction (`jQuery(selector, data).html()`).
-  - Current limitations to address in Phase 4: does not re-initialize lazy-loaded images/WooCommerce fragments/Gutenberg Interactivity directives after Ajax injection, lacks preset selector templates for standard WordPress themes, WooCommerce Shop, and Gutenberg Query Loop (`wp-block-query`).
+  - Set one pagination handler per loop. Presets cover WooCommerce classic shop and Product Collection and Gutenberg Query Loop. Scope selectors when multiple loops are present.
 - **Appsero Telemetry (WP.org `3.3.9` only — not in GitHub `dev`):**
   - Live WP.org `tags/3.3.9` added `appsero/src/{Client,Insights,License}.php` with hash `7e201c93-ae5f-4a3a-8ead-d1ccf4ad5e30`. Decide explicitly in Phase 1/2 whether to keep Appsero (synced to Git + fixing the `"Post Grid Master"` copy-paste typo in `README.txt` Privacy Policy) or remove it cleanly via `.github/release-removals.json`.

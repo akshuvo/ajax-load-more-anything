@@ -573,6 +573,11 @@ body.toplevel_page_ald_setting #wpfooter {
 	flex-wrap: wrap;
 }
 
+.ald-card__head > div {
+	flex: 1 1 0;
+	min-width: 0;
+}
+
 .ald-card h3 {
 	margin: 0;
 	font-size: 16px;
@@ -687,27 +692,23 @@ body.toplevel_page_ald_setting #wpfooter {
 	gap: 10px;
 }
 
-.ald-recipe-chip {
+.ald-preset-btn.ald-recipe-chip {
 	padding: 10px 12px;
 	border-radius: var(--ald-radius-sm);
 	background: var(--ald-surface-subtle);
 	border: 1px solid var(--ald-divider);
 	display: flex;
-	flex-direction: column;
-	gap: 4px;
+	text-align: left;
+}
+
+.ald-preset-btn.ald-recipe-chip:hover {
+	background: var(--ald-accent-soft);
+	border-color: var(--ald-accent);
 }
 
 .ald-recipe-chip strong {
 	font-size: 13px;
 	color: var(--ald-text);
-}
-
-.ald-recipe-chip code {
-	font-family: var(--ald-mono);
-	font-size: 12px;
-	background: transparent;
-	padding: 0;
-	color: var(--ald-accent-hover);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -865,8 +866,8 @@ body.toplevel_page_ald_setting #wpfooter {
 	color: var(--ald-text);
 }
 
-.ald-input,
-.ald-select {
+body.wp-core-ui .ald-app .ald-input,
+body.wp-core-ui .ald-app select.ald-select {
 	width: 100%;
 	max-width: 100%;
 	min-height: 38px;
@@ -880,13 +881,14 @@ body.toplevel_page_ald_setting #wpfooter {
 	box-shadow: none;
 }
 
-body.wp-core-ui .ald-app select.ald-select,
-.ald-app select.ald-select {
-	appearance: none;
+body.wp-core-ui .ald-app select.ald-select {
 	-webkit-appearance: none;
 	-moz-appearance: none;
+	appearance: none;
 	padding-right: 34px;
-	background: var(--ald-surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5.5 7.5L10 12L14.5 7.5' stroke='%234b5563' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5.5 7.5L10 12L14.5 7.5' stroke='%234b5563' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 10px center;
 	background-size: 16px 16px;
 }
 
@@ -894,15 +896,15 @@ body.wp-core-ui .ald-app select.ald-select,
 	color: var(--ald-placeholder);
 }
 
-.ald-input:focus,
-.ald-select:focus {
+body.wp-core-ui .ald-app .ald-input:focus,
+body.wp-core-ui .ald-app select.ald-select:focus {
 	border-color: var(--ald-accent);
 	box-shadow: 0 0 0 3px var(--ald-accent-ring);
 }
 
-.ald-input[disabled],
-.ald-select[disabled] {
-	background: var(--ald-surface-subtle);
+body.wp-core-ui .ald-app .ald-input[disabled],
+body.wp-core-ui .ald-app select.ald-select[disabled] {
+	background-color: var(--ald-surface-subtle);
 	color: var(--ald-text-muted);
 	cursor: not-allowed;
 }
@@ -986,6 +988,18 @@ body.wp-core-ui .ald-app select.ald-select,
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
+}
+
+.ald-mini-btn.ald-wrapper-enable,
+.ald-mini-btn.ald-wrapper-duplicate {
+	width: auto;
+	padding: 0 8px;
+	font-size: 12px;
+}
+
+.ald-wrapper-enable[aria-pressed="false"] {
+	background: var(--ald-surface-subtle);
+	color: var(--ald-text-muted);
 }
 
 .ald-mini-btn:hover {

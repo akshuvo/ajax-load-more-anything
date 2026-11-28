@@ -21,14 +21,16 @@ SVN_URL = 'https://plugins.svn.wordpress.org/' + SLUG
 RUNTIME_DIRS = {'admin', 'appsero', 'assets', 'inc', 'languages'}
 ROOT_FILES = {'ajax-load-div.php', 'README.txt', 'README.md'}
 LISTING_ASSET_DIR = '.wordpress'
+LISTING_BLUEPRINT = 'blueprints/blueprint.json'
 LISTING_ASSET_RE = re.compile(
-    r'^(banner-(772x250|1544x500)\.(png|jpg)|icon-(128x128|256x256)\.(png|jpg)|icon\.svg|screenshot-[1-9]\d*\.(png|jpg|gif))$'
+    r'^(banner-(772x250|1544x500)\.(png|jpg)|icon-(128x128|256x256)\.(png|jpg)|icon\.svg|screenshot-[1-9]\d*\.(png|jpg|gif)|blueprints/blueprint\.json)$'
 )
 LISTING_ASSET_MIME = {
     '.png': 'image/png',
     '.jpg': 'image/jpeg',
     '.gif': 'image/gif',
     '.svg': 'image/svg+xml',
+    '.json': 'application/json',
 }
 
 
@@ -125,17 +127,20 @@ def zip_manifest(path):
 
 def listing_assets(source, allow_untracked=False):
     asset_dir = source / LISTING_ASSET_DIR
+    require(not asset_dir.is_symlink(), 'Unsafe listing asset directory')
     if not asset_dir.exists():
         return []
-    require(asset_dir.is_dir() and not asset_dir.is_symlink(), 'Unsafe listing asset directory')
+    require(asset_dir.is_dir(), 'Unsafe listing asset directory')
+    blueprint_dir = (asset_dir / LISTING_BLUEPRINT).parent
+    require(not blueprint_dir.is_symlink(), 'Symlink rejected: blueprints')
     names = []
     if allow_untracked:
         for path in sorted(asset_dir.rglob('*')):
-            relative = path.relative_to(asset_dir)
+            filename = path.relative_to(asset_dir).as_posix()
+            require(not path.is_symlink(), 'Symlink rejected: ' + filename)
             if path.is_dir():
-                require(False, 'Nested listing asset directory rejected: ' + relative.as_posix())
-            require(not path.is_symlink(), 'Symlink rejected: ' + relative.as_posix())
-            filename = relative.as_posix()
+                require(path == blueprint_dir, 'Nested listing asset directory rejected: ' + filename)
+                continue
             if filename == '.DS_Store':
                 continue
             require(LISTING_ASSET_RE.fullmatch(filename), 'Invalid WordPress.org listing asset filename: ' + filename)
@@ -145,10 +150,7 @@ def listing_assets(source, allow_untracked=False):
     for entry in filter(None, entries):
         metadata, path = entry.split('\t', 1)
         require(metadata.split()[0] in ('100644', '100755'), 'Gitlink/symlink rejected: ' + path)
-        parts = PurePosixPath(path).parts
-        require(len(parts) == 2 and parts[0] == LISTING_ASSET_DIR,
-                'Nested listing asset path rejected: ' + path)
-        filename = parts[1]
+        filename = PurePosixPath(path).relative_to(LISTING_ASSET_DIR).as_posix()
         require(LISTING_ASSET_RE.fullmatch(filename), 'Invalid WordPress.org listing asset filename: ' + filename)
         names.append(filename)
     return sorted(names)
@@ -219,7 +221,10 @@ def build(source, output, tag=None, allow_untracked=False):
             original = source / LISTING_ASSET_DIR / name
             require(original.is_file() and not original.is_symlink() and original.stat().st_size > 0,
                     'Missing/empty listing asset: ' + name)
+            if name == LISTING_BLUEPRINT:
+                require(isinstance(read_json(original), dict), 'Playground Blueprint must be a JSON object')
             destination = listing_dir / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(original, destination)
             destination.chmod(0o644)
         listing_manifest = manifest(listing_dir)
@@ -303,6 +308,10 @@ def validate_stage(source, output):
             path.removeprefix('assets/') in staged_assets and
             item in ('added', 'modified', 'normal')
         )
+        is_allowed_asset = is_allowed_asset or (
+            path == 'assets/blueprints' and LISTING_BLUEPRINT in staged_assets and
+            item == 'added' and props == 'none'
+        )
         if assets_only:
             require(is_allowed_asset, 'SVN change outside approved assets: ' + path)
         else:
@@ -320,6 +329,20 @@ def validate_stage(source, output):
     diff = run('svn', 'diff', cwd=wc)
     (output / 'svn-diff.txt').write_text(diff)
     return hashlib.sha256((ET.canonicalize(status) + diff).encode()).hexdigest()
+
+
+def stage_listing_assets(output, wc, desired_assets, before_assets):
+    if not desired_assets:
+        return
+    for name in sorted(desired_assets):
+        require(LISTING_ASSET_RE.fullmatch(name), 'Invalid WordPress.org listing asset filename: ' + name)
+        destination = wc / 'assets' / name
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(output / 'listing-assets' / name, destination)
+    run('svn', 'add', '--force', '--no-ignore', '--no-auto-props', 'assets', cwd=wc)
+    for name in sorted(desired_assets.keys() - before_assets.keys()):
+        mime = LISTING_ASSET_MIME[Path(name).suffix.lower()]
+        run('svn', 'propset', 'svn:mime-type', mime, 'assets/' + name, cwd=wc)
 
 
 def stage(source, output, check_existing=False, allow_missing_svn=False, assets_only=False):
@@ -352,13 +375,7 @@ def stage(source, output, check_existing=False, allow_missing_svn=False, assets_
         run('svn', 'update', '--quiet', '--non-interactive', '--set-depth', 'infinity',
             '-r', str(revision), 'assets', cwd=wc)
         before_assets = manifest(wc / 'assets')
-        for name in sorted(desired_assets):
-            shutil.copyfile(output / 'listing-assets' / name, wc / 'assets' / name)
-        run('svn', 'add', '--force', '--no-ignore', '--no-auto-props', 'assets', cwd=wc)
-        for name in sorted(desired_assets):
-            if name not in before_assets:
-                mime = LISTING_ASSET_MIME[Path(name).suffix.lower()]
-                run('svn', 'propset', 'svn:mime-type', mime, 'assets/' + name, cwd=wc)
+        stage_listing_assets(output, wc, desired_assets, before_assets)
         expected_assets = {**before_assets, **desired_assets}
         state = {'version': release_version, 'revision': revision, 'root_changed': root_changed,
                  'baseline': {}, 'before_trunk': {}, 'assets': expected_assets,
@@ -415,14 +432,7 @@ def stage(source, output, check_existing=False, allow_missing_svn=False, assets_
     before_assets = manifest(wc / 'assets')
     listing_manifest_path = output / 'listing-assets-manifest.json'
     desired_assets = read_json(listing_manifest_path) if listing_manifest_path.is_file() else {}
-    if desired_assets:
-        for name in sorted(desired_assets):
-            shutil.copyfile(output / 'listing-assets' / name, wc / 'assets' / name)
-        run('svn', 'add', '--force', '--no-ignore', '--no-auto-props', 'assets', cwd=wc)
-        for name in sorted(desired_assets):
-            if name not in before_assets:
-                mime = LISTING_ASSET_MIME[Path(name).suffix.lower()]
-                run('svn', 'propset', 'svn:mime-type', mime, 'assets/' + name, cwd=wc)
+    stage_listing_assets(output, wc, desired_assets, before_assets)
     expected_assets = {**before_assets, **desired_assets}
     state = {'version': release_version, 'revision': revision, 'root_changed': root_changed,
              'baseline': baseline, 'before_trunk': before_trunk, 'assets': expected_assets,

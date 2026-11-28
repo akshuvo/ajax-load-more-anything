@@ -105,26 +105,10 @@
 			return parser.parseFromString(html, 'text/html');
 		}
 
-		/**
-		 * Reveal items using the configured CSS display type.
-		 *
-		 * @param {jQuery}  $items      Items to reveal.
-		 * @param {string}  displayType Configured display type.
-		 * @param {boolean} animate     Whether to animate default slideDown.
-		 */
-		function revealItems($items, displayType, animate) {
-			if (!$items.length) {
-				return;
+		function warnMissingSelector(wrapper, field, selector, $matches) {
+			if (params.diagnostics === '1' && selector && !$matches.length) {
+				window.console.warn('[Load More Anything] Wrapper "' + wrapper.key + '" matched 0 elements for ' + field + ':', selector);
 			}
-			if (!displayType || displayType === 'default') {
-				if (animate) {
-					$items.slideDown(250);
-				} else {
-					$items.show();
-				}
-				return;
-			}
-			$items.css({ display: displayType });
 		}
 
 		/**
@@ -133,9 +117,16 @@
 		 *
 		 * @param {jQuery}   $target       Target elements in live DOM.
 		 * @param {NodeList} sourceNodes   Matching elements in fetched Document.
-		 * @param {string}   implementType 'replace_data' | 'insert_after' | 'insert_before'
+		 * @param {string}   implementType 'replace_data' | 'insert_after' | 'insert_before' | 'insert_after_elements'
 		 */
 		function applyHtmlToTarget($target, sourceNodes, implementType) {
+			if (implementType === 'insert_after_elements') {
+				$target.last().after(Array.prototype.map.call(sourceNodes, function (node) {
+					return node.outerHTML;
+				}).join(''));
+				return;
+			}
+
 			var applySingle = function ($el, html) {
 				if (implementType === 'insert_before') {
 					$el.prepend(html);
@@ -167,6 +158,8 @@
 			params.general.forEach(function (wrapper) {
 				var $container = safeQuery(wrapper.btn_selector);
 				var $allItems = safeQuery(wrapper.load_selector);
+				warnMissingSelector(wrapper, 'btn_selector', wrapper.btn_selector, $container);
+				warnMissingSelector(wrapper, 'load_selector', wrapper.load_selector, $allItems);
 
 				if (!$container.length || !$allItems.length) {
 					return;
@@ -176,35 +169,42 @@
 				var loadItems = Math.max(1, parseInt(wrapper.load_items, 10) || 3);
 				var displayType = wrapper.display_type || 'default';
 
-				// Hide all items initially, then reveal initial slice.
-				$allItems.hide();
-				revealItems($allItems.slice(0, visibleItems), displayType, false);
-
-				// Build button safely without string interpolation of user selectors.
-				var $btn = $('<a>', {
-					href: '#',
-					role: 'button',
-					'class': wrapper.button_class || 'btn loadMoreBtn'
-				}).attr('data-glm-button-selector', wrapper.btn_selector);
-
-				// Retain legacy #loadMore id on first injected button only (avoids duplicate DOM IDs).
-				if (!document.getElementById('loadMore')) {
-					$btn.attr('id', 'loadMore');
+				function reveal($items) {
+					if (displayType !== 'default') {
+						$items.css('display', displayType);
+					}
+					$items.removeClass('ald-item-hidden');
 				}
 
-				var $label = $('<span class="loadMoreBtn-label"></span>').html(wrapper.button_label || 'Load More');
-				$btn.append($label);
-				$container.append($btn);
+				var $buttons = $();
+				$container.each(function () {
+					var $button = $('<a>', {
+						href: '#',
+						role: 'button',
+						'class': wrapper.button_class || 'btn loadMoreBtn'
+					}).attr('data-glm-button-selector', wrapper.btn_selector);
 
-				var $buttons = $container.find('.loadMoreBtn').filter(function () {
-					return $(this).attr('data-glm-button-selector') === wrapper.btn_selector;
+					if (!document.getElementById('loadMore')) {
+						$button.attr('id', 'loadMore');
+					}
+
+					$button.append($('<span class="loadMoreBtn-label"></span>').html(wrapper.button_label || 'Load More'));
+					if (wrapper.button_placement === 'after') {
+						$(this).after($('<div class="ald-btn-wrap"></div>').append($button));
+					} else {
+						$(this).append($button);
+					}
+					$buttons = $buttons.add($button);
 				});
 
-				var updateCount = function () {
-					var remaining = safeQuery(wrapper.load_selector).filter(':hidden').length;
-					$container.find('.ald-count').text(remaining);
+				$allItems.slice(visibleItems).addClass('ald-item-hidden');
+				reveal($allItems.slice(0, visibleItems));
+
+				function updateCount() {
+					var remaining = $allItems.filter('.ald-item-hidden').length;
+					$buttons.find('.ald-count').text(remaining);
 					return remaining;
-				};
+				}
 
 				if (updateCount() === 0) {
 					$buttons.hide();
@@ -212,13 +212,10 @@
 
 				$buttons.on('click', function (e) {
 					e.preventDefault();
-					var $hidden = safeQuery(wrapper.load_selector).filter(':hidden');
-					var $batch = $hidden.slice(0, loadItems);
+					var $batch = $allItems.filter('.ald-item-hidden').slice(0, loadItems);
+					reveal($batch);
 
-					revealItems($batch, displayType, true);
-
-					var remaining = updateCount();
-					if (remaining === 0) {
+					if (updateCount() === 0) {
 						$buttons.fadeOut('slow');
 					}
 
@@ -278,12 +275,30 @@
 				var state = {
 					isLoading: false,
 					xhr: null,
-					observer: null
+					observer: null,
+					$sentinel: $()
 				};
+				var $links = safeQuery(wrapper.click_selector);
+				warnMissingSelector(wrapper, 'click_selector', wrapper.click_selector, $links);
+				if (params.diagnostics === '1') {
+					(wrapper.data_implement_selectors || []).forEach(function (row) {
+						warnMissingSelector(wrapper, 'data_selector', row.data_selector, safeQuery(row.data_selector));
+					});
+				}
+
+				var $pagination = $();
+				if (wrapper.event_type !== 'selectors_click' && wrapper.hide_selector_wrapper === 'yes') {
+					$pagination = safeQuery(wrapper.wrapper_to_hide);
+					warnMissingSelector(wrapper, 'wrapper_to_hide', wrapper.wrapper_to_hide, $pagination);
+				}
+				if (wrapper.event_type === 'scroll_to_load' && $links.length) {
+					$pagination.addClass('ald-sr-only');
+				}
 
 				// Inject custom Ajax Load More button for Pro custom_button event type.
 				if (params.ald_pro === '1' && wrapper.event_type === 'custom_button' && wrapper.custom_button_append) {
 					var $appendTarget = safeQuery(wrapper.custom_button_append);
+					warnMissingSelector(wrapper, 'custom_button_append', wrapper.custom_button_append, $appendTarget);
 					if ($appendTarget.length) {
 						var $ajaxBtn = $('<button>', {
 							type: 'button',
@@ -294,8 +309,10 @@
 						$ajaxBtn.append($('<span class="ald-btn-label"></span>').text(wrapper.button_label || 'Load More'));
 						$appendTarget.after($ajaxBtn);
 
-						if (!safeQuery(wrapper.click_selector).length) {
+						if (!$links.length) {
 							$ajaxBtn.hide();
+						} else {
+							$pagination.addClass('ald-sr-only');
 						}
 					}
 				}
@@ -458,13 +475,23 @@
 						state.observer = null;
 					}
 
-					if (wrapper.event_type !== 'scroll_to_load') {
-						return;
-					}
+					state.$sentinel.remove();
+					state.$sentinel = $();
 
 					var $targetEl = safeQuery(wrapper.click_selector).last();
 					if (!$targetEl.length) {
 						return;
+					}
+
+					// A clipped pagination link has no visible intersection area. Observe a
+					// one-pixel marker in its original flow position, outside the clipped box.
+					var $hiddenPagination = $targetEl.parents('.ald-sr-only').last();
+					if (!$hiddenPagination.length) {
+						$hiddenPagination = $targetEl.filter('.ald-sr-only');
+					}
+					if ($hiddenPagination.length) {
+						state.$sentinel = $('<span class="ald-pagination-sentinel" aria-hidden="true"></span>');
+						$hiddenPagination.after(state.$sentinel);
 					}
 
 					var offset = Math.max(0, parseInt(wrapper.trigger_offset, 10) || 0);
@@ -474,7 +501,7 @@
 							function (entries) {
 								entries.forEach(function (entry) {
 									if (entry.isIntersecting && !state.isLoading) {
-										$(entry.target).trigger('click');
+										$targetEl.trigger('click');
 									}
 								});
 							},
@@ -485,14 +512,13 @@
 							}
 						);
 
-						state.observer.observe($targetEl.get(0));
+						state.observer.observe((state.$sentinel.length ? state.$sentinel : $targetEl).get(0));
 					}
 				}
 
 				if (wrapper.event_type === 'scroll_to_load') {
-					if ('IntersectionObserver' in window) {
-						bindScrollObserver();
-					} else {
+					bindScrollObserver();
+					if (!('IntersectionObserver' in window)) {
 						var scrollTicking = false;
 						$(window).on('scroll', function () {
 							if (scrollTicking || state.isLoading) {
@@ -506,7 +532,7 @@
 								if (!$targetEl.length) {
 									return;
 								}
-								var el = $targetEl.get(0);
+								var el = (state.$sentinel.length ? state.$sentinel : $targetEl).get(0);
 								var isInview = false;
 								if (params.ald_pro === '1' && typeof window.lmaIsViewport === 'function') {
 									isInview = window.lmaIsViewport(el, offset);

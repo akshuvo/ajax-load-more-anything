@@ -100,7 +100,7 @@ add_action( 'add_option_ald_options', 'update_option_ald_options_hook', 10, 0 );
  * @return array
  */
 function ald_get_selector_presets() {
-	return [
+	$presets = [
 		'general' => [
 			'list_items' => [
 				'title'         => __( 'List Items', 'ajax-load-more-anything' ),
@@ -123,14 +123,15 @@ function ald_get_selector_presets() {
 				'display_type'  => 'default',
 			],
 			'card_grid'  => [
-				'title'         => __( 'Flex Card Grid', 'ajax-load-more-anything' ),
-				'wrapper_title' => __( 'Flex Card Grid', 'ajax-load-more-anything' ),
-				'btn_selector'  => '.ald-cards-section',
-				'load_selector' => '.ald-cards-section .ald-card-item',
-				'visible_items' => '6',
-				'load_items'    => '3',
-				'button_label'  => __( 'Load +[count] More', 'ajax-load-more-anything' ),
-				'display_type'  => 'flex',
+				'title'            => __( 'Flex Card Grid', 'ajax-load-more-anything' ),
+				'wrapper_title'    => __( 'Flex Card Grid', 'ajax-load-more-anything' ),
+				'btn_selector'     => '.ald-cards-section',
+				'load_selector'    => '.ald-cards-section .ald-card-item',
+				'visible_items'    => '6',
+				'load_items'       => '3',
+				'button_label'     => __( 'Load +[count] More', 'ajax-load-more-anything' ),
+				'display_type'     => 'default',
+				'button_placement' => 'after',
 			],
 			'comments'   => [
 				'title'         => __( 'WP Comments', 'ajax-load-more-anything' ),
@@ -148,16 +149,16 @@ function ald_get_selector_presets() {
 				'title'                    => __( 'WordPress Blog Archive', 'ajax-load-more-anything' ),
 				'wrapper_title'            => __( 'WordPress Blog Archive', 'ajax-load-more-anything' ),
 				'event_type'               => 'selectors_click',
-				'click_selector'           => '.navigation.pagination a.next, .nav-links a.next',
+				'click_selector'           => '.site-main .navigation.pagination a.next, .site-main .nav-links a.next',
 				'hide_selector_wrapper'    => 'no',
-				'wrapper_to_hide'          => '.navigation.pagination, .nav-links',
+				'wrapper_to_hide'          => '.site-main .navigation.pagination, .site-main .navigation:not(.pagination) > .nav-links, .site-main > .nav-links',
 				'data_implement_selectors' => [
 					[
-						'data_selector'  => '.site-main',
-						'implement_type' => 'insert_after',
+						'data_selector'  => '.site-main > article',
+						'implement_type' => 'insert_after_elements',
 					],
 					[
-						'data_selector'  => '.navigation.pagination, .nav-links',
+						'data_selector'  => '.site-main .navigation.pagination, .site-main .navigation:not(.pagination) > .nav-links, .site-main > .nav-links',
 						'implement_type' => 'replace_data',
 					],
 				],
@@ -218,6 +219,98 @@ function ald_get_selector_presets() {
 			],
 		],
 	];
+
+	$collection                        = '.wp-block-woocommerce-product-collection';
+	$presets['ajax']['woo_collection'] = ald_ajax_archive_preset(
+		__( 'WooCommerce Product Collection', 'ajax-load-more-anything' ),
+		$collection . ' .wc-block-product-template',
+		$collection . ' .wp-block-query-pagination-next',
+		$collection . ' .wp-block-query-pagination',
+		true
+	);
+
+	$presets['ajax']['astra']         = ald_ajax_archive_preset( __( 'Astra Blog Archive', 'ajax-load-more-anything' ), '.site-main > .ast-row', '.ast-pagination a.next', '.ast-pagination' );
+	$presets['ajax']['kadence']       = ald_ajax_archive_preset( __( 'Kadence Blog Archive', 'ajax-load-more-anything' ), '#archive-container', '.navigation.pagination a.next', '.navigation.pagination' );
+	$presets['ajax']['generatepress'] = ald_ajax_archive_preset( __( 'GeneratePress Blog Archive', 'ajax-load-more-anything' ), '.site-main > article', '.paging-navigation a.next', '.paging-navigation', false, 'insert_after_elements' );
+	$presets['ajax']['bricks']        = ald_ajax_archive_preset( __( 'Bricks Query Loop', 'ajax-load-more-anything' ), '.brxe-posts .bricks-layout-wrapper', '.bricks-pagination a.next, .brxe-pagination a.next', '.brxe-pagination, .bricks-pagination:not(.brxe-pagination .bricks-pagination)' );
+	$presets['ajax']['divi']          = ald_ajax_archive_preset( __( 'Divi Blog Module (Fullwidth)', 'ajax-load-more-anything' ), '.et_pb_posts .et_pb_ajax_pagination_container > article, .et_pb_posts > article', '.et_pb_posts .pagination .alignleft a, .et_pb_posts .pagination a.next', '.et_pb_posts .pagination', false, 'insert_after_elements' );
+	$presets['ajax']['blocksy']       = ald_ajax_archive_preset( __( 'Blocksy Blog Archive', 'ajax-load-more-anything' ), '.entries', '.ct-pagination a.next', '.ct-pagination' );
+	$presets['ajax']['storefront']    = ald_ajax_archive_preset( __( 'Storefront Blog Archive', 'ajax-load-more-anything' ), '.site-main > article', '.site-main .navigation.pagination a.next', '.site-main .navigation.pagination', false, 'insert_after_elements' );
+
+	$presets['general']['post_grid_master'] = [
+		'title'            => __( 'Post Grid Master Cards', 'ajax-load-more-anything' ),
+		'wrapper_title'    => __( 'Post Grid Master Cards', 'ajax-load-more-anything' ),
+		'btn_selector'     => '.am_post_grid',
+		'load_selector'    => '.am_post_grid > .am_grid_col',
+		'visible_items'    => '6',
+		'load_items'       => '3',
+		'button_label'     => __( 'Load +[count] More', 'ajax-load-more-anything' ),
+		'display_type'     => 'default',
+		'button_placement' => 'after',
+	];
+
+	return $presets;
+}
+
+/**
+ * Build an Ajax preset from a list and pagination selectors.
+ *
+ * @param string $title      Preset title.
+ * @param string $items      Content selector.
+ * @param string $next       Next-page link selector.
+ * @param string $pagination Pagination selector.
+ * @param bool   $scroll     Whether to use infinite scroll.
+ * @param string $mode       Insertion mode for the content.
+ * @return array
+ */
+function ald_ajax_archive_preset( $title, $items, $next, $pagination, $scroll = false, $mode = 'insert_after' ) {
+	return [
+		'title'                    => $title,
+		'wrapper_title'            => $title,
+		'event_type'               => $scroll ? 'scroll_to_load' : 'selectors_click',
+		'click_selector'           => $next,
+		'hide_selector_wrapper'    => $scroll ? 'yes' : 'no',
+		'wrapper_to_hide'          => $pagination,
+		'data_implement_selectors' => [
+			[
+				'data_selector'  => $items,
+				'implement_type' => $mode,
+			],
+			[
+				'data_selector'  => $pagination,
+				'implement_type' => 'replace_data',
+			],
+		],
+	];
+}
+
+/**
+ * Suggest presets based on active plugins and the parent theme.
+ *
+ * @return array
+ */
+function ald_get_stack_presets() {
+	$presets = [];
+	$block   = function_exists( 'wp_is_block_theme' ) && wp_is_block_theme();
+	$theme   = strtolower( get_template() );
+
+	if ( defined( 'WC_VERSION' ) ) {
+		$presets[] = [ 'ajax', $block ? 'woo_collection' : 'woocommerce' ];
+	}
+	if ( defined( 'ELEMENTOR_VERSION' ) ) {
+		$presets[] = [ 'ajax', 'elementor' ];
+	}
+	if ( $block ) {
+		$presets[] = [ 'ajax', 'gutenberg' ];
+	}
+	if ( in_array( $theme, [ 'astra', 'kadence', 'generatepress', 'blocksy', 'storefront', 'divi', 'bricks' ], true ) ) {
+		$presets[] = [ 'ajax', $theme ];
+	}
+	if ( defined( 'GRIDMASTER_VERSION' ) ) {
+		$presets[] = [ 'general', 'post_grid_master' ];
+	}
+
+	return $presets;
 }
 
 /**
@@ -322,19 +415,21 @@ function ald_add_general_loadmore_wrap( $args ) {
 	if ( '' === $key ) {
 		$key = 'gen_' . strtolower( wp_generate_password( 6, false ) );
 	}
+	$group = 'general_loadmore';
 
 	/* translators: %d: Wrapper number. */
-	$default_title  = sprintf( __( 'General Wrapper #%d', 'ajax-load-more-anything' ), $thiskey + 1 );
-	$wrapper_title  = ! empty( $selector['wrapper_title'] ) ? (string) $selector['wrapper_title'] : $default_title;
-	$btn_selector   = isset( $selector['btn_selector'] ) ? (string) $selector['btn_selector'] : '';
-	$load_selector  = isset( $selector['load_selector'] ) ? (string) $selector['load_selector'] : '';
-	$visible_items  = isset( $selector['visible_items'] ) ? (string) $selector['visible_items'] : '';
-	$load_items     = isset( $selector['load_items'] ) ? (string) $selector['load_items'] : '';
-	$button_label   = isset( $selector['button_label'] ) ? (string) $selector['button_label'] : '';
-	$display_type   = isset( $selector['display_type'] ) ? (string) $selector['display_type'] : 'default';
-	$button_classes = isset( $selector['button_classes'] ) ? (string) $selector['button_classes'] : '';
-	$is_pro         = ald_is_pro();
-	$expanded_class = ! empty( $args['expanded'] ) ? ' opened' : '';
+	$default_title    = sprintf( __( 'General Wrapper #%d', 'ajax-load-more-anything' ), $thiskey + 1 );
+	$wrapper_title    = ! empty( $selector['wrapper_title'] ) ? (string) $selector['wrapper_title'] : $default_title;
+	$btn_selector     = isset( $selector['btn_selector'] ) ? (string) $selector['btn_selector'] : '';
+	$load_selector    = isset( $selector['load_selector'] ) ? (string) $selector['load_selector'] : '';
+	$visible_items    = isset( $selector['visible_items'] ) ? (string) $selector['visible_items'] : '';
+	$load_items       = isset( $selector['load_items'] ) ? (string) $selector['load_items'] : '';
+	$button_label     = isset( $selector['button_label'] ) ? (string) $selector['button_label'] : '';
+	$display_type     = ald_sanitize_display_type( $selector['display_type'] ?? 'default' );
+	$button_placement = $selector['button_placement'] ?? 'inside';
+	$button_classes   = isset( $selector['button_classes'] ) ? (string) $selector['button_classes'] : '';
+	$is_pro           = ald_is_pro();
+	$expanded_class   = ! empty( $args['expanded'] ) ? ' opened' : '';
 
 	ob_start();
 	do_action( 'ald_general_loadmore_before_wrap', $args );
@@ -362,6 +457,7 @@ function ald_add_general_loadmore_wrap( $args ) {
 				</span>
 			</div>
 			<div class="ald-wrapper-card__controls">
+				<?php ald_wrapper_controls( $group, $key, $selector ); ?>
 				<button type="button" class="ald-icon-btn ald-icon-btn--danger delete_field" title="<?php esc_attr_e( 'Remove wrapper', 'ajax-load-more-anything' ); ?>" aria-label="<?php esc_attr_e( 'Remove wrapper', 'ajax-load-more-anything' ); ?>">
 					<span class="dashicons dashicons-trash" aria-hidden="true"></span>
 				</button>
@@ -374,7 +470,15 @@ function ald_add_general_loadmore_wrap( $args ) {
 				<div class="ald-field">
 					<label for="general_loadmore-btn_selector-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Button Insert Wrapper Selector', 'ajax-load-more-anything' ); ?></label>
 					<input id="general_loadmore-btn_selector-<?php echo esc_attr( $key ); ?>" class="ald-input ald-mono" type="text" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][btn_selector]" value="<?php echo esc_attr( $btn_selector ); ?>" placeholder="#selector" />
-					<p class="desc"><?php esc_html_e( 'The Load More button will be appended inside the end of this container.', 'ajax-load-more-anything' ); ?></p>
+					<p class="desc"><?php esc_html_e( 'The container used to position the Load More button.', 'ajax-load-more-anything' ); ?></p>
+				</div>
+
+				<div class="ald-field">
+					<label for="general_loadmore-button_placement-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Button Placement', 'ajax-load-more-anything' ); ?></label>
+					<select id="general_loadmore-button_placement-<?php echo esc_attr( $key ); ?>" class="ald-select" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][button_placement]">
+						<option value="inside" <?php selected( $button_placement, 'inside' ); ?>><?php esc_html_e( 'Inside the container', 'ajax-load-more-anything' ); ?></option>
+						<option value="after" <?php selected( $button_placement, 'after' ); ?>><?php esc_html_e( 'After the container (Flex or Grid)', 'ajax-load-more-anything' ); ?></option>
+					</select>
 				</div>
 
 				<div class="ald-field">
@@ -416,7 +520,10 @@ function ald_add_general_loadmore_wrap( $args ) {
 				</div>
 
 				<div class="ald-field">
-					<label for="general_loadmore-display_type-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Item Display Type', 'ajax-load-more-anything' ); ?></label>
+					<div class="ald-field__label-row">
+						<label for="general_loadmore-display_type-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Item Display Type', 'ajax-load-more-anything' ); ?></label>
+						<?php ald_available_in_pro( 'display_type' ); ?>
+					</div>
 					<select id="general_loadmore-display_type-<?php echo esc_attr( $key ); ?>" class="ald-select" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][display_type]">
 						<?php
 						foreach ( ald_display_types() as $option_value => $option ) :
@@ -435,7 +542,7 @@ function ald_add_general_loadmore_wrap( $args ) {
 				<div class="ald-field ald-field--full ald-pro-field">
 					<div class="ald-field__label-row">
 						<label for="general_loadmore-button_classes-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Custom Button Classes', 'ajax-load-more-anything' ); ?></label>
-						<?php ald_available_in_pro(); ?>
+						<?php ald_available_in_pro( 'button_classes' ); ?>
 					</div>
 					<input id="general_loadmore-button_classes-<?php echo esc_attr( $key ); ?>" class="ald-input ald-mono" type="text" name="ald_options[general_loadmore][<?php echo esc_attr( $key ); ?>][button_classes]" value="<?php echo esc_attr( $button_classes ); ?>" placeholder="button btn-primary" <?php disabled( ! $is_pro, true ); ?> />
 					<p class="desc"><?php esc_html_e( 'Space-separated CSS classes appended to the Load More button.', 'ajax-load-more-anything' ); ?></p>
@@ -519,6 +626,7 @@ function ald_add_ajax_loadmore_wrap( $args ) {
 	if ( '' === $key ) {
 		$key = 'ajax_' . strtolower( wp_generate_password( 6, false ) );
 	}
+	$group = 'ajax_loadmore';
 
 	/* translators: %d: Wrapper number. */
 	$default_title            = sprintf( __( 'Ajax Wrapper #%d', 'ajax-load-more-anything' ), $thiskey + 1 );
@@ -537,7 +645,14 @@ function ald_add_ajax_loadmore_wrap( $args ) {
 	$scroll_to_top            = isset( $selector['scroll_to_top'] ) ? (string) $selector['scroll_to_top'] : 'no';
 	$data_implement_selectors = isset( $selector['data_implement_selectors'] ) && is_array( $selector['data_implement_selectors'] ) ? $selector['data_implement_selectors'] : [];
 	$is_pro                   = ald_is_pro();
-	$expanded_class           = ! empty( $args['expanded'] ) ? ' opened' : '';
+	if ( ! $is_pro ) {
+		$update_browser_url = 'no';
+		$update_page_title  = 'no';
+		if ( 'custom_button' === $event_type ) {
+			$event_type = 'selectors_click';
+		}
+	}
+	$expanded_class = ! empty( $args['expanded'] ) ? ' opened' : '';
 
 	$event_labels = [
 		'selectors_click' => __( 'Selector Click', 'ajax-load-more-anything' ),
@@ -564,6 +679,7 @@ function ald_add_ajax_loadmore_wrap( $args ) {
 				<span class="ald-pill ald-pill--accent ald-event-pill"><?php echo esc_html( $event_badge ); ?></span>
 			</div>
 			<div class="ald-wrapper-card__controls">
+				<?php ald_wrapper_controls( $group, $key, $selector ); ?>
 				<button type="button" class="ald-icon-btn ald-icon-btn--danger delete_field" title="<?php esc_attr_e( 'Remove wrapper', 'ajax-load-more-anything' ); ?>" aria-label="<?php esc_attr_e( 'Remove wrapper', 'ajax-load-more-anything' ); ?>">
 					<span class="dashicons dashicons-trash" aria-hidden="true"></span>
 				</button>
@@ -574,7 +690,10 @@ function ald_add_ajax_loadmore_wrap( $args ) {
 		<div class="ald-wrapper-card__body ald-toggle-wrap" <?php echo empty( $args['expanded'] ) ? 'hidden' : ''; ?>>
 			<div class="ald-field-grid">
 				<div class="ald-field">
-					<label for="ajax_loadmore-event_type-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Event Trigger Type', 'ajax-load-more-anything' ); ?></label>
+					<div class="ald-field__label-row">
+						<label for="ajax_loadmore-event_type-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Event Trigger Type', 'ajax-load-more-anything' ); ?></label>
+						<?php ald_available_in_pro( 'custom_button' ); ?>
+					</div>
 					<select id="ajax_loadmore-event_type-<?php echo esc_attr( $key ); ?>" data-pro-val="custom_button" class="option-select-lmapro-modal-trigger ald-select ajax_loadmore-event_type" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][event_type]">
 						<option value="selectors_click" <?php selected( $event_type, 'selectors_click' ); ?>><?php esc_html_e( 'Selector(s) Click (Ajax Pagination)', 'ajax-load-more-anything' ); ?></option>
 						<option value="scroll_to_load" <?php selected( $event_type, 'scroll_to_load' ); ?>><?php esc_html_e( 'Scroll to Load (Infinite Scroll)', 'ajax-load-more-anything' ); ?></option>
@@ -613,7 +732,7 @@ function ald_add_ajax_loadmore_wrap( $args ) {
 				<div class="ald-field ajax_loadmore-trigger_offset ald-pro-field" data-id="trigger_offset">
 					<div class="ald-field__label-row">
 						<label for="ajax_loadmore-trigger_offset-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Infinite Scroll Trigger Offset (px)', 'ajax-load-more-anything' ); ?></label>
-						<?php ald_available_in_pro(); ?>
+						<?php ald_available_in_pro( 'scroll_offset' ); ?>
 					</div>
 					<input id="ajax_loadmore-trigger_offset-<?php echo esc_attr( $key ); ?>" class="ald-input" type="number" min="0" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][trigger_offset]" value="<?php echo esc_attr( $trigger_offset ); ?>" placeholder="300" <?php disabled( ! $is_pro, true ); ?> />
 					<p class="desc"><?php esc_html_e( 'Pixels before the pagination link enters the viewport to pre-fetch the next page.', 'ajax-load-more-anything' ); ?></p>
@@ -642,7 +761,10 @@ function ald_add_ajax_loadmore_wrap( $args ) {
 				</div>
 
 				<div class="ald-field">
-					<label for="ajax_loadmore-update_browser_url-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Update Browser URL?', 'ajax-load-more-anything' ); ?></label>
+					<div class="ald-field__label-row">
+						<label for="ajax_loadmore-update_browser_url-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Update Browser URL?', 'ajax-load-more-anything' ); ?></label>
+						<?php ald_available_in_pro( 'url_sync' ); ?>
+					</div>
 					<select id="ajax_loadmore-update_browser_url-<?php echo esc_attr( $key ); ?>" class="ald-select" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][update_browser_url]">
 						<option value="no" <?php selected( $update_browser_url, 'no' ); ?>><?php esc_html_e( 'No', 'ajax-load-more-anything' ); ?></option>
 						<option value="yes" <?php disabled( ! $is_pro, true ); ?> <?php selected( $update_browser_url, 'yes' ); ?>><?php echo esc_html( __( 'Yes', 'ajax-load-more-anything' ) . ( $is_pro ? '' : ' ' . __( '(Pro)', 'ajax-load-more-anything' ) ) ); ?></option>
@@ -650,7 +772,10 @@ function ald_add_ajax_loadmore_wrap( $args ) {
 				</div>
 
 				<div class="ald-field">
-					<label for="ajax_loadmore-update_page_title-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Update Page Title?', 'ajax-load-more-anything' ); ?></label>
+					<div class="ald-field__label-row">
+						<label for="ajax_loadmore-update_page_title-<?php echo esc_attr( $key ); ?>"><?php esc_html_e( 'Update Page Title?', 'ajax-load-more-anything' ); ?></label>
+						<?php ald_available_in_pro( 'page_title' ); ?>
+					</div>
 					<select id="ajax_loadmore-update_page_title-<?php echo esc_attr( $key ); ?>" class="ald-select" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][update_page_title]">
 						<option value="no" <?php selected( $update_page_title, 'no' ); ?>><?php esc_html_e( 'No', 'ajax-load-more-anything' ); ?></option>
 						<option value="yes" <?php disabled( ! $is_pro, true ); ?> <?php selected( $update_page_title, 'yes' ); ?>><?php echo esc_html( __( 'Yes', 'ajax-load-more-anything' ) . ( $is_pro ? '' : ' ' . __( '(Pro)', 'ajax-load-more-anything' ) ) ); ?></option>
@@ -689,6 +814,7 @@ function ald_add_ajax_loadmore_wrap( $args ) {
 											<select class="ald-select" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][data_implement_selectors][<?php echo esc_attr( $dis_key ); ?>][implement_type]">
 												<option value="replace_data" <?php selected( $implement_type, 'replace_data' ); ?>><?php esc_html_e( 'Replace Data', 'ajax-load-more-anything' ); ?></option>
 												<option value="insert_after" <?php selected( $implement_type, 'insert_after' ); ?>><?php esc_html_e( 'Insert After (Append)', 'ajax-load-more-anything' ); ?></option>
+																<option value="insert_after_elements" <?php selected( $implement_type, 'insert_after_elements' ); ?>><?php esc_html_e( 'Insert After Matching Elements', 'ajax-load-more-anything' ); ?></option>
 												<option value="insert_before" <?php selected( $implement_type, 'insert_before' ); ?>><?php esc_html_e( 'Insert Before (Prepend)', 'ajax-load-more-anything' ); ?></option>
 											</select>
 										</td>
@@ -709,6 +835,7 @@ function ald_add_ajax_loadmore_wrap( $args ) {
 										<td>
 											<select class="ald-select" name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][data_implement_selectors][0][implement_type]">
 												<option value="insert_after"><?php esc_html_e( 'Insert After (Append)', 'ajax-load-more-anything' ); ?></option>
+												<option value="insert_after_elements"><?php esc_html_e( 'Insert After Matching Elements', 'ajax-load-more-anything' ); ?></option>
 												<option value="replace_data"><?php esc_html_e( 'Replace Data', 'ajax-load-more-anything' ); ?></option>
 												<option value="insert_before"><?php esc_html_e( 'Insert Before (Prepend)', 'ajax-load-more-anything' ); ?></option>
 											</select>
@@ -730,6 +857,7 @@ function ald_add_ajax_loadmore_wrap( $args ) {
 										<select class="ald-select" disabled name="ald_options[ajax_loadmore][<?php echo esc_attr( $key ); ?>][data_implement_selectors][__ROW__][implement_type]">
 											<option value="replace_data"><?php esc_html_e( 'Replace Data', 'ajax-load-more-anything' ); ?></option>
 											<option value="insert_after"><?php esc_html_e( 'Insert After (Append)', 'ajax-load-more-anything' ); ?></option>
+											<option value="insert_after_elements"><?php esc_html_e( 'Insert After Matching Elements', 'ajax-load-more-anything' ); ?></option>
 											<option value="insert_before"><?php esc_html_e( 'Insert Before (Prepend)', 'ajax-load-more-anything' ); ?></option>
 										</select>
 									</td>
@@ -750,6 +878,29 @@ function ald_add_ajax_loadmore_wrap( $args ) {
 	<?php
 	$output = ob_get_clean();
 	do_action( 'ald_ajax_loadmore_after_wrap', $output, $args );
+}
+
+/**
+ * Render controls shared by General and Ajax wrapper cards.
+ *
+ * @param string $group    Saved wrapper group.
+ * @param string $key      Wrapper key.
+ * @param array  $selector Saved wrapper configuration.
+ * @return void
+ */
+function ald_wrapper_controls( $group, $key, $selector ) {
+	$enabled = 'no' !== ( $selector['enabled'] ?? 'yes' );
+	?>
+	<button type="button" class="ald-mini-btn ald-wrapper-enable" aria-pressed="<?php echo $enabled ? 'true' : 'false'; ?>" aria-label="<?php esc_attr_e( 'Enable wrapper', 'ajax-load-more-anything' ); ?>">
+		<?php
+		echo $enabled
+			? esc_html__( 'Enabled', 'ajax-load-more-anything' )
+			: esc_html__( 'Disabled', 'ajax-load-more-anything' );
+		?>
+	</button>
+	<input type="hidden" class="ald-wrapper-enabled" name="ald_options[<?php echo esc_attr( $group ); ?>][<?php echo esc_attr( $key ); ?>][enabled]" value="<?php echo $enabled ? 'yes' : 'no'; ?>" />
+	<button type="button" class="ald-mini-btn ald-wrapper-duplicate"><?php esc_html_e( 'Duplicate', 'ajax-load-more-anything' ); ?></button>
+	<?php
 }
 
 /**
@@ -781,6 +932,131 @@ function ald_plugin_name_data() {
 add_action( 'ald_left_panel', 'ald_plugin_name_data', 10 );
 
 /**
+ * Get the localized copy and upgrade URL for each Pro entry point.
+ *
+ * @return array
+ */
+function ald_get_pro_contexts() {
+	if ( ald_is_pro() ) {
+		return [];
+	}
+
+	$contexts = [
+		'general'        => [
+			'title'       => __( 'Upgrade to Load More Anything Pro', 'ajax-load-more-anything' ),
+			'description' => __( 'Unlock unlimited General & Ajax wrappers, custom Ajax buttons, browser URL/Title sync, trigger offset, and custom JavaScript.', 'ajax-load-more-anything' ),
+		],
+		'sidebar_card'   => [
+			'title'       => __( 'Compare Free and Pro', 'ajax-load-more-anything' ),
+			'description' => __( 'See which wrapper limits, pagination controls, and customization options come with each edition.', 'ajax-load-more-anything' ),
+		],
+		'limit_general'  => [
+			'title'       => __( 'Add Unlimited General Wrappers', 'ajax-load-more-anything' ),
+			'description' => __( 'Use separate Load More settings for more than six lists, tables, or grids.', 'ajax-load-more-anything' ),
+		],
+		'limit_ajax'     => [
+			'title'       => __( 'Add Unlimited Ajax Wrappers', 'ajax-load-more-anything' ),
+			'description' => __( 'Configure more than one paginated archive or grid with its own Ajax settings.', 'ajax-load-more-anything' ),
+		],
+		'custom_button'  => [
+			'title'       => __( 'Add an Ajax Load More Button', 'ajax-load-more-anything' ),
+			'description' => __( 'Place a custom button after your content and use your existing pagination link to fetch the next page.', 'ajax-load-more-anything' ),
+		],
+		'url_sync'       => [
+			'title'       => __( 'Update the Browser URL as Items Load', 'ajax-load-more-anything' ),
+			'description' => __( 'Sync the address bar with the page that just loaded so visitors can bookmark it or navigate back.', 'ajax-load-more-anything' ),
+		],
+		'page_title'     => [
+			'title'       => __( 'Update the Page Title as Items Load', 'ajax-load-more-anything' ),
+			'description' => __( 'Show the title of the fetched page in the browser tab.', 'ajax-load-more-anything' ),
+		],
+		'scroll_offset'  => [
+			'title'       => __( 'Start Loading Before Pagination Enters View', 'ajax-load-more-anything' ),
+			'description' => __( 'Set the number of pixels before the pagination trigger at which the next page should load.', 'ajax-load-more-anything' ),
+		],
+		'display_type'   => [
+			'title'       => __( 'Unlock More Item Display Types', 'ajax-load-more-anything' ),
+			'description' => __( 'Choose a CSS display value such as grid, inline-block, or table-row for revealed items.', 'ajax-load-more-anything' ),
+		],
+		'button_classes' => [
+			'title'       => __( 'Style the Load More Button With Your Own Classes', 'ajax-load-more-anything' ),
+			'description' => __( 'Add CSS classes from your theme or design system to the General Load More button.', 'ajax-load-more-anything' ),
+		],
+		'custom_js'      => [
+			'title'       => __( 'Run Custom JavaScript After Items Load', 'ajax-load-more-anything' ),
+			'description' => __( 'Add callbacks for your lightbox, layout, or analytics after content loads.', 'ajax-load-more-anything' ),
+		],
+	];
+
+	foreach ( $contexts as $surface => &$context ) {
+		$context['url'] = ald_get_pro_url( $surface );
+	}
+
+	return $contexts;
+}
+
+/**
+ * Render the review request when the current administrator is eligible.
+ *
+ * @return void
+ */
+function ald_review_card() {
+	$installed = absint( get_option( 'ald_installed', 0 ) );
+	if ( ! $installed ) {
+		add_option( 'ald_installed', time(), '', false );
+		return;
+	}
+
+	if ( time() - $installed < 14 * DAY_IN_SECONDS || get_user_meta( get_current_user_id(), 'ald_review_dismissed', true ) ) {
+		return;
+	}
+
+	foreach ( [ 'general_loadmore', 'ajax_loadmore' ] as $group ) {
+		foreach ( (array) get_ald_options( $group, [] ) as $wrapper ) {
+			if ( is_array( $wrapper ) && ( ( ! empty( $wrapper['btn_selector'] ) && ! empty( $wrapper['load_selector'] ) ) || ! empty( $wrapper['click_selector'] ) || ! empty( $wrapper['button_trigger_selector'] ) ) ) {
+				?>
+				<div class="ald-card ald-review-card">
+					<h3><?php esc_html_e( 'How is Load More Anything working for you?', 'ajax-load-more-anything' ); ?></h3>
+					<p><?php esc_html_e( 'Share your experience to help other WordPress users decide whether the plugin fits their site.', 'ajax-load-more-anything' ); ?></p>
+					<a class="ald-btn ald-btn--secondary" target="_blank" rel="noopener noreferrer" href="<?php echo esc_url( 'https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/#new-post' ); ?>">
+						<?php esc_html_e( 'Write a Review', 'ajax-load-more-anything' ); ?>
+					</a>
+					<button type="button" class="ald-btn ald-btn--ghost ald-dismiss-review" data-nonce="<?php echo esc_attr( wp_create_nonce( 'ald_dismiss_review' ) ); ?>">
+						<?php esc_html_e( 'Dismiss', 'ajax-load-more-anything' ); ?>
+					</button>
+				</div>
+				<?php
+				return;
+			}
+		}
+	}
+}
+
+/**
+ * Dismiss the review card for the current administrator.
+ *
+ * @return void
+ */
+function ald_dismiss_review() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_send_json_error( [ 'message' => __( 'Permission denied.', 'ajax-load-more-anything' ) ], 403 );
+	}
+
+	$nonce = isset( $_POST['nonce'] ) ? sanitize_key( wp_unslash( $_POST['nonce'] ) ) : '';
+	if ( ! wp_verify_nonce( $nonce, 'ald_dismiss_review' ) ) {
+		wp_send_json_error( [ 'message' => __( 'Security check failed.', 'ajax-load-more-anything' ) ], 403 );
+	}
+
+	$user_id = get_current_user_id();
+	if ( ! update_user_meta( $user_id, 'ald_review_dismissed', 'yes' ) && 'yes' !== get_user_meta( $user_id, 'ald_review_dismissed', true ) ) {
+		wp_send_json_error( [ 'message' => __( 'The review card could not be dismissed. Please try again.', 'ajax-load-more-anything' ) ], 500 );
+	}
+
+	wp_send_json_success();
+}
+add_action( 'wp_ajax_ald_dismiss_review', 'ald_dismiss_review' );
+
+/**
  * Render the Free vs Pro comparison modal (scoped to the plugin settings screen only).
  *
  * @return void
@@ -797,8 +1073,8 @@ function ald_plugin_pro_modal() {
 			<div class="ald-modal-header">
 				<span class="ald-badge ald-badge--pro"><?php esc_html_e( 'Pro Upgrade', 'ajax-load-more-anything' ); ?></span>
 				<h2 id="ald-pro-modal-title"><?php esc_html_e( 'Upgrade to Load More Anything Pro', 'ajax-load-more-anything' ); ?></h2>
-				<p><?php esc_html_e( 'Unlock unlimited General & Ajax wrappers, custom Ajax buttons, browser URL/Title sync, trigger offset, and custom JavaScript.', 'ajax-load-more-anything' ); ?></p>
-				<a class="ald-btn ald-btn--primary" target="_blank" rel="noopener noreferrer" href="<?php echo esc_url( ALD_GOPRO_URL ); ?>">
+				<p class="ald-pro-modal-description"><?php esc_html_e( 'Unlock unlimited General & Ajax wrappers, custom Ajax buttons, browser URL/Title sync, trigger offset, and custom JavaScript.', 'ajax-load-more-anything' ); ?></p>
+				<a class="ald-btn ald-btn--primary ald-pro-modal-cta" target="_blank" rel="noopener noreferrer" href="<?php echo esc_url( ald_get_pro_url() ); ?>">
 					<?php esc_html_e( 'Upgrade to Pro', 'ajax-load-more-anything' ); ?>
 					<span class="dashicons dashicons-external" aria-hidden="true"></span>
 				</a>
@@ -877,9 +1153,9 @@ function ald_plugin_options_custom_js() {
 				<h3><?php esc_html_e( 'Custom JavaScript', 'ajax-load-more-anything' ); ?></h3>
 				<p class="desc"><?php esc_html_e( 'Trigger custom callbacks after Ajax or General items load (e.g. lightbox, masonry, or analytics hooks).', 'ajax-load-more-anything' ); ?></p>
 			</div>
-			<?php ald_available_in_pro(); ?>
+			<?php ald_available_in_pro( 'custom_js' ); ?>
 		</div>
-		<div class="ald-pro-overlay-box ald-trigger-pro" role="button" tabindex="0">
+		<div class="ald-pro-overlay-box ald-trigger-pro" data-pro-surface="custom_js" role="button" tabindex="0" aria-haspopup="dialog">
 			<textarea class="wfull ald-code-textarea" rows="4" id="ald_options_custom_js" disabled placeholder="// Available in Load More Anything Pro"></textarea>
 			<span class="ald-pro-overlay-cta">
 				<span class="dashicons dashicons-lock" aria-hidden="true"></span>
@@ -894,14 +1170,15 @@ add_action( 'ald_options_js', 'ald_plugin_options_custom_js', 10 );
 /**
  * Render an accessible "Pro" lock pill button.
  *
+ * @param string $surface Upgrade context.
  * @return void
  */
-function ald_available_in_pro() {
+function ald_available_in_pro( $surface = 'general' ) {
 	if ( ald_is_pro() ) {
 		return;
 	}
 	?>
-	<button type="button" class="ald-pro-lock ald-trigger-pro">
+	<button type="button" class="ald-pro-lock ald-trigger-pro" data-pro-surface="<?php echo esc_attr( $surface ); ?>" aria-haspopup="dialog">
 		<span class="dashicons dashicons-lock" aria-hidden="true"></span>
 		<span><?php esc_html_e( 'Pro', 'ajax-load-more-anything' ); ?></span>
 	</button>

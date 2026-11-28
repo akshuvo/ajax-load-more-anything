@@ -1,6 +1,6 @@
-=== Load More Anything ===
+=== Load More Anything – Infinite Scroll & Ajax Pagination ===
 Contributors: mdshuvo, addonmaster
-Tags: infinite scroll, ajax load more, ajax pagination, load more, ajax
+Tags: infinite scroll, load more, ajax load more, ajax pagination, woocommerce
 Requires at least: 5.8
 Tested up to: 7.1
 Stable tag: 3.3.10
@@ -8,19 +8,21 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Add Load More buttons, Ajax pagination, and Infinite Scroll to blog posts, WooCommerce products, comments, lists, tables, or any CSS selector.
+Add Infinite Scroll, Load More buttons & Ajax pagination to WordPress posts, WooCommerce products, Gutenberg Query Loop, Elementor, comments & lists.
 
 == Description ==
 
-**Load More Anything** lets you turn any WordPress content list or paginated archive into a smooth **Load More** or **Infinite Scroll** experience without writing code. Works with blog posts, Gutenberg Query Loop blocks, WooCommerce shop grids, comments, custom post types, lists, tables, galleries, and custom containers.
+Choose how visitors browse your WordPress content. Add a Load More button to a long list, table, gallery, or comment thread. Use Ajax pagination or infinite scroll for a blog archive, a Gutenberg Query Loop, a WooCommerce Shop or Product Collection, or a paginated page builder grid.
+
+Start from a selector preset in **Load More Anything → Overview** or enter your own CSS selectors. You can enable, disable, or duplicate individual wrappers within your plan's limits. For Flexbox and Grid layouts, place the General Load More button after the container to keep it outside the layout.
 
 ### Key Features
 
 * **General (DOM) Load More** — Hide and progressively reveal items already on the page with a live `+[count]` remaining counter (up to 6 wrappers in Free; unlimited in Pro).
 * **Ajax Pagination & Infinite Scroll** — Fetch paginated WordPress archives, WooCommerce shops, Gutenberg Query Loops, and custom post types dynamically without reloading the page (1 wrapper in Free; unlimited in Pro).
-* **One-Click Selector Presets** — Built-in starter recipes for WordPress Blog Archives, Gutenberg Query Loop, WooCommerce Shop Grid, Elementor Posts/Loop, Comments, Lists, and Table Rows.
+* **One-Click Selector Presets** — Start with recipes for WordPress Blog Archives, Gutenberg Query Loop, WooCommerce Shop and Product Collection, Elementor Posts/Loop, popular themes, comments, lists, and table rows. The Overview suggests presets for supported plugins and themes active on your site.
 * **Modern Performance & Accessibility** — Uses `IntersectionObserver` infinite scroll, safe `DOMParser` HTML extraction, polite ARIA live announcements, and conditional asset loading (zero frontend footprint when unconfigured).
-* **Flexible Data Implementation** — Choose Replace Data, Insert After (Append), or Insert Before (Prepend) on any number of target CSS selectors.
+* **Flexible Data Implementation** — Replace pagination, append or prepend content inside a container, or insert complete post elements after their existing matches.
 * **Custom CSS & Compatibility** — Built-in CodeMirror CSS editor, Elementor editor preview protection, WPML translation support, and optional scroll-to-container after load.
 
 ### Pro Features
@@ -34,19 +36,15 @@ Upgrade to [Load More Anything Pro](https://addonmaster.com/load-more-anything/)
 * 21 additional CSS display types (`grid`, `inline-block`, `table-row`, etc.) & custom button classes
 * Custom JavaScript editor & priority support
 
-### Live Demos
+### Live Preview
 
-* [Infinite Scroll Blog Demo](https://plugins.addonmaster.com/ajax-load-more-anything/blog/)
-* [WooCommerce Products Ajax Pagination](https://plugins.addonmaster.com/ajax-load-more/store/)
-* [Load WordPress Comments](https://plugins.addonmaster.com/ajax-load-more/long-comments/)
-* [Load More List Items](https://plugins.addonmaster.com/ajax-load-more/load-more-list/)
-* [Load More Table Rows](https://plugins.addonmaster.com/ajax-load-more/load-more-table-data/)
+Open the WordPress.org Live Preview when available to try Ajax pagination, a long comment thread, and a table with a Load More button.
 
 ### Documentation & Support
 
 * [Plugin Documentation](https://addonmaster.com/docs-category/load-more-anything/)
 * [WordPress.org Support Forum](https://wordpress.org/support/plugin/ajax-load-more-anything)
-* [Submit a Support Ticket](https://addonmaster.com/submit-a-ticket/)
+* [Contact AddonMaster](https://addonmaster.com/contact/)
 * [Leave a Review](https://wordpress.org/support/plugin/ajax-load-more-anything/reviews/?filter=5#new-post)
 
 == Privacy Policy ==
@@ -74,9 +72,21 @@ Include `[count]` inside your General Load More button label (for example: `Load
 
 Start with one of the built-in Quick Presets in the General or Ajax tabs (WordPress Blog, Gutenberg Query Loop, WooCommerce Shop, Elementor Posts), or inspect your page in browser DevTools to copy the container and pagination link selectors.
 
-= Does it work with WooCommerce, Elementor, and Gutenberg? =
+= How do I use Ajax pagination with a Gutenberg Query Loop or WooCommerce Product Collection? =
 
-Yes. Load More Anything works with any theme or page builder that outputs standard HTML wrappers or pagination links, including WooCommerce shop grids, Elementor Posts/Loop grids, and Gutenberg Query Loop blocks.
+Add a Pagination block with a Next Page link to the loop. In Load More Anything, choose the Gutenberg Query Loop preset or the WooCommerce Product Collection preset for block themes. Scope the selectors to the intended loop if the page contains more than one. Use one pagination system per loop by turning off any competing client-side pagination or Infinite Scroll feature on that loop.
+
+= Are paginated pages crawlable, and does the browser Back button work? =
+
+The original WordPress page URLs still work directly, and pagination links remain in the initial HTML when visually hidden for Infinite Scroll. Free keeps the current URL when Ajax loads more items. Pro can update the URL for each loaded page and reload that page when visitors navigate back.
+
+= Will my content still work after I deactivate Load More Anything? =
+
+Yes. The plugin uses your existing markup and native pagination and adds its controls at runtime. Deactivation removes the Load More behavior. WordPress continues to render your posts, blocks, lists, and pagination normally.
+
+= Does it work with Elementor, Bricks, Divi, Astra, or Kadence? =
+
+Starter presets cover Elementor Posts and Loop widgets, Bricks loops, the Divi Blog module, and Astra and Kadence archives. Selectors vary by theme template and builder configuration. Check the rendered content and next-page link on your page and adjust the preset if needed.
 
 = Where can I get help? =
 

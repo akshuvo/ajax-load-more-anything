@@ -46,7 +46,7 @@ function ald_is_pro() {
 function ald_display_types() {
 	return [
 		'default'            => [
-			'label' => __( 'Default (Slide Down)', 'ajax-load-more-anything' ),
+			'label' => __( 'Default (Native Display)', 'ajax-load-more-anything' ),
 			'value' => 'default',
 			'pro'   => false,
 		],
@@ -340,7 +340,7 @@ function ald_get_active_general_wrappers() {
 	$wrappers = [];
 
 	foreach ( $general_loadmore as $key => $value ) {
-		if ( ! is_array( $value ) ) {
+		if ( ! is_array( $value ) || 'no' === ( $value['enabled'] ?? 'yes' ) ) {
 			continue;
 		}
 
@@ -370,14 +370,15 @@ function ald_get_active_general_wrappers() {
 		}
 
 		$wrappers[] = [
-			'key'           => sanitize_key( (string) $key ),
-			'btn_selector'  => $btn_selector,
-			'load_selector' => $load_selector,
-			'visible_items' => $visible_items,
-			'load_items'    => $load_items,
-			'button_label'  => ald_button_label( $raw_label ),
-			'display_type'  => $display_type,
-			'button_class'  => $btn_class,
+			'key'              => sanitize_key( (string) $key ),
+			'btn_selector'     => $btn_selector,
+			'load_selector'    => $load_selector,
+			'visible_items'    => $visible_items,
+			'load_items'       => $load_items,
+			'button_label'     => ald_button_label( $raw_label ),
+			'display_type'     => $display_type,
+			'button_class'     => $btn_class,
+			'button_placement' => 'after' === ( $value['button_placement'] ?? 'inside' ) ? 'after' : 'inside',
 		];
 	}
 
@@ -399,7 +400,7 @@ function ald_get_active_ajax_wrappers() {
 	$wrappers = [];
 
 	foreach ( $ajax_loadmore as $key => $value ) {
-		if ( ! is_array( $value ) ) {
+		if ( ! is_array( $value ) || 'no' === ( $value['enabled'] ?? 'yes' ) ) {
 			continue;
 		}
 
@@ -439,7 +440,7 @@ function ald_get_active_ajax_wrappers() {
 				continue;
 			}
 			$implement_type = isset( $row['implement_type'] ) ? sanitize_key( $row['implement_type'] ) : 'replace_data';
-			if ( ! in_array( $implement_type, [ 'replace_data', 'insert_after', 'insert_before' ], true ) ) {
+			if ( ! in_array( $implement_type, [ 'replace_data', 'insert_after', 'insert_before', 'insert_after_elements' ], true ) ) {
 				$implement_type = 'replace_data';
 			}
 			$clean_dis[] = [
@@ -484,45 +485,12 @@ function ald_has_frontend_config() {
 }
 
 /**
- * Build dynamic inline CSS for hiding initial General items, hidden Ajax wrappers, and Custom CSS.
+ * Build inline CSS from the saved Custom CSS setting.
  *
  * @return string
  */
 function ald_get_frontend_inline_css() {
-	$css_chunks = [];
-
-	if ( ! ald_is_elementor_preview() ) {
-		$general_selectors = [];
-		foreach ( ald_get_active_general_wrappers() as $wrapper ) {
-			if ( '' !== $wrapper['load_selector'] ) {
-				$general_selectors[] = $wrapper['load_selector'];
-			}
-		}
-		if ( ! empty( $general_selectors ) ) {
-			$css_chunks[] = implode( ', ', array_unique( $general_selectors ) ) . ' { display: none; }';
-		}
-	}
-
-	$ajax_hide_selectors = [];
-	foreach ( ald_get_active_ajax_wrappers() as $wrapper ) {
-		if ( 'selectors_click' !== $wrapper['event_type'] && 'yes' === $wrapper['hide_selector_wrapper'] && '' !== $wrapper['wrapper_to_hide'] ) {
-			$ajax_hide_selectors[] = $wrapper['wrapper_to_hide'];
-		}
-	}
-	if ( ! empty( $ajax_hide_selectors ) ) {
-		$css_chunks[] = implode( ', ', array_unique( $ajax_hide_selectors ) ) . ' { visibility: hidden; }';
-	}
-
-	$custom_css = ald_sanitize_custom_css( get_ald_options( 'custom_css', '' ) );
-	if ( '' !== $custom_css ) {
-		$css_chunks[] = $custom_css;
-	}
-
-	if ( empty( $css_chunks ) ) {
-		return '';
-	}
-
-	return ald_minify_css( implode( "\n", $css_chunks ) );
+	return ald_minify_css( ald_sanitize_custom_css( get_ald_options( 'custom_css', '' ) ) );
 }
 
 /**
@@ -536,6 +504,7 @@ function ald_get_frontend_config() {
 		'ajaxurl'            => admin_url( 'admin-ajax.php' ),
 		'ald_pro'            => ald_is_pro() ? '1' : '0',
 		'isElementorPreview' => ald_is_elementor_preview(),
+		'diagnostics'        => current_user_can( 'manage_options' ) ? '1' : '0',
 		'general'            => ald_get_active_general_wrappers(),
 		'ajax'               => ald_get_active_ajax_wrappers(),
 		'i18n'               => [

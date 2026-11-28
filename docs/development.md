@@ -119,3 +119,10 @@ Inspected live on 2026-11-27 from `https://plugins.svn.wordpress.org/ajax-load-m
 3. **WPCS Ruleset (Phase 1):** Use a non-hidden `phpcs.xml` (not `.phpcs.xml.dist`, avoiding PCP `hidden_files` errors) modeled on `licenser/phpcs.xml`, targeting `WordPress-Core`, `WordPress-Extra`, `WordPress-Docs`, `minimum_wp_version >= 5.8`, `testVersion >= 7.4-`, and short array `[]` allowed.
 4. **Asset Parity:** Never edit `admin.js`/`admin.css`/`styles.css`/`lma-pro.js` without regenerating their `.min.*` counterparts (or adopting a single clean build script / unminified source strategy in Phase 1/4).
 5. **No Hidden or Dev Artifacts in Releases:** Keep `.DS_Store`, `AGENTS.md`, `docs/`, `phpcs.xml`, `scripts/`, `tests/`, `.github/`, and `.wordpress/` excluded from plugin release ZIPs (via authoritative `.github/release-files.txt`).
+
+
+## WordPress.org Playground
+
+The release builder stages `.wordpress/blueprints/blueprint.json` at `assets/blueprints/blueprint.json` with MIME type `application/json`. The Blueprint stays outside the runtime ZIP and the release inventory. The asset allowlist accepts exactly that nested path. Release tests exercise ordinary and assets-only SVN staging in disposable repositories.
+
+The Blueprint installs the current WordPress.org plugin, sets up a paginated sample blog, and creates a long comment thread and a table demonstration. It opens the showcase page. The WordPress.org listing still requires a committer to test the deployed Blueprint and set the preview to public from the plugin's Advanced view. [WordPress.org Plugin Handbook](https://developer.wordpress.org/plugins/wordpress-org/previews-and-blueprints/)
